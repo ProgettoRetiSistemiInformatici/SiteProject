@@ -2,7 +2,7 @@
 //le foto andranno caricate da database tramite php
 include ('dbconnection.php');
 
-$user = $_GET['user'];
+session_start();
 
 global $mysqli;
 $query = "SELECT name, description FROM photo ORDER BY id LIMIT 6;";

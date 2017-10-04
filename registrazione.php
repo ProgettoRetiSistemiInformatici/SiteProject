@@ -2,9 +2,13 @@
 
 include ('dbconnection.php');
 
+session_start();
+
 $username = $_POST['username'];
 $password = $_POST['password'];
 $email = $_POST['email'];
+
+$_SESSION["utente"] = $username;
 
 $username = filter_var($username, FILTER_SANITIZE_STRING);
 $password = filter_var($password, FILTER_SANITIZE_STRING);
@@ -34,7 +38,7 @@ $mysqli->close();
 	<h1>Risultati registrazione</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: /home.php?user='.$username); ?>		
+	<?php else: header('Location: /home.php?user='.$_SESSION["utente"]); ?>		
 	<?php endif ?>
 </body>
 </html>
