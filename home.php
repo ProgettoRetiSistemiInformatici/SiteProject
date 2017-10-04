@@ -4,6 +4,11 @@ include ('dbconnection.php');
 
 session_start();
 
+//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
+if(!isset($_SESSION["utente"])){
+    header("Location: /index.php");
+}
+
 global $mysqli;
 $query = "SELECT name, description FROM photo ORDER BY id LIMIT 6;";
 if (!$result = $mysqli->query($query)){
@@ -67,10 +72,10 @@ div.desc {
 
 <!-- Menu -->
 <ul>
-  <li><a href="/home.php">Home</a></li>
+  <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
   <li><a href="uploadFile.html">Load Image</a></li>
   <li><a href="#contact">Share Us</a></li>
-  <li><a href="#about">About</a></li>
+  <li><a href="logOut.php">Log Out</a></li>
 </ul>
 
 <!-- Photo Grid -->
