@@ -9,3 +9,6 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
   -accesso.php: controlla che le credenziali siano corrette accedento al DB, in caso affermativo reindirizza alla homepage
   -signup.html: pagina per l'inserimento delle credenziali per registrazione.php
   -registrazione.php :controlla che tutti i campi siano completi ed inserisce tutto nel DB, in caso di successo reindirizza alla   homepage
+
+04/10/2017 - Creato il file home.php contenente l'homepage del sito.
+  Aggiornamento: aggiornati i file accesso.php, registrazione.php, home.php per includere le sessioni in modo da semplificare il passaggio delle informazioni dell'utente attuale da una pagina all'altra.
