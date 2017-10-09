@@ -13,3 +13,5 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
 04/10/2017 - Creato il file home.php contenente l'homepage del sito.
   -Creato il file logOut.php: permette di eseguire il logout dal sito.
   Aggiornamento: aggiornati i file accesso.php, registrazione.php, home.php per includere le sessioni in modo da semplificare il passaggio delle informazioni dell'utente attuale da una pagina all'altra.
+
+9/10/2017 - Approvato l'inserimento del file upload.php
