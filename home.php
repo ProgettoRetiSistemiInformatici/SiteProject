@@ -10,7 +10,7 @@ if(!isset($_SESSION["utente"])){
 }
 
 global $mysqli;
-$query = "SELECT name, description FROM photo ORDER BY id LIMIT 6;";
+$query = "SELECT name, description FROM photo ORDER BY id LIMIT 50;";
 if (!$result = $mysqli->query($query)){
      echo "Errore nella query";
 }
@@ -26,6 +26,8 @@ $mysqli->close();
 
 <style>
 ul {
+    position: -webkit-sticky;
+    position: sticky;
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -79,11 +81,10 @@ div.desc {
 </ul>
 
 <!-- Photo Grid -->
-
 <div><?php /*Fetch object array */
     while($obj = $result->fetch_object()){ ?>
       <div class="gallery">
-        <a target="_blank" href="<?php echo $obj->name ?>">
+        <a href="/comments.php?photo=<?php echo $obj->name?>">
           <img src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine" width="300" height="200">
         </a>
         <div class="desc"> <?php echo $obj->description ?> </div>
