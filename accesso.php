@@ -23,7 +23,7 @@ $query = $mysqli->query("SELECT * FROM login WHERE user = '$username' AND passwo
 if($query->num_rows) {
 	echo "Accesso consentito";
 } else {
-	echo "Accesso rifiutato";
+	$error = "Accesso rifiutato";
 }
 $mysqli->close();
 

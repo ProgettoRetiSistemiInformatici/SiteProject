@@ -9,7 +9,7 @@ if(!isset($_SESSION["utente"])){
     header("Location: /index.php");
 }
 
-global $mysqli;
+//global $mysqli;
 $query = "SELECT name, description FROM photo ORDER BY id LIMIT 50;";
 if (!$result = $mysqli->query($query)){
      echo "Errore nella query";
