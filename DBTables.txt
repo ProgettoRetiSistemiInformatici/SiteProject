@@ -11,9 +11,10 @@ CREATE TABLE photo(
   id INT(5) not null AUTO_INCREMENT,
   name VARCHAR(64) not null UNIQUE,
   user VARCHAR(64) not null,
-  rate INT(5) not null default(0),
-  votes INT(5) not null default(0),
-  description VARCHAR(160));
+  rate INT(5) not null default 0,
+  votes INT(5) not null default 0,
+  description VARCHAR(160),
+  PRIMARY KEY (id));
   
 create table comments(
   id INT(5) not null AUTO_INCREMENT,
