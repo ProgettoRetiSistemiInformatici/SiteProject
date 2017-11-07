@@ -10,7 +10,7 @@ if(!isset($_SESSION["utente"])){
 }
 
 //global $mysqli;
-$query = "SELECT name, description FROM photo ORDER BY id LIMIT 50;";
+$query = "SELECT name, description, rate, votes FROM photo ORDER BY id LIMIT 50;";
 if (!$result = $mysqli->query($query)){
      echo "Errore nella query";
 }
@@ -66,6 +66,14 @@ div.desc {
 </style>
 </head>
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.10&appId=139108946732772';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 <header>
   <h1><b>PHOTOLIO</b></h1>
@@ -76,7 +84,7 @@ div.desc {
 <ul>
   <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
   <li><a href="uploadFile.html">Load Image</a></li>
-  <li><a href="#contact">Share Us</a></li>
+  <li><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftest.com%2F&amp;src=sdkpreparse">Share Us</a></li>
   <li><a href="logOut.php">Log Out</a></li>
 </ul>
 
@@ -87,7 +95,11 @@ div.desc {
         <a href="/comments.php?photo=<?php echo $obj->name?>">
           <img src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine" width="300" height="200">
         </a>
-        <div class="desc"> <?php echo $obj->description ?> </div>
+        <div class="desc"> Vote Is: <?php echo $obj->rate /$obj->votes; ?>/5 | <?php echo $obj->description ?> | 
+        	<div class="fb-share-button" data-href="http://test.com/comments.php?photo=cat.jpg" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+        		<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftest.com%2Fcomments.php%3Fphoto%3D<?php echo $obj->name?>&amp;src=sdkpreparse">Condividi</a>
+        	</div>
+        </div>
       </div>
     <?php } ?>
 </div>

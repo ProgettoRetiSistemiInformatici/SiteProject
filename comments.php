@@ -89,7 +89,7 @@
         <div class="page">
             <div class="image">
                 <img src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" width="300" height="200">
-                <div class="desc"><?php echo $obj->description; ?></div>
+                <div class="desc"> Vote Is: <?php echo $obj->rate/$obj->votes; ?>/5 | <?php echo $obj->description; ?></div>
             </div>
             <div class="comment">
                 <form method="post" action="/saveComment.php">
