@@ -95,9 +95,9 @@ div.desc {
         <a href="/comments.php?photo=<?php echo $obj->name?>">
           <img src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine" width="300" height="200">
         </a>
-        <div class="desc"><?php echo $obj->description ?> | 
-        	<div class="fb-share-button" data-href="http://test.com/comments.php?photo=cat.jpg" data-layout="button_count" data-size="small" data-mobile-iframe="true">
-        		<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftest.com%2Fcomments.php%3Fphoto%3D<?php echo $obj->name?>&amp;src=sdkpreparse">Condividi</a>
+        <div class="desc"> <?php echo $obj->description ?> | 
+        	<div class="fb-share-button" data-href="http://test.com/fotopage.php?photo=<?php echo $obj->name?>" data-layout="button_count" data-size="small" data-mobile-iframe="true">
+        		<a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Ftest.com%2Ffotopage.php%3Fphoto%3D<?php echo $obj->name?>&amp;src=sdkpreparse">Condividi</a>
         	</div>
         </div>
       </div>
