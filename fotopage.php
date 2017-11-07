@@ -86,9 +86,6 @@ else {
             <!-- Menu -->
         <ul class ="menu">
             <li><a href="<?php echo "/index.php" ?>" >Home</a></li>
-            <li><a href="uploadFile.html">Load Image</a></li>
-            <li><a href="#contact">Share Us</a></li>
-            <li><a href="logOut.php">Log Out</a></li>
             <li><a href="signin.html"> Sign In</a></li>
             <li><a href="signup.html"> Sign Up</a></li>
             
