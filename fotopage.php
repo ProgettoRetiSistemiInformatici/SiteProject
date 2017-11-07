@@ -13,14 +13,12 @@ $query ="SELECT rate, votes, description from photo where name = '$foto'";
 if(!$result = $mysqli->query($query)){
     die($mysqli->error);
 }
-else {
-    $obj = $result -> fetch_object();
-    $rate = $obj -> rate;
-    $views = $obj -> votes;
-    if($views>0)
-     $finalrate = $rate/$views;
-    else $finalrate = 0;
-}
+$obj = $result -> fetch_object();
+$rate = $obj -> rate;
+$votes = $obj -> votes;
+if($rate != 0)
+     $rate = $rate/$views;
+else $rate = 0;
 ?>
 
 <!DOCTYPE html>
@@ -95,7 +93,7 @@ else {
             <div class='page'>
                 <div class="image">
                     <img src="<?php echo "uploads/". $foto ?>" alt ="Immagine" height="300" width="200"  ><br>
-                        <div class="desc"><?php echo $obj->description; ?></div>
+                        <div class="desc"> Vote Is: <?php echo $rate; ?>/5 | <?php echo $obj->description; ?></div>
                     </div>
                 <div class="comment">
                     <form method="post" action="/saveComment.php">
