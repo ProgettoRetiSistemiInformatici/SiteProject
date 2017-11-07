@@ -22,5 +22,11 @@ create table comments(
   photo VARCHAR(64) not null,
   text VARCHAR(200) not null,
   PRIMARY KEY(id),
-  FOREIGN KEY(user) REFERENCES login(user),
+  FOREIGN KEY(user) REFERENCES users(name),
   FOREIGN KEY(photo) REFERENCES photo(name));
+
+create table users(
+  id int(5) not null, AUTO_INCREMENT,
+  name VARCHAR(16) not null,
+  email VARCHAR(64) not null UNIQUE,
+  PRIMARY KEY(id));
