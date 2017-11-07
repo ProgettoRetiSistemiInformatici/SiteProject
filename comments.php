@@ -25,6 +25,11 @@
     <head>
         <title>Comments - <?php echo $photo; ?></title>
         <meta charset = "UTF-8" >
+        <meta property="og:url"           content="http://localhost/" />
+        <meta property="og:type"          content="website" />
+        <meta property="og:title"         content="Photolio" />
+        <meta property="og:description"   content="Enter the artistic photos world!" />
+        <meta property="og:image"         content="<?php echo "/uploads/" .$photo; ?>" />
         <style>
             ul.menu {
                     list-style-type: none;
@@ -71,6 +76,14 @@
             }
         </style>
     </head>
+    <div id="fb-root"></div>
+    <script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.10&appId=1936240010034928';
+      fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
     <body>
         <header>
             <h1><b>PHOTOLIO</b></h1>
@@ -101,7 +114,11 @@
                         4<input type="radio" name="rate" value="4"/>
                         5<input type="radio" name="rate" value="5"/>
                     </sel>
-                    <input type="submit">
+                    <input type="submit"
+                    <div class="fb-share-button" data-href="<?php echo "/fotopage.php?photo=" .$photo?>"
+                         data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
+                     href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Condividi</a>
+                    </div>
                 </form>
             </div>
         </div>
