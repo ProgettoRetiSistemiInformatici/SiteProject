@@ -75,6 +75,11 @@
                 width: 100%;
                 height: auto;   
             }
+            div.rate{
+                text-align: center;
+                padding-left: 15px;
+                font-family: "Courier New", Courier, monospace;
+            }
         </style>
     </head>
     <body>
@@ -108,6 +113,7 @@
                         5<input type="radio" name="rate" value="5"/>
                     </sel>
                     <input type="submit">
+                    <div class="rate"> Vote Is: <br><b><?php echo $obj->rate; ?>/5</b></div>
                 </form>
             </div>
         </div>
