@@ -26,6 +26,10 @@ $query = "INSERT INTO login (user, password, email) VALUES ('$username', '$passw
 if (!$mysqli->query($query)) {
 	die($mysqli->error);
 }
+$query = "INSERT INTO users (name, email) VALUES ('$username', '$email')";
+if (!$mysqli->query($query)) {
+	die($mysqli->error);
+}
 $mysqli->close();
 
 ?>
