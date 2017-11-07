@@ -50,9 +50,10 @@
         else{
             $obj = $result->fetch_object();
             if(($obj->rate) != 0){
-                $rate = ($obj->rate + $rate) / 2;
+            	$votes = $obj->votes + 1;
+                $rate = ($obj->rate + $rate);
             }
-            $query = "UPDATE photo SET rate =  '$rate', votes= votes + 1 WHERE name = ('$photo');";
+            $query = "UPDATE photo SET rate =  '$rate', votes = '$votes' WHERE name = ('$photo');";
             if(!$mysqli -> query($query)){
                 die($mysqli->error);
                 $error = "error in mysql!";
