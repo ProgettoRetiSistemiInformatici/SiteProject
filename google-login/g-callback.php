@@ -18,13 +18,10 @@
         
 	$email = $userData['email'];
         $email = filter_var($email,FILTER_SANITIZE_STRING);
-	$gender = $userData['gender'];
-        $gender = filter_var($gender,FILTER_SANITIZE_STRING);
 	$Name = $userData['givenName'];
         $mysqli->real_escape_string($email);
-        $mysqli->real_escape_string($gender);
         $_SESSION['utente'] = $Name;
-        $query ="INSERT INTO google_users(username, email, gender) VALUES('$Name','$email', '$gender');";
+        $query ="INSERT INTO users(username, email) VALUES('$Name','$email');";
         if(!$mysqli->query($query)){
             die($mysqli->error); 
             echo $id;
