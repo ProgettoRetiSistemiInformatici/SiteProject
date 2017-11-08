@@ -9,4 +9,4 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
 <p>inizializzare il composer:<span style="background-color: #9999;"><code style="font-size:12px;">$ composer init </code></span> e installarlo <span style="background-color: #9999;"><code style="font-size:12px;">$ composer install</code></span></p>
 <h2>Avvio<h2>
   
-<p>per avviare il progetto da terminale, nella directory contenente i file digitare <span style="background-color: #9999;"><code style="font-size:12px;"> $ runphoto.sh</code></span></p>
+per avviare il progetto da terminale, nella directory contenente i file digitare <span style="background-color: #9999;"><code style="font-size:12px;"> $ runphoto.sh</code></span>
