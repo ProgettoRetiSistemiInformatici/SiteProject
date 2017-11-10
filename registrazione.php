@@ -23,9 +23,10 @@ $password = hash('sha256', $password);//Creazione dell'hash
 $mysqli-> real_escape_string($username);
 $mysqli-> real_escape_string($password);
 $query = "INSERT INTO login (user, password, email) VALUES ('$username', '$password', '$email');";
+$query.= "INSERT INTO users (name, email) VALUES('$username','$email');";
 // Esecuzione della query e controllo degli eventuali errori
-if (!$mysqli->query($query)) {
-	die($mysqli->error);
+if (!$mysqli->multi_query($query)) {
+	die($mysqli->error);            
 }
 $mysqli->close();
 session_write_close();
