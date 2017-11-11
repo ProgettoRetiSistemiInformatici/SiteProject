@@ -5,6 +5,7 @@ include ('dbconnection.php');
 session_start();
 $name = $_GET['user'];
 
+$date_right;
 global $mysqli;
 $query = "SELECT * from users where name= '$name';";
 $query .= "SELECT name, description from photo where user ='$name';";
@@ -18,9 +19,11 @@ if ($mysqli->multi_query($query)){
     }
     
 }
+$_SESSION['profile'] = $obj;
 $mysqli->close();
 $date_from_sql = $obj->birth;
-$date_right = date('d-m-Y',strtotime($date_from_sql));
+if($date_from_sql != null)
+ $date_right = date('d-m-Y',strtotime($date_from_sql));
 session_write_close();
 
 ?>
@@ -36,19 +39,21 @@ and open the template in the editor.
 <html>
 <head>
 <title><?php echo $obj->name;?>'s Profile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <meta charset="UTF-8">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <style>
     div.profile_img{
         margin: left;
-        border: 5px cyan;
+        border: 5px blue;
         padding: 10px;
     }
     div.profile_info{
         margin:left;
-        border: 1px lightgray;
+        border: 1px solid lightgray;
         padding: 5px;
-        font-size: 8px;
+        width: 200px;
+        font-size: 10px;
     }
 ul {
     position: -webkit-sticky;
@@ -100,16 +105,18 @@ div.desc {
 <!-- Profile Info -->
 <div class="profile_img"><img src="<?php echo "profile_images/". $obj->profile_image;?>" width="75" height="75"></div>
 <div class="profile_info">
-    Nome e Cognome:<?php echo $obj->firstname." ".$obj->lastname;?><br>
+    Nome e Cognome:<?php echo  $obj->firstname." ".$obj->lastname;?><br>
     Email: <?php echo $obj->email;?><br>
-    Birth Date : <?php echo $date_right;?>
+    Birth Date : <?php echo $date_right;?><br>
+    Level : <?php echo $obj->level; ?><br>
 </div>
 <!-- Menu -->
 <ul>
   <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
   <li><a href="../uploadFile.html">Load Image</a></li>
   <li><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2F&amp;src=sdkpreparse">Share Us</a></li>
-  <li><a href="logOut.php">Log Out</a></li>
+  <li><a href="../google-login/logout.php">Log Out</a></li>
+  <li><a href="changedata.php">Modifica Profilo</a></li>
 </ul>
 
 <!-- Photo Grid -->
