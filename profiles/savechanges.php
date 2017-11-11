@@ -4,10 +4,25 @@ include 'dbconnection.php';
 session_start();
 
 
-$newBirth = $_POST['newBirth'];
-$Birthsql = date('Y-m-d',$newBirth);
-$newFirstName = $_POST['newName'];
-$newLastName = $_POST['newLName'];
+if(isset($_POST['newBirth'])){
+    $newBirth = $_POST['newBirth'];
+    $Birthsql = date('Y-m-d',$newBirth);
+}
+else {
+    $Birthsql=$_SESSION['profile']->birth;
+}
+if(isset($_POST['newName'])){
+    $newFirstName = $_POST['newName'];
+}
+else{
+    $newFirstName=$_SESSION['profile']->firstname;
+}
+if(isset($_POST['newLName'])){
+    $newLastName = $_POST['newLName'];
+}
+else{
+    $newLastName = $_SESSION['profile']->lastname;
+}
 $profileId=$_SESSION['profile']->id;
 
 global $mysqli;
