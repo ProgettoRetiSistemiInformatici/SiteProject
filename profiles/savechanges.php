@@ -3,6 +3,11 @@ include 'dbconnection.php';
 
 session_start();
 
+if(isset($_POST['newEmail'])){
+    $newEmail = $_POST['newEmail'];
+   if($newEmail==null)
+    $newFirstName=$_SESSION['profile']->email;
+}
 if(isset($_POST['newBirth'])){
     $newBirth = $_POST['newBirth'];
     if($newBirth == null)
@@ -19,7 +24,7 @@ if(isset($_POST['newLName'])){
     $newLastName = $_SESSION['profile']->lastname;
 }
 
-if(isset($_POST['newPimage'])&& $_POST['newPimage'] != null){
+if(isset($_POST['newPimage'])&& $_POST['newPimage']['size'] != 0){
         $MAXDIM = 10000000;
         $target_dir="profile_images/";
         $name = $_FILES["newPimage"]["name"];
