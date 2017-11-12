@@ -36,6 +36,7 @@ session_start();
         <form action="savechanges.php" method="post" enctype="multipart/form-data">
             <div style="width: 50%; margin: 0 auto;"><div class="profile_img"><img src="<?php echo "profile_images/".$_SESSION['profile']->profile_image; ?>" 
                                           alt="Immagine "width="75" height="75"> <br>Modifica Immagine del profilo:<input type="file" name="newPimage"><br></div> 
+<div align="center" class="profile_info">Email: <?php echo  $_SESSION['profile']->email ?>| Modifica email personale <input type="text" name="newEmail"><br></div>                                      
             <div align="center" class="profile_info">Nome: <?php echo  $_SESSION['profile']->firstname ?>| Modifica dati personali <input type="text" name="newName"><br></div>                          
             <div align="center" class="profile_info">Cognome: <?php echo  $_SESSION['profile']->lastname ?>| Modifica dati personali <input type="text" name="newLName"><br></div>                          
             <div align="center" class="profile_info">Data di nascita: <?php echo  date('d-m-Y',strtotime($_SESSION['profile']->birth)) ?>|Modifica dati personali<input type="date" name="newBirth"><br></div>                          
