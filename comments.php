@@ -1,21 +1,23 @@
 <?php
     include('dbconnection.php');
-    
+
     session_start();
     global $photo;
+
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
+
     if($_GET['photo']!= null){
         $photo = $_GET['photo'];
-        $photo = filter_var($photo, FILTER_SANITIZE_STRING); 
+        $photo = filter_var($photo, FILTER_SANITIZE_STRING);
         $_SESSION['photo'] = $photo;
-    
+
         }
-    
+
     else {$photo = $_SESSION['photo'];
-    
+
     }
-    
+
     $mysqli;
     $query = "SELECT name, description, rate, votes FROM photo WHERE name = ('$photo');";
     if(!$result = $mysqli -> query($query)){
@@ -27,9 +29,15 @@
     $views = $obj -> votes;
     if($views>0)
      $finalrate = $rate/$views;
-    else 
+    else
      $finalrate = 0;
-    $mysqli -> close();
+
+    $query = "SELECT user, text FROM comments WHERE photo = ('$photo');";
+    if(!$comments = $mysqli -> query($query)){
+      echo "errore nella query";
+    }
+
+   $mysqli -> close();
 ?>
 <!DOCTYPE html>
 <html>
@@ -67,7 +75,7 @@
             div.image{
                 margin-top: 5px;
                 border: 1px solid #ccc;
-                width: 25%;
+                width: 100%;
                 float: left;
             }
             div.image img{
@@ -81,11 +89,10 @@
             div.comment{
                 margin-top: 5px;
                 width: 25%;
-                float:left;
             }
             div.comment textarea{
                 width: 100%;
-                height: auto;   
+                height: 100px;
             }
             div.rate{
                 text-align: center;
@@ -93,55 +100,50 @@
                 font-family: "Courier New", Courier, monospace;
             }
         </style>
+        <script src="https://apis.google.com/js/platform.js" async defer>
+          {lang: 'en-GB'}
+        </script>
     </head>
-    <div id="fb-root"></div>
-    <script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.10&appId=124840911516975';
-      fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));</script>
     <body>
         <header>
             <h1><b>PHOTOLIO</b></h1>
             <p><b>A site for photo sharing</b></p>
         </header>
-        
+
         <!-- Menu -->
-        <ul class="menu">
-            <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
-            <li><a href="uploadFile.html">Load Image</a></li>
-            <li><a href="#contact">Share Us</a></li>
-            <li><a href="logOut.php">Log Out</a></li>
-        </ul>
-        
+        <?php include 'menu.php' ?>
+
         <!-- Photo Div -->
         <div class="page">
             <div class="image">
                 <img src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" width="300" height="200">
-                <div class="desc"><?php echo $desc; ?></div>
-                  <div class="desc"> Vote Is: <?php echo $finalrate ?>/5 | <?php echo $obj->description; ?></div>
+                <div class="desc"><?php echo $obj->description; ?> | Rating: <?php echo $finalrate ?>/5 | <div class="g-plus" data-action="share"
+                  data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>">
+                  </div></div>
             </div>
             <div class="comment">
-                <form method="post" action="/saveComment.php">
-                    <textarea name="comment" rows="20" cols="50" maxlength="200" placeholder="Type something here..."></textarea>
-                        1<input type="radio" name="rate" value="1"/>
-                        2<input type="radio" name="rate" value="2"/>
-                        3<input type="radio" name="rate" value="3"/>
-                        4<input type="radio" name="rate" value="4"/>
-                        5<input type="radio" name="rate" value="5"/>
-                    
-                    <input type="submit">
-                    <div class="fb-share-button" data-href="<?php echo "/fotopage.php?photo=" .$photo?>"
-                         data-layout="button" data-size="large" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank"
-                     href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse">Condividi</a></div>
-                    <div class="rate"> Vote Is: <br><b><?php echo $finalrate; ?>/5</b></div>
-                </form>
-            </div>
-        </div>
-    </body>
+              <p>Commenti:</p>
+              <?php
+                if($comments->num_rows){
+                  while($obj = $comments -> fetch_object()){
+                    echo "<p><b>" . $obj->user . "</b>: " . $obj->text . "</p><br>";
+                  }
+                }
+                else {
+                  echo "<p>No comments yet. Be the first one to comment!!</p>";
+                } ?>
+
+              <form method="post" action="/saveComment.php">
+                  <textarea name="comment" rows="20" cols="50" maxlength="200" placeholder="Type something here..."></textarea>
+                      <p>Rate this photo: </p>
+                      1<input type="radio" name="rate" value="1"/>
+                      2<input type="radio" name="rate" value="2"/>
+                      3<input type="radio" name="rate" value="3"/>
+                      4<input type="radio" name="rate" value="4"/>
+                      5<input type="radio" name="rate" value="5"/>
+                  <input type="submit">
+              </form>
+          </div>
+      </div>
+  </body>
 </html>
-
-
-
