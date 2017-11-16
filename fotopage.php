@@ -17,16 +17,16 @@ else {
     $obj = $result -> fetch_object();
     $rate = $obj -> rate;
     $views = $obj -> votes;
-    if($views>0)
-     $finalrate = $rate/$views;
-    else $finalrate = 0;
+    $finalrate = $rate/$views;
 }
 ?>
 
 <!DOCTYPE html>
 <html>
         <head>
+            <meta charset="UTF-8">
             <title> Rate this Photo!</title>
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
             <style>
             ul.menu {
                     list-style-type: none;
@@ -86,6 +86,7 @@ else {
             <!-- Menu -->
         <ul class ="menu">
             <li><a href="<?php echo "/index.php" ?>" >Home</a></li>
+            <li><a href="#contact">Share Us</a></li>
             <li><a href="signin.html"> Sign In</a></li>
             <li><a href="signup.html"> Sign Up</a></li>
             

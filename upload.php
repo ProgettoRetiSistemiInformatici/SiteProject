@@ -66,12 +66,13 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 else {
     $caricato = move_uploaded_file($tmpName, $target_file);
+    $desc = $_POST["descrizione"];
     if($caricato){
         $user = $_SESSION["utente"];
         $nameExt = basename($name);
         $mysqli -> real_escape_string($user);
         $mysqli -> real_escape_string($nameExt);
-        $query = "INSERT INTO photo (name, user) VALUES('$nameExt', '$user');";
+        $query = "INSERT INTO photo (name, user, description) VALUES('$nameExt', '$user','$desc');";
          if(!$mysqli->query($query)){
             die($mysqli->error);
             $error = "error in mysql!";
@@ -95,7 +96,7 @@ session_write_close();
 <body>
 	<h1>Risultati caricamento immagine</h1>
 	<?php if ($error): ?>
-		<p style="color: red"><?php echo $error; print_r($_FILES); ?></p>
+		<p style="color: red"><?php echo $error; print_r($name); ?></p>
 	<?php else: header('Location: /home.php?user='.$_SESSION['utente']);?>	
 	<?php endif ?>
         <?php exit();?>	
