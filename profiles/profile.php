@@ -48,24 +48,7 @@ session_write_close();
         width: 200px;
         font-size: 10px;
     }
-ul {
-    position: -webkit-sticky;
-    position: sticky;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
 
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    padding: 8px;
-    background-color: #dddddd;
-}
 div.gallery {
     margin-top: 5px;
     border: 1px solid #ccc;
@@ -113,7 +96,7 @@ div.desc {
         <a href="http://photolio.com/comments.php?photo=<?php echo $foto->name?>">
           <img src="<?php echo "../uploads/". $foto->name; ?>" alt="Immagine" width="300" height="200">
         </a>
-         <div class="desc"> <?php echo $foto->description ?> |<div class="g-plus" data-action="share" data-height="24"
+         <div class="desc"> <?php echo $foto->description ?> </br><div class="g-plus" data-action="share" data-height="24"
                       data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $foto->name ?>"></div>
         </div>
       </div>
