@@ -15,5 +15,3 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
   Aggiornamento: aggiornati i file accesso.php, registrazione.php, home.php per includere le sessioni in modo da semplificare il passaggio delle informazioni dell'utente attuale da una pagina all'altra.
 
 9/10/2017 - Approvato l'inserimento del file upload.php
-
-18/10/2017 - Aggiornati alcuni file e aggiunti i file di comments.php, saveComments.php.
