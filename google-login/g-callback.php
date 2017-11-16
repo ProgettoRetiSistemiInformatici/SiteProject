@@ -1,6 +1,6 @@
 <?php
 	require_once "config.php";
-        include ("dbconnection.php");
+        include ("../dbconnection.php");
         
         session_start();
 
@@ -18,16 +18,27 @@
         
 	$email = $userData['email'];
         $email = filter_var($email,FILTER_SANITIZE_STRING);
+	$gender = $userData['gender'];
+        $gender = filter_var($gender,FILTER_SANITIZE_STRING);
 	$Name = $userData['givenName'];
+        $Lastname = $userData['familyName'];
         $mysqli->real_escape_string($email);
-        $_SESSION['utente'] = $Name;
-        $query ="INSERT INTO users(username, email) VALUES('$Name','$email');";
-        if(!$mysqli->query($query)){
-            die($mysqli->error); 
-            echo $id;
-        }
-        $mysqli->close;
+        $mysqli->real_escape_string($gender);
+        $result = $mysqli->query("SELECT name,email FROM users WHERE email = '$email'");
+        if(!$result->num_rows){
+           $query1 = "INSERT INTO users(name, firstname, lastname, email, gender) VALUES('$Name','$Name','$Lastname','$email','$gender');";
+           if(!$mysqli->query($query1)){
+                die($mysqli->error);
+                $error = "error in mysql!";
+            }
+           }
+           else{
+               $obj=$result->fetch_object();
+               $_SESSION['utente'] = $obj->name;
+           }        
+        $mysqli->close();
         session_write_close();
-	header('Location: /home.php?g_user='.$Name);
+        
+        header('Location: index.php?user='.$_SESSION['utente']);
 	exit();
 ?>
