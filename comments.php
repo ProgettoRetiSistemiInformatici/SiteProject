@@ -52,31 +52,18 @@
         <meta charset = "UTF-8" >
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
         <style>
-            ul.menu {
-                    list-style-type: none;
-                    margin: 0;
-                    padding: 0;
-                    overflow: hidden;
-            }
-            li {
-                    float: left;
-            }
-            li a {
-                    display: block;
-                    padding: 8px;
-                    background-color: #dddddd;
-            }
             div.page{
                 list-style-type: none;
                 margin: 0;
                 padding: 0;
                 overflow: hidden;
+                text-align:center;
             }
             div.image{
                 margin-top: 5px;
                 border: 1px solid #ccc;
                 width: 100%;
-                float: left;
+                text-align:center;
             }
             div.image img{
                 width: 100%;
@@ -88,6 +75,7 @@
             }
             div.comment{
                 margin-top: 5px;
+                text-align:center;
                 width: 25%;
             }
             div.comment textarea{
@@ -117,11 +105,12 @@
         <div class="page">
             <div class="image">
                 <img src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" width="300" height="200">
-                <div class="desc"><?php echo $obj->description; ?> | Rating: <?php echo $finalrate ?>/5 | <div class="g-plus" data-action="share"
-                  data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>">
-                  </div></div>
+                <div class="desc"><?php echo $obj->description; ?> | Rating: <?php echo $finalrate ?>/5</div>
             </div>
             <div class="comment">
+              <p>Share on G+:</p> <div class="g-plus" data-action="share"
+                data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>">
+              </div>
               <p>Commenti:</p>
               <?php
                 if($comments->num_rows){
@@ -132,10 +121,9 @@
                 else {
                   echo "<p>No comments yet. Be the first one to comment!!</p>";
                 } ?>
-
               <form method="post" action="/saveComment.php">
                   <textarea name="comment" rows="20" cols="50" maxlength="200" placeholder="Type something here..."></textarea>
-                      <p>Rate this photo: </p>
+                  <p>Rate this photo: </p>
                       1<input type="radio" name="rate" value="1"/>
                       2<input type="radio" name="rate" value="2"/>
                       3<input type="radio" name="rate" value="3"/>

@@ -24,24 +24,6 @@ $mysqli->close();
 <meta charset="UTF-8">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
 <style>
-ul {
-    position: -webkit-sticky;
-    position: sticky;
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-}
-
-li {
-    float: left;
-}
-
-li a {
-    display: block;
-    padding: 8px;
-    background-color: #dddddd;
-}
 div.gallery {
     margin-top: 5px;
     border: 1px solid #ccc;
@@ -80,7 +62,7 @@ div.desc {
         <a href="/comments.php?photo=<?php echo $obj->name?>">
           <img src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine" width="300" height="200">
         </a>
-        <div class="desc"> <?php echo $obj->description ?> | <div class="g-plus" data-action="share" data-height="24"
+        <div class="desc"> <?php echo $obj->description ?> </br> <div class="g-plus" data-action="share" data-height="24"
                       data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $obj->name ?>"></div>
                       </div>
         	</div>
