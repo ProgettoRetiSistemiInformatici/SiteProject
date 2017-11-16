@@ -1,5 +1,4 @@
-<?php
-include 'dbconnection.php';
+clude '../dbconnection.php';
 
 session_start();
 
@@ -10,8 +9,9 @@ if(isset($_POST['newEmail'])){
 }
 if(isset($_POST['newBirth'])){
     $newBirth = $_POST['newBirth'];
-    if($newBirth == null)
+    if($newBirth == null){
         $newBirth=$_SESSION['profile']->birth;
+    }
 }
 if(isset($_POST['newName'])){
     $newFirstName = $_POST['newName'];
@@ -91,7 +91,7 @@ if(!$mysqli->query("UPDATE users SET profile_image ='$imagename', firstname ='$n
     $error = "error in mysql!";
 }
 
-header("Location: profile.php?user=".$_SESSION['profile']->user);
+header("Location: profile.php?user=".$_SESSION['utente']);
 
 session_write_close();
 
