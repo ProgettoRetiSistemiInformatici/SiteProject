@@ -67,7 +67,7 @@ $mysqli->close();
          <div class="desc"><div class="g-plus" data-action="share" data-height="24" 
                       data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $obj->name ?>"></div>
          </div><br>
-         <div align="center" class="input_radio"><input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>"></div>
+         <div align="center" class="input_radio"><input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>"> <input type='radio' value='<?php echo $obj->name; ?>' name='cover'></div>
       </div>
      <?php } ?> 
     </div>
