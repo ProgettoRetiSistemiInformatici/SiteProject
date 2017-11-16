@@ -1,32 +1,23 @@
 <?php 
 include ("../dbconnection.php");
+include("../tokenize.php");
 
 session_start();
 
 global $mysqli;
 $galleryitems = $_POST['galleryitem'];
 $_SESSION['titlealbum']=$_POST['title'];
+$cover =$_POST['cover'];
 $final;
-$query = "SELECT name, id from photo ";
-$queryfinal;
+
 $ids;
 $i=0;
 while($i<sizeof($galleryitems)){
     $final.= $galleryitems[$i]."|";
     $i++;
 }
-function tokenize($str, $token_symbols) {
-    $word = strtok($str, $token_symbols);
-    global $query, $queryfinal;
-    $queryfinal.=$query;
-    $queryfinal.= "WHERE name= '$word'";
-    $word= strtok($token_symbols);
-    while (false !== $word) {
-        $queryfinal.=" OR name='$word';";
-        $word = strtok($token_symbols);
-    }
-}
-tokenize($final,"|");
+$queryfinal="SELECT name,id from photo ";
+$queryfinal .= tokenizenames($final,"|");
 
 if(!$result = $mysqli->query($queryfinal)){
     die($mysqli->error);
@@ -104,7 +95,7 @@ $mysqli->close();
 </html>
 <?php
 $_SESSION['ids'] = $ids;
-
+$_SESSION['cover'] = $cover;
 session_write_close();
 
 ?>
