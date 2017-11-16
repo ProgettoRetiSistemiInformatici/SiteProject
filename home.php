@@ -72,21 +72,15 @@ div.desc {
 </header>
 
 <!-- Menu -->
-<ul>
-  <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
-  <li><a href="uploadFile.html">Load Image</a></li>
-  <li><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2F&amp;src=sdkpreparse">Share Us</a></li>
-  <li><a href="logOut.php">Log Out</a></li>
-</ul>
-
+<?php include 'menu.php'; ?>
 <!-- Photo Grid -->
 <div><?php /*Fetch object array */
     while($obj = $result->fetch_object()){ ?>
       <div class="gallery">
-        <a href="/comments.php?photo=<?php echo $obj->name?>"> 
+        <a href="/comments.php?photo=<?php echo $obj->name?>">
           <img src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine" width="300" height="200">
         </a>
-        <div class="desc"> <?php echo $obj->description ?> | <div class="g-plus" data-action="share" data-height="24" 
+        <div class="desc"> <?php echo $obj->description ?> | <div class="g-plus" data-action="share" data-height="24"
                       data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $obj->name ?>"></div>
                       </div>
         	</div>
@@ -99,4 +93,3 @@ div.desc {
 </script>
 </body>
 </html>
-
