@@ -1,6 +1,6 @@
 <?php 
 //ottieni la password dal file
-$arr = file(".htacred", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES); 
+$arr = file($_SERVER['DOCUMENT_ROOT'] . "/.htacred", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $host = $arr[0];
 $id = $arr[1];
