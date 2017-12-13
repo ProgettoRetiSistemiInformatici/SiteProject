@@ -1,0 +1,12 @@
+RewriteEingine On
+RewriteBase /
+
+#Protect the htaccess file
+<Files ~ "^.*\.([Hh][Tt][Aa])>
+order allow,deny
+deny from all
+satisfy all
+</Files>
+
+#Disable directory browsing
+Option All -Indexes
