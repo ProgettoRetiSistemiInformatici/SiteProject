@@ -1,3 +1,9 @@
 localhost
+<<<<<<< HEAD
 root
 2006manu
+=======
+#id di accesso al DB
+#password di accesso al DB
+#nome del DB del progetto
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096

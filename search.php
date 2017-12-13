@@ -1,7 +1,11 @@
 <?php
+<<<<<<< HEAD
 
 require 'initialization/dbconnection.php';
 
+=======
+include("dbconnection.php");
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
 session_start();
 global $mysqli;
 $searchterm=$_POST['search'];
@@ -12,11 +16,19 @@ $query = "SELECT *"
         . " from users where name='$searchterm' or firstname='$searchterm' or lastname='$searchterm';";
 $query.= " SELECT * from"
         . "(album join users on users.name = album.user) where users.name='$searchterm' or users.firstname='$searchterm' or users.lastname='$searchterm';";
+<<<<<<< HEAD
 $query.= "select f.name as foto, f.id, f.description, u.name, u.lastname, u.firstname from
     (photo f join users u on u.name = f.user) where u.lastname ='$searchterm' or u.name ='$searchterm' or u.firstname='$searchterm' order by f.id desc;
 ";
 if (!$mysqli->multi_query($query)){
    die($mysqli->error);
+=======
+$query.= "select f.name as foto, f.id, f.description, u.name, u.lastname, u.firstname from 
+    (photo f join users u on u.name = f.user) where u.lastname ='$searchterm' or u.name ='$searchterm' or u.firstname='$searchterm' order by f.id desc;
+";
+if (!$mysqli->multi_query($query)){ 
+   die($mysqli->error); 
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
 }
 
 if($result = $mysqli->store_result()){
@@ -39,7 +51,11 @@ session_write_close();
 <html>
     <head>
         <title>Risultati Ricerca - <?php echo $searchterm; ?></title>
+<<<<<<< HEAD
         <?php include 'shared/header.php'; ?>
+=======
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
         <style>
             ul {
                 position: -webkit-sticky;
@@ -85,7 +101,11 @@ session_write_close();
                 margin: 0;
                 padding: 1em;
             }
+<<<<<<< HEAD
 
+=======
+            
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
             nav ul {
                 display: block;
                 list-style-type: none;
@@ -135,6 +155,7 @@ session_write_close();
             <!--Album's List-->
             <nav>
                 <div class="row">
+<<<<<<< HEAD
                     <div class='panel panel-default' style="width: fit-content;">
                         <div class='panel-heading'><p>Related Albums</p>
                             <div class='panel-body'>
@@ -142,6 +163,15 @@ session_write_close();
                 <?php
                     while($ra = $resultalbum->fetch_object()){
                         ?>
+=======
+                    <div class='panel panel-default' style="width: fit-content;"> 
+                        <div class='panel-heading'><p>Related Albums</p>
+                            <div class='panel-body'>
+                                <div class=" panel panel-default">
+                <?php 
+                    while($ra = $resultalbum->fetch_object()){ 
+                        ?>        
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
                     <div class='panel-heading'><ul><?php  echo $ra->titolo; ?></ul></div>
                     <div class='panel-body' align="center">
                         <a href='profiles/profileview.php?user=<?php echo $ra->user;?>&idS=<?php echo $ra->idFoto;?>&id=<?php echo$ra->id;?>'>
@@ -149,8 +179,13 @@ session_write_close();
                             echo "../google-login/images/album.png";} else {
                             echo "../uploads/".$ra->Cover;
                         }?>' alt='Immagine' height="80" width="80"></a>
+<<<<<<< HEAD
                         </div>
                     <?php
+=======
+                        </div>       
+                    <?php        
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
                     } ?>        </div>
                             </div>
                         </div>
@@ -186,15 +221,26 @@ session_write_close();
                 <div class='container'>
                     <?php while($foto = $resultfoto->fetch_object()){?>
                     <div class="gallery">
+<<<<<<< HEAD
                       <a href="/comments.php?photo=<?php echo $foto->foto?>">
                         <img src="<?php echo "uploads/".$foto->foto ?>" alt="Immagine" width="300" height="200">
                       </a>
                       <div class="desc"> <?php echo $foto->description ?> |<div class="g-plus" data-action="share" data-height="24"
+=======
+                      <a href="/comments.php?photo=<?php echo $foto->foto?>"> 
+                        <img src="<?php echo "uploads/".$foto->foto ?>" alt="Immagine" width="300" height="200">
+                      </a>
+                      <div class="desc"> <?php echo $foto->description ?> |<div class="g-plus" data-action="share" data-height="24" 
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
                                     data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $foto->foto ?>"></div>
                       </div>
                     </div>
 
+<<<<<<< HEAD
                     <?php
+=======
+                    <?php 
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
                     } ?>
                 </div>
             </article>

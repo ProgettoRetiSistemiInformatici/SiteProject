@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php
 
 session_start();
@@ -5,6 +6,10 @@ session_start();
 $user = $_SESSION['utente'];
 
 ?>
+=======
+<html>
+<head>
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096
   <style>
   ul {
       position: -webkit-sticky;
@@ -25,6 +30,7 @@ $user = $_SESSION['utente'];
       background-color: #dddddd;
   }
 </style>
+<<<<<<< HEAD
   <ul>
     <li><a href=<?php echo'../home.php?user=' . $user ?>>Home</a></li>
     <li><a href='../load_image/uploadFile.html'>Load Image</a></li>
@@ -38,3 +44,16 @@ $user = $_SESSION['utente'];
       } ?>
 
 </ul>
+=======
+</head>
+<body>
+  <ul>
+    <li><a href="<?php echo "/home.php?user=" .$_SESSION["utente"] ?>" >Home</a></li>
+    <li><a href="../uploadFile.html">Load Image</a></li>
+    <li><a href="#">Share us on Google+</a></li>
+    <li><a href="../google-login/logout.php">Log Out</a></li>
+    <li><a href="changedata.php">Modifica Profilo</a></li>
+  </ul>
+</body>
+</html>
+>>>>>>> c4e8eed04fa369e772f4e2be70136ba753273096

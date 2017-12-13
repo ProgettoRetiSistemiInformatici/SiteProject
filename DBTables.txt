@@ -1,0 +1,25 @@
+Le tabelle da creare nel DB del progetto:
+
+CREATE TABLE login(
+  id INT(5) not null AUTO_INCREMENT,
+  user VARCHAR(16) not null UNIQUE,
+  password VARCHAR(64) not null,
+  email VARCHAR(64) not null UNIQUE,
+  PRIMARY KEY(id));
+  
+CREATE TABLE photo(
+  id INT(5) not null AUTO_INCREMENT,
+  name VARCHAR(64) not null UNIQUE,
+  user VARCHAR(64) not null,
+  rate INT(5) not null default(0),
+  votes INT(5) not null default(0),
+  description VARCHAR(160));
+  
+create table comments(
+  id INT(5) not null AUTO_INCREMENT,
+  user VARCHAR(16) not null,
+  photo VARCHAR(64) not null,
+  text VARCHAR(200) not null,
+  PRIMARY KEY(id),
+  FOREIGN KEY(user) REFERENCES login(user),
+  FOREIGN KEY(photo) REFERENCES photo(name));
