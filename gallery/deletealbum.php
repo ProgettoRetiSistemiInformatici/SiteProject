@@ -5,7 +5,7 @@ session_start();
 $id=$_GET['id'];
 global $mysqli;
 
-$query="SELECT user from album where id='$id';";
+$query="SELECT user FROM album WHERE id='$id';";
 $query.= "DELETE FROM album WHERE id='$id';";
 if(!$mysqli->multi_query($query)){
     die($mysqli->error);

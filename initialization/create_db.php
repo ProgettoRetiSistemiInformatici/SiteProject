@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Create database
-$sql = "CREATE DATABASE photolio";
+$sql = "CREATE DATABASE photolio CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci";
 if ($conn->query($sql) === TRUE) {
 } else {
    echo "Error creating database: " . $conn->error;

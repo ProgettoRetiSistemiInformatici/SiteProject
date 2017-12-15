@@ -3,10 +3,7 @@
 
     session_start();
     global $photo;
-
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
+    
     if($_GET['photo']!= null){
         $photo = $_GET['photo'];
         $photo = filter_var($photo, FILTER_SANITIZE_STRING);
@@ -19,8 +16,8 @@
     }
 
     global $mysqli;
-    $query = "select user, description, (rate/votes) as finalrate from photo where name ='$photo';";
-    $query .= "select text, user from comments where photo ='$photo'";
+    $query = "SELECT user, description, (rate/votes) AS finalrate FROM photo WHERE name ='$photo';";
+    $query .= "SELECT comment, user FROM comments WHERE photo ='$photo'";
     if(!$mysqli->multi_query($query)){
         die($mysqli->error);
     }
@@ -44,103 +41,97 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Comments - <?php echo $photo; ?></title>
-        <?php include '../shared/header.php' ?>
-        <style>
-            ul.menu {
-                    list-style-type: none;
-                    margin: 0;
-                    padding: 0;
-                    overflow: hidden;
-            }
-            li {
-                    float: left;
-            }
-            li a {
-                    display: block;
-                    padding: 8px;
-                    background-color: #dddddd;
-            }
-            div.page{
-                list-style-type: none;
-                margin: 0;
-                padding: 0;
-                overflow: hidden;
-            }
-            div.image{
-                margin-top: 5px;
-                border: 1px solid #ccc;
-                width: 100%;
-                float: left;
-            }
-            div.image img{
-                width: 100%;
-                height: auto;
-            }
-            div.desc {
-                padding: 15px;
-                text-align: center;
-                font-style: italic;
-                color: dimgrey;
-            }
-            div.comment{
-                margin-top: 5px;
-                width: 25%;
-            }
-            div.comment textarea{
-                width: 100%;
-                height: 100px;
-            }
-            div.rate{
-                text-align: center;
-                padding-left: 15px;
-                font-family: "Courier New", Courier, monospace;
-            }
-        </style>
+        <?php include '../shared/meta.php'; ?>
         <script src="https://apis.google.com/js/platform.js" async defer>
           {lang: 'en-GB'}
         </script>
     </head>
     <body>
-        <header>
-            <h1><b>PHOTOLIO</b></h1>
-            <p><b>A site for photo sharing</b></p>
-        </header>
-
-        <!-- Menu -->
-        <?php include '../menu.php'; ?>
-    <!-- Photo Div -->
-    <div class="page">
-            <div class="image">
-                <img src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" class='img-responsive'>
-                <div class="desc"><?php echo $desc; ?> | Rating: <?php echo round($rate,2); ?>/5</div>
-            </div>
-            <div class="comment">
-              <p>Share on G+:</p> <div class="g-plus" data-action="share"
-                data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>">
+      <div class="container">
+        <?php include '../shared/header.php'; ?>
+      <!-- Menu -->
+        <?php include '../shared/menuProfile.php'; ?>
+      <!-- Photo Div -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <img class="img-responsive img-rounded" src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" class='img-responsive center-block'>
               </div>
-              <p>Commenti:</p>
-              <?php
-                $result->data_seek(0);
-                if($comments->num_rows){
-                  while($obj = $comments->fetch_object()){
-                    echo "<p><b>" . $obj->user . "</b>: " . $obj->text . "</p><br>";
-                  }
-                }
-                else {
-                  echo "<p>No comments yet. Be the first one to comment!!</p>";
-                }?>
-              <form method="post" action="/saveComment.php">
-                  <textarea name="comment" rows="20" cols="50" maxlength="200" placeholder="Type something here..."></textarea>
-                  <p>Rate this photo: </p>
-                      1<input type="radio" name="rate" value="1"/>
-                      2<input type="radio" name="rate" value="2"/>
-                      3<input type="radio" name="rate" value="3"/>
-                      4<input type="radio" name="rate" value="4"/>
-                      5<input type="radio" name="rate" value="5"/>
-                  <input type="submit">
-              </form>
+              <div class="panel-body">
+                <div class="col-md-12 text-center">
+                  <p><b>Description:</b> <?php echo $desc; ?> </p>
+                  <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>"></div>
+                  <div class="col-md-6 center-block text-center">
+                     <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
+                  </div>
+                </div>
+                <form action="saveComment.php" method="post">
+                  <div class="col-md-12 text-center">
+                    <div class="form-group">
+                      <p><b>Rate:</b></p>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
+                      </label>
+                    </div>
+                    <button class="btn btn-primary" type="submit">Add new vote</button>
+                  </div>
+                </form>
+              </div>
+            </div>
           </div>
-    </div>
-  </body>
+        </div>
+        <div class="row">
+          <div class="col-md-12 text-center">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3>Comments</h3>
+              </div>
+              <div class="panel-body">
+                <div class="col-md-6 center-block">
+                  <ul class="list-group">
+                    <li class="list-group-item">
+                      <?php
+                        $result->data_seek(0);
+                        if($comments->num_rows){
+                          while($obj = $comments->fetch_object()){
+                            echo "<p><b><a href='../profiles/profile.php?user=" . $obj->user. "'>" . $obj->user . "</a></b>: " . $obj->comment . "</p>";
+                          }
+                        }
+                        else {
+                          echo "<p>No comments yet. Be the first one to comment!!</p>";
+                        }?>
+                    </li>
+                  </ul>
+                </div>
+                <form action="saveComment.php" method="post">
+                  <div class="col-md-6 text-center">
+                    <div class="form-group">
+                      <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 text-center">
+                      <button class="btn btn-primary" type="submit">Add new comment</button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </body>
 </html>

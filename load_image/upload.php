@@ -64,17 +64,17 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 else {
     $caricato = move_uploaded_file($tmpName, $target_file);
-    $desc = $_POST["descrizione"];
+    $desc = $_POST["description"];
     if($caricato){
         $user = $_SESSION["utente"];
         $nameExt = basename($name);
         $mysqli -> real_escape_string($user);
         $mysqli -> real_escape_string($nameExt);
         $query = "INSERT INTO photo (name, user, description, tag) VALUES('$nameExt', '$user', '$desc', '$tags');";
-         if(!$mysqli->query($query)){
-            die($mysqli->error);
-            $error = "error in mysql!";
-            }
+        if(!$mysqli->query($query)){
+          die($mysqli->error);
+          $error = "error in mysql!";
+        }
         $_SESSION['photo'] = $nameExt;
 
         if(!empty($tags)){

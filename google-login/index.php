@@ -1,5 +1,5 @@
 <?php
-  include("../dbconnection.php");
+  require '../initialization/dbconnection.php';
 	session_start();
         global $mysqli;
 	if (!isset($_SESSION['access_token'])) {

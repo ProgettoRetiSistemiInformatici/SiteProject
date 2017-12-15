@@ -3,16 +3,19 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-        <?php include 'shared/header.php'; ?>
-        <title>Photolio! - Welcome</title>
-    	</head>
-<body>
+        <?php include 'shared/meta.php'; ?>
+  </head>
+	<body>
     <div class="container">
-			<div class="row text-center">
-				<h1 class="text-center">WELCOME</h1>
-				<p class="text-center"><a class="btn btn-primary" href="google-login">Log In</a></p>
-				<p class="text-center"><a class="btn btn-primary" href="access/signup.php">Sign Up</a></p>
+			<div class="row">
+				<div class="col-md-12 center-block text-center" style="margin-top: 100px">
+					<div class="jumbotron">
+						<h1>WELCOME</h1>
+						<p><a class="btn btn-primary" href="google-login">Log in</a></p>
+						<p><a class="btn btn-primary" href="google-login/signup.php">Sign up</a></p>
+					</div>
+				</div>
 			</div>
 		</div>
-</body>
+	</body>
 </html>

@@ -2,10 +2,10 @@
 require '../initialization/dbconnection.php';
 session_start();
 
-$user = $_GET['user'];
-$_SESSION['utente'] = $user;
+$user = $_SESSION['utente'];
+
 global $mysqli;
-if(!$result = $mysqli->query("SELECT name from photo where user= '$user';")){
+if(!$result = $mysqli->query("SELECT name, description FROM photo WHERE user= '$user';")){
     die($mysqli->error);
     $error = "error in mysql!";
 }
@@ -14,66 +14,59 @@ $mysqli->close();
 
 ?>
 
-
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Photolio - Create Gallery</title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <style>
-    div.gallery {
-        margin-top: 5px;
-        border: 1px solid #ccc;
-        width: 25%;
-        float: left;
-    }
-
-    div.gallery:hover {
-        border: 1px solid #777;
-    }
-
-    div.gallery img {
-        width: 100%;
-        height: auto;
-    }
-
-    div.desc {
-        padding: 15px;
-        text-align: center;
-    }
-    div.input_checkbox{
-        padding-bottom: 10px;
-        align-content: center;
-        font-family: sans-serif;
-    }
-    </style>
-    </head>
-    <body>
-        <header>
-            <h1><b>PHOTOLIO</b></h1>
-            <p><b>A site for photo sharing</b></p>
-            <p>Hi, <?php echo $_GET['user'];?><br><p style='color: dodgerblue; font-size: 11px;'>
-            Please click on the checkbox to collect photos for the album, enter a title and then it's "done"
-            <p style="font-size: 9px">* type forced</p>
-        </header>
-        <form action="galleryconfirm.php" method="post">
-            Enter title:<input type="text" name="title"/>*
-        <input type="submit" value="done">
-        <div><?php /*Fetch object array */
-            while($obj = $result->fetch_object()){ ?>
-      <div class="gallery">
-          <img name="<?php echo $obj->name?>" src='../uploads/<?php echo $obj->name ?>' alt="Immagine">
-         <div class="desc"><div class="g-plus" data-action="share" data-height="24"
-                      data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $obj->name ?>"></div>
-         </div><br>
-         <div align="center" class="input_radio"><input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>"> <input type='radio' value='<?php echo $obj->name; ?>' name='cover'></div>
+<head>
+  <?php include '../shared/meta.php'; ?>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <?php include '../shared/header.php'; ?>
+    </header>
+    <!-- Menu -->
+    <?php include '../shared/menuProfile.php'; ?>
+    <form action="galleryconfirm.php" method="post">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="form-group">
+            <label for="inputTitle">Album title:</label>
+              <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Title" required>
+          </div>
+        </div>
+        <div class="col-md-8">
+          <div class="pull-right" style="margin-top: 26px">
+            <button type="submit" class="btn btn-primary">Accept</button>
+            <button type="reset" class="btn btn-default">Reset</button>
+          </div>
+        </div>
       </div>
-     <?php } ?>
-    </div>
-        </form>
-    <script src="https://apis.google.com/js/platform.js" async defer>
-    {lang: 'en-GB'}
-    </script>
-    </body>
+      <div class="row">
+        <?php /*Fetch object array */
+          while($obj = $result->fetch_object()){ ?>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
+                <div class="text-center">
+                  <div class="caption">
+                    <p><?php echo $obj->description ?></p>
+                  </div>
+                  <div class="checkbox">
+                    <label>
+                      <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>">Add to this album</input>
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+        <?php } ?>
+      </div>
+    </form>
+  </div>
+</body>
 </html>

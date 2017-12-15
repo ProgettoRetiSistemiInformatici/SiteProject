@@ -6,7 +6,7 @@ session_start();
 
 global $mysqli;
 $galleryitems = $_POST['galleryitem'];
-$_SESSION['titlealbum']=$_POST['title'];
+$_SESSION['title']=$_POST['title'];
 $cover =$_POST['cover'];
 $final;
 
@@ -16,7 +16,7 @@ while($i<sizeof($galleryitems)){
     $final.= $galleryitems[$i]."|";
     $i++;
 }
-$queryfinal="SELECT name,id from photo ";
+$queryfinal="SELECT name, id from photo ";
 $queryfinal .= tokenizenames($final,"|");
 
 if(!$result = $mysqli->query($queryfinal)){
@@ -25,74 +25,53 @@ if(!$result = $mysqli->query($queryfinal)){
 
 $mysqli->close();
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <?php include '../shared/header.php'; ?>
-        <title>Create Album</title>
-        <style>
-        div.gallery {
-            margin-top: 5px;
-            border: 1px solid #ccc;
-            width: 25%;
-            float: left;
-        }
-
-        div.gallery:hover {
-            border: 1px solid #777;
-        }
-
-        div.gallery img {
-            width: 100%;
-            height: auto;
-        }
-        .button {
-            background-color: blue;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 8px;
-        }
-        .button1{
-            background-color: #f44336;
-        }
-        .button:hover{
-           color: blanchedalmond;
-        }
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1><b>PHOTOLIO</b></h1>
-        <p><b>A site for photo sharing</b></p>
-        </header>
-        <p align="left" style="font-size: 12px; padding-left: 5px; padding-bottom: 10px;">Are you sure to create this Album?<br></p>
-        <div class="container" style="margin-top: 150px">
-            <div class="row justify-content-center">
-                <div class="col-md-6 col-offset-3" align="center">
-                    <a href="createalbum.php"><button class="button">Yes</button></a>
-                    <a href="gallerychoose.php?user=<?php echo $_SESSION['utente'];?>"><button class="button button1">No</button></a>
-                </div>
+<head>
+  <?php include '../shared/meta.php'; ?>
+</head>
+<body>
+  <div class="container">
+    <?php include '../shared/header.php'; ?>
+    <!-- Menu -->
+    <?php include '../shared/menuProfile.php'; ?>
+    <form action="createalbum.php">
+      <div class="panel panel-default">
+        <div class="panel-body bg-danger">
+          <div class="row">
+            <div class="col-md-6">
+              <h3>Do you really want to create this album?</h3>
             </div>
+            <div class="col-md-6">
+              <div class="pull-right" style="margin-top: 16px">
+                <button type="submit" class="btn btn-primary">Yes</button>
+                <a href='<?php echo "../profiles/profile.php?user=" . $_SESSION['utente']; ?>' class="btn btn-danger">No</a>
+              </div>
+            </div>
+          </div>
         </div>
-        <div><?php
-
-        while($obj= $result->fetch_object()){
-        ?>
-        <div class="gallery">
-            <img src="../uploads/<?php echo  $obj->name; ?>" alt="Immagine" width="300" height="200">
+      </div>
+    </form>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <?php /*Fetch object array */
+            while($obj = $result->fetch_object()){ ?>
+              <div class="col-sm-6 col-md-4">
+                <div class="thumbnail">
+                  <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
+                </div>
+              </div>
+          <?php $ids .= $obj->id . "|";
+          } ?>
         </div>
-        <?php $ids.= $obj->id."|";
-               }?>
-        </div>
-    </body>
+      </div>
+    </div>
+  </div>
+</body>
 </html>
+
 <?php
 $_SESSION['ids'] = $ids;
 $_SESSION['cover'] = $cover;

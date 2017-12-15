@@ -1,47 +1,106 @@
 <?php
 session_start();
-
-
 ?>
+
 <!DOCTYPE html>
 <html>
-    <head>
-        <?php include 'shared/header.php' ?>
-        <title>
-            Photolio
-        </title>
-        <style>
-            div.profile_img{
-                margin: 0;
-                border: 5px blue;
-                padding: 10px;
-            }
-            div.profile_info{
-                margin: left;
-                border: 1px solid lightgray;
-                padding: 5px;
-                width: 500px;
-                font-size: 10px;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <h1><b>PHOTOLIO</b></h1>
-            <p><b>A site for photo sharing</b></p>
-        </header>
-        <!--profile current data -->
-        <form action="savechanges.php" method="post" enctype="multipart/form-data">
-            <div style="width: 50%; margin: 0 auto;">
-                <div class="profile_img"><img src="<?php echo "profile_images/".$_SESSION['profile']->profile_image; ?>"
-                                          alt="Immagine" width="75" height="75"> <br>Modifica Immagine del profilo:<input type="file" name="newPimage"><br></div>
-            <div align="center" class="profile_info">Email: <?php echo  $_SESSION['profile']->email ?>| Modifica email personale <input type="text" name="newEmail"><br></div>
-            <div align="center" class="profile_info">Nome: <?php echo  $_SESSION['profile']->firstname ?>| Modifica dati personali <input type="text" name="newName"><br></div>
-            <div align="center" class="profile_info">Cognome: <?php echo  $_SESSION['profile']->lastname ?>| Modifica dati personali <input type="text" name="newLName"><br></div>
-            <div align="center" class="profile_info">Data di nascita: <?php echo  date('d-m-Y',strtotime($_SESSION['profile']->birth)) ?>|Modifica dati personali<input type="text" name="newBirth" placeholder="dd-mm-yyyy"><br></div>
-            <div class="profile_info"><textarea name="aboutMe" rows="10" cols="50" maxlength="200" placeholder="Type something about you..."></textarea>
+<head><?php include '../shared/meta.php'; ?></head>
+<body>
+  <div class="container">
+    <?php include '../shared/header.php'; ?>
+    <?php include '../shared/menuProfile.php'; ?>
+    <form action="savechanges.php" method="post" enctype="multipart/form-data">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <p><b>Actual profile image:</b></p>
+                  <img alt="Profile image" class="img-rounded img-responsive" src="<?php echo "profile_images/". $_SESSION['profile']->profile_image;?>">
+                </div>
+                <div class="panel-body">
+                  <div class="form-group text-center">
+                    <label for="InputFile">Choose new profile image:</label>
+                    <input class="center-block" type="file" id="InputFile" name="newPimage">
+                    <p class="help-block">Modify your current profile image</p>
+                  </div>
+                </div>
+              </div>
+              <div class="panel panel-default">
+                <div class="panel-body text-center">
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                  <button class="btn btn-default" type="reset">Reset</button>
+                </div>
+              </div>
             </div>
-            <div align="right" class="profile_info"><input type="submit"></div>
-        </form>
-    </body>
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="form-group">
+                        <label for="InputEmail">Email:</label>
+                        <input name="newEmail" type="email" class="form-control" id="InputEmail" placeholder="<?php echo  $_SESSION['profile']->email ?>">
+                        <p class="help-block">Modify your current email</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="form-group">
+                        <label for="InputName">Firstname:</label>
+                        <input name="newName" type="text" class="form-control" id="InputName" placeholder="<?php echo  $_SESSION['profile']->firstname ?>">
+                        <p class="help-block">Modify your current name</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="form-group">
+                        <label for="InputLastname">Lastname:</label>
+                        <input name="newLName" type="text" class="form-control" id="InputLastname" placeholder="<?php echo  $_SESSION['profile']->lastname ?>">
+                        <p class="help-block">Modify your current lastname</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <label for="InputBirthDate">Birth Date:</label>
+                      <input name="newBirth" type="date" class="form-control" id="InputLastname" placeholder="<?php echo  date('d-m-Y',strtotime($_SESSION['profile']->birth)) ?>">
+                      <p class="help-block">Modify your current birth date</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <label for="inputUDesc">Description:</label>
+                      <textarea name="aboutMe" maxlength="200" class="form-control" id="inputUDesc" rows="3"></textarea>
+                      <p class="help-block">Insert a short description of yourself</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</body>
 </html>
