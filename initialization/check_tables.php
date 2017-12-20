@@ -65,7 +65,7 @@
       $sql = "CREATE TABLE tags(
         id INT(5) NOT NULL AUTO_INCREMENT,
         tag VARCHAR(16) NOT NULL UNIQUE,
-        photos_id INT(99) NOT NULL,
+        photos_id TEXT NOT NULL,
         PRIMARY KEY (id));";
 
       if ($mysqli->query($sql) === TRUE) {

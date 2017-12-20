@@ -2,7 +2,7 @@
 	require_once "config.php";
 	require '../initialization/dbconnection.php';
 
-        session_start();
+	session_start();
 
 	if (isset($_SESSION['access_token']))
 		$gClient->setAccessToken($_SESSION['access_token']);

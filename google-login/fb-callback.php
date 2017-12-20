@@ -3,7 +3,7 @@
 $fb = new Facebook\Facebook([
   'app_id' => '384437665319826', // Replace {app-id} with your app id
   'app_secret' => '059369468eb08916c3d0f174fe0cba51',
-  'default_graph_version' => 'v2.10',
+  'default_graph_version' => 'v2.11',
   ]);
 
 $helper = $fb->getRedirectLoginHelper();
@@ -69,6 +69,5 @@ $_SESSION['fb_access_token'] = (string) $accessToken;
 
 // User is logged in with a long-lived access token.
 // You can redirect them to a members-only page.
-header('Location: https://localhost:8000/info.php');
-
+//header('Location: https://example.com/members.php');
 ?>
