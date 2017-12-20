@@ -6,7 +6,7 @@ $query = "SELECT id FROM photo WHERE name = '$photo_name';";
 if(!$result = $mysqli -> query($query)){
   echo "Errore nella query per prendere l'id";
 }
-$photo_id = $result;
+$photo_id = $result->id;
 
 
 $tags = explode(" ", $tag);

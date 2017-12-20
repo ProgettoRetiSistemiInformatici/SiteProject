@@ -1,7 +1,6 @@
 <?php
 	session_start();
-	error_reporting(E_ALL);
-	ini_set('display_errors', 1);
+
 	require_once "GoogleAPI/vendor/autoload.php";
 	$gClient = new Google_Client();
 	$gClient->setClientId(getenv("GOOGLE_APP_ID"));

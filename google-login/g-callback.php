@@ -1,6 +1,6 @@
 <?php
 	require_once "config.php";
-	require '../initialization/dvconnnection.php';
+	require '../initialization/dbconnection.php';
 
         session_start();
 
@@ -24,7 +24,7 @@
         $Lastname = $userData['familyName'];
         $mysqli->real_escape_string($email);
         $mysqli->real_escape_string($gender);
-        $result = $mysqli->query("SELECT name,email FROM users WHERE email = '$email'");
+        $result = $mysqli->query("SELECT name, email FROM users WHERE email = '$email'");
         if(!$result->num_rows){
            $query1 = "INSERT INTO users(name, firstname, lastname, email, gender) VALUES('$Name','$Name','$Lastname','$email','$gender');";
            if(!$mysqli->query($query1)){

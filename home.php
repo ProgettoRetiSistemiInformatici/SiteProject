@@ -58,6 +58,7 @@ session_write_close();
       </div>
     </div>
   </div>
+  <?php include 'test.php' ?>
 </div>
 </body>
 </html>

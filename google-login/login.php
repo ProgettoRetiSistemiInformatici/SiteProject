@@ -1,5 +1,6 @@
 <?php
     require_once "config.php";
+    require_once "fb-config.php";
 
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
@@ -10,6 +11,7 @@
 	}
 
 	$loginURL = $gClient->createAuthUrl();
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +40,9 @@
             </div>
             <div class="col-md-6 text-center" style="margin-top: 300px">
               <div class="jumbotron">
-                <input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log in with Google" class="btn btn-danger">              </div>
+                <input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log in with Google" class="btn btn-danger">
+                <input type="button" onclick="window.location = '<?php echo $FBloginUrl ?>';" value="Log in with Facebook" class="btn btn-primary">
+              </div>
             </div>
         </div>
     </div>

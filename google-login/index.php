@@ -1,5 +1,6 @@
 <?php
   require '../initialization/dbconnection.php';
+  
 	session_start();
         global $mysqli;
 	if (!isset($_SESSION['access_token'])) {
@@ -8,9 +9,9 @@
 	}
         else {
             $user = $_SESSION['utente'];
-            $query="select name from users where name='$user';";
+            $query="SELECT name FROM users WHERE name='$user';";
             if($result= $mysqli->query($query)){
-            header('Location: ../home.php?user'.$user);
+            header('Location: ../home.php?user='.$user);
             }
         }
 ?>
