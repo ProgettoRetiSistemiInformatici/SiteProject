@@ -3,7 +3,7 @@
 
     session_start();
     global $photo;
-    
+
     if($_GET['photo']!= null){
         $photo = $_GET['photo'];
         $photo = filter_var($photo, FILTER_SANITIZE_STRING);
@@ -59,11 +59,28 @@
                 <img class="img-responsive img-rounded" src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" class='img-responsive center-block'>
               </div>
               <div class="panel-body">
-                <div class="col-md-12 text-center">
-                  <p><b>Description:</b> <?php echo $desc; ?> </p>
-                  <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>"></div>
-                  <div class="col-md-6 center-block text-center">
-                     <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
+                <div class="col-md-6 text-center">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="col-md-12 text-center">
+                        <h3><b>Photographer:</b> <a href="../profiles/profile.php?user=<?php echo $fuser; ?>"><?php echo $fuser; ?></a></h3>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 text-center">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <div class="col-md-12 text-center center-block">
+                        <p><b>Description:</b> <?php echo $desc; ?> </p>
+                      </div>
+                      <div class="col-md-6 center-block text-center">
+                          <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
+                      </div>
+                      <div class="col-md-6 text-center">
+                        <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <form action="saveComment.php" method="post">
