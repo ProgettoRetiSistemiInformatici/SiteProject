@@ -3,21 +3,29 @@
 require '../initialization/dbconnection.php';
 require "tokenize.php";
 
-$name = $_GET['user'];
+$user = $_GET['user'];
+
+if($name == $_SESSION['current_user']){
+  $current_user = true;
+}
+else{
+  $current_user = false;
+}
 
 $date_right;
 global $mysqli;
-$query = "SELECT * FROM users WHERE name= '$name';";
-$query .= "SELECT name, description FROM photo WHERE user ='$name';";
-$query .= "SELECT * FROM albums WHERE user='$name' ORDER BY 'id' DESC LIMIT 3;";
-$query .= "SELECT u2.name, u2.profile_image FROM (relations JOIN users AS u1 JOIN users AS u2 ON relations.idUser1 = u1.id && relations.idUser2 = u2.id) WHERE u1.name = '$name';";
+$query = "SELECT * FROM users WHERE id= '$user';";
+$query .= "SELECT name, description FROM photo WHERE user_id ='$user';";
+$query .= "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id' DESC LIMIT 3;";
+$query .= "SELECT * FROM relations WHERE follower_id = '$_SESSION['current_user']' AND followed_id = '$user';";
 $obj;
 if ($mysqli->multi_query($query)){
-    if($result = $mysqli->store_result())
+    if($result = $mysqli->store_result()){
         //Store first query result(profile info)
-        $obj = $result->fetch_object();
+        $profile = $result->fetch_object();
+    }
     if($mysqli->next_result()){
-        $photos = $mysqli->store_result();
+        $photo = $mysqli->store_result();
     }
     if($mysqli-> next_result()){
         $albums = $mysqli->store_result();
@@ -26,13 +34,14 @@ if ($mysqli->multi_query($query)){
         $follows = $mysqli->store_result();
     }
 }
-$_SESSION['profile'] = $obj;
-$_SESSION['utente'] = $name;
+
 $date_from_sql = $obj->birth;
 if($date_from_sql != null){
  $date_right = date('d-m-Y',strtotime($date_from_sql));
 }
+
 session_write_close();
+
 ?>
 
 <!DOCTYPE html>
@@ -57,24 +66,35 @@ session_write_close();
       <div class="panel-heading">
         <h3 class="panel-title">
           <p><b>Profile info</b></p>
-          <img class="img-responsive img-rounded" src="<?php echo "profile_images/". $obj->profile_image;?>"></h3>
+          <img class="img-responsive img-rounded" src="<?php echo "profile_images/". $profile->profile_image;?>"></h3>
       </div>
       <div class="panel-body">
         <ul class="list-group">
           <?php
-                if (!empty($obj->fistname) || !empty($obj->lastname)){
-                  echo "<li class='list-group-item'><b>Name:</b> " . $obj->firstname . " " . $obj->lastname . "</li>";
+                if (!empty($profile->firstname) || !empty($profile->lastname)){
+                  echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $obj->lastname . "</li>";
                 }
-                echo "<li class='list-group-item'><b>Email:</b> " . $obj->email . "</li>";
+                echo "<li class='list-group-item'><b>Email:</b> " . $profile->email . "</li>";
                 echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
-                echo "<li class='list-group-item'><b>Level:</b> " . $obj->level . "</li>";
+                echo "<li class='list-group-item'><b>Level:</b> " . $profile->level . "</li>";
 
-                if (!empty($obj->descuser)){
-                  echo "<li class='list-group-item'><b>About Me:</b> " . $obj->descuser . "</li>";
+                if (!empty($profile->descuser)){
+                  echo "<li class='list-group-item'><b>About Me:</b> " . $profile->descuser . "</li>";
                 }
             ?>
         </ul>
-        <p><a class="btn btn-primary" href="changedata.php">Edit profile</a></p>
+        <?php if($current_user){
+          echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
+        }
+        else{
+          if(#follow){
+            echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $user . '">Unfollow</a></p>';
+          }
+          else{
+            echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $user . '">Follow</a></p>';
+          }
+        }
+        ?>
       </div>
     </div>
   </div>
@@ -110,7 +130,10 @@ session_write_close();
                 echo "<p>No albums to show</p>";;
               } ?>
             </div>
-          <a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>
+            <?php if($current_user){
+              echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
+            }
+            ?>
           </div>
         </div>
       </div>
@@ -140,7 +163,7 @@ session_write_close();
         </a>
         <div class="caption text-center">
           <p><b><?php echo $photo->description ?><b></p>
-          <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/photo_page/fotopage.php?photo=". $photo->name ?>">
+          <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/photo_page/fotopage.php?photo=". $photo->id ?>">
           </div>
         </div>
       </div>

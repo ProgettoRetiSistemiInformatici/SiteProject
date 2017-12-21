@@ -27,12 +27,12 @@
                 <img src="images/photo-machine.png" class="img-thumbnail" width="100"><br><br>
                 <form action="access.php" method="post">
                     <div class="form-group">
-                        <label for="inputEmail">Username</label>
-                        <input type="text" id="inputEmail" name="name" class="form-control" placeholder="Username"><br>
+                        <label for="inputEmail">Email:</label>
+                        <input type="email" id="inputEmail" required name="email" class="form-control" placeholder="Email"><br>
                     </div>
                     <div class="form-group">
-                        <label for="inputPassword">Password</label>
-                        <input type="password" id="inputPassword" placeholder="Password" name="password" class="form-control"><br>
+                        <label for="inputPassword">Password:</label>
+                        <input type="password" id="inputPassword" required placeholder="Password" name="password" class="form-control"><br>
                     </div>
                     <input type="submit" value="Log in" class="btn btn-primary">
                 </form>

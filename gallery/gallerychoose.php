@@ -2,10 +2,10 @@
 require '../initialization/dbconnection.php';
 session_start();
 
-$user = $_SESSION['utente'];
+$user = $_SESSION['current_user'];
 
 global $mysqli;
-if(!$result = $mysqli->query("SELECT name, description FROM photo WHERE user= '$user';")){
+if(!$result = $mysqli->query("SELECT name, description FROM photo WHERE user_id= '$user';")){
     die($mysqli->error);
     $error = "error in mysql!";
 }

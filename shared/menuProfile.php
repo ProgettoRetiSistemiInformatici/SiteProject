@@ -2,7 +2,7 @@
 
 session_start();
 
-$user = $_SESSION['utente'];
+$user = $_SESSION['current_user'];
 
 ?>
 <nav class="navbar navbar-default">

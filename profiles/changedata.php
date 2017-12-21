@@ -1,5 +1,23 @@
 <?php
-session_start();
+require '../initialization/dbconnection.php';
+require "tokenize.php";
+
+$user = $_SESSION['current_user']
+
+global $mysqli;
+$query = "SELECT * FROM login WHERE id = '$user';";
+
+if(!$result = $mysqli->query($query)){
+  echo "Errore nella query";
+  die();
+}
+else{
+    $profile = $result->fetch_object();
+}
+
+$_SESSION['profile'] = $profile;
+
+session_write_close();
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +35,7 @@ session_start();
               <div class="panel panel-default">
                 <div class="panel-body">
                   <p><b>Actual profile image:</b></p>
-                  <img alt="Profile image" class="img-rounded img-responsive" src="<?php echo "profile_images/". $_SESSION['profile']->profile_image;?>">
+                  <img alt="Profile image" class="img-rounded img-responsive" src="<?php echo "profile_images/". $profile->profile_image;?>">
                 </div>
                 <div class="panel-body">
                   <div class="form-group text-center">
@@ -35,26 +53,14 @@ session_start();
               </div>
             </div>
             <div class="col-md-6">
-              <div class="row">
-                <div class="col-md-12">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <div class="form-group">
-                        <label for="InputEmail">Email:</label>
-                        <input name="newEmail" type="email" class="form-control" id="InputEmail" placeholder="<?php echo  $_SESSION['profile']->email ?>">
-                        <p class="help-block">Modify your current email</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <div class="form-group">
                         <label for="InputName">Firstname:</label>
-                        <input name="newName" type="text" class="form-control" id="InputName" placeholder="<?php echo  $_SESSION['profile']->firstname ?>">
+                        <input name="newName" type="text" class="form-control" id="InputName" placeholder="<?php echo  $profile->firstname ?>">
                         <p class="help-block">Modify your current name</p>
                       </div>
                     </div>
@@ -67,7 +73,7 @@ session_start();
                     <div class="panel-body">
                       <div class="form-group">
                         <label for="InputLastname">Lastname:</label>
-                        <input name="newLName" type="text" class="form-control" id="InputLastname" placeholder="<?php echo  $_SESSION['profile']->lastname ?>">
+                        <input name="newLName" type="text" class="form-control" id="InputLastname" placeholder="<?php echo  $profile->lastname ?>">
                         <p class="help-block">Modify your current lastname</p>
                       </div>
                     </div>
@@ -79,7 +85,7 @@ session_start();
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <label for="InputBirthDate">Birth Date:</label>
-                      <input name="newBirth" type="date" class="form-control" id="InputLastname" placeholder="<?php echo  date('d-m-Y',strtotime($_SESSION['profile']->birth)) ?>">
+                      <input name="newBirth" type="date" class="form-control" id="InputLastname" placeholder="<?php echo  date('d-m-Y',strtotime($profile->birth)) ?>">
                       <p class="help-block">Modify your current birth date</p>
                     </div>
                   </div>

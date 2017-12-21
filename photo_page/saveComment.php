@@ -8,11 +8,11 @@
 
     $rate = filter_var($_POST['rate'], FILTER_SANITIZE_NUMBER_INT);
     $comment = filter_var($_POST['comment'], FILTER_SANITIZE_STRING);
-    $photo = $_SESSION['photo'];
+    $photo_id = $_SESSION['photo_id'];
 
     if(!$rate && !$comment){//Non ha né commentato né votato
         echo "Nor rate or comment are setted";
-        header('Location: ../home.php?user='.$_SESSION['utente']);
+        header('Location: ../home.php?user='.$_SESSION['current_user']);
     }
     else if(!$rate){ //Ha solo commentato
         echo "Non ho votato ";
@@ -30,10 +30,10 @@
 
     function addComment($comment){
         global $mysqli;
-        $user = $_SESSION['utente'];
-        $photo = $_SESSION['photo'];
+        $user_id = $_SESSION['current_user'];
+        $photo_id = $_SESSION['photo_id'];
         $comment = $mysqli -> real_escape_string($comment);
-        $query = "INSERT INTO comments (user, photo, comment) VALUES ('$user', '$photo', '$comment');";
+        $query = "INSERT INTO comments (user_id, photo_id, comment) VALUES ('$user_id', '$photo_id', '$comment');";
         if(!$mysqli -> query($query)){
             die($mysqli->error);
             $error = "error in mysql!";
@@ -41,8 +41,9 @@
     }
     function addRate($rate){
         global $mysqli;
-        $photo = $_SESSION['photo'];
-        $query = "SELECT rate FROM photo WHERE name = ('$photo');";
+      
+        $photo_id = $_SESSION['photo_id'];
+        $query = "SELECT rate FROM photo WHERE id = '$photo_id';";
 
         if(!$result = $mysqli -> query($query)){
             die($mysqli->error);
@@ -53,7 +54,7 @@
             if(($obj->rate) != 0){
                 $rate = ($obj->rate + $rate);
             }
-            $query = "UPDATE photo SET rate =  '$rate', votes= votes + 1 WHERE name = ('$photo');";
+            $query = "UPDATE photo SET rate =  '$rate', votes= votes + 1 WHERE id = ('$photo_id');";
             if(!$mysqli -> query($query)){
                 die($mysqli->error);
                 $error = "error in mysql!";
@@ -61,7 +62,7 @@
         }
     }
     $mysqli -> close();
-    unset($_SESSION['photo']);
+    unset($_SESSION['photo_id']);
 ?>
 
 <!DOCTYPE html>
@@ -73,7 +74,7 @@
 	<h1>Risultati caricamento commenti</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error; ?></p>
-	<?php else: header('Location: ../photo_page/comments.php?photo=' . $photo);?>
+	<?php else: header('Location: ../photo_page/comments.php?photo_id=' . $photo_id);?>
 	<?php endif ?>
 </body>
 </html>

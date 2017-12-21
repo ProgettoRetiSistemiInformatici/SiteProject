@@ -2,41 +2,55 @@
     require '../initialization/dbconnection.php';
 
     session_start();
-    global $photo;
+    global $photo_id;
 
-    if($_GET['photo']!= null){
-        $photo = $_GET['photo'];
-        $photo = filter_var($photo, FILTER_SANITIZE_STRING);
-        $_SESSION['photo'] = $photo;
+    if($_GET['photo_id']!= null){
+        $photo_id = $_GET['photo_id'];
+        $_SESSION['photo_id'] = $photo_id;
 
-        }
-
+    }
     else {
-        $photo = $_SESSION['photo'];
+        $photo_id = $_SESSION['photo_id'];
     }
 
     global $mysqli;
-    $query = "SELECT user, description, (rate/votes) AS finalrate FROM photo WHERE name ='$photo';";
-    $query .= "SELECT comment, user FROM comments WHERE photo ='$photo'";
-    if(!$mysqli->multi_query($query)){
+    $query = "SELECT name, user_id, description, (rate/votes) AS finalrate FROM photo WHERE id ='$photo_id';";
+    if(!$result = $mysqli->query($query)){
         die($mysqli->error);
     }
     else{
-        $result = $mysqli->store_result();
-        $obj =$result->fetch_object();
-        $fuser= $obj->user;
+        $obj = $result->fetch_object();
+        $photo_name = $obj->name;
+        $photographer_id = $obj->user_id;
         $desc = $obj->description;
         $rate = $obj->finalrate;
         if($rate == NULL){
             $rate = 0;
         }
-        if(!$mysqli->next_result()){
-            die($mysqli->error);
-        }
-        $comments = $mysqli->store_result();
     }
-    $_SESSION['fotouser'] = $fuser;
-   $mysqli -> close();
+
+    $query = "SELECT firstname, email FROM login WHERE id = '$photographer_id';";
+    $query .= "SELECT comment, user_id FROM comments WHERE photo_id ='$photo_id';";
+    if ($mysqli->multi_query($query)){
+      if($result = $mysqli->store_result()){
+          $photographer = $result->fetch_object();
+          if($photographer->firstname == NULL){
+            $fuser = $photographer->email;
+          }
+          else{
+            $fuser = $photographer->firstname;
+          }
+      }
+      if($mysqli->next_result()){
+          $comments = $mysqli->store_result();
+      }
+    }
+    while($obj = $comments->fetch_object()){
+      $array =
+    }
+
+    $mysqli -> close();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +70,7 @@
           <div class="col-md-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <img class="img-responsive img-rounded" src="<?php echo "/uploads/" .$photo; ?>" alt="Immagine" class='img-responsive center-block'>
+                <img class="img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine" class='img-responsive center-block'>
               </div>
               <div class="panel-body">
                 <div class="col-md-6 text-center">
@@ -78,7 +92,7 @@
                           <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
                       </div>
                       <div class="col-md-6 text-center">
-                        <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo ?>"></div>
+                        <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo_id ?>"></div>
                       </div>
                     </div>
                   </div>
@@ -124,7 +138,7 @@
                         $result->data_seek(0);
                         if($comments->num_rows){
                           while($obj = $comments->fetch_object()){
-                            echo "<p><b><a href='../profiles/profile.php?user=" . $obj->user. "'>" . $obj->user . "</a></b>: " . $obj->comment . "</p>";
+                            echo "<p><b><a href='../profiles/profile.php?user=" . $obj->user_id. "'>" . $obj->user . "</a></b>: " . $obj->comment . "</p>";
                           }
                         }
                         else {

@@ -6,17 +6,17 @@
   global $mysqli;
 
   if (isset($_SESSION['access_token'])) {
-      $user = $_SESSION['utente'];
-      $query="SELECT name FROM users WHERE name='$user';";
+      $user_id = $_SESSION['current_user'];
+      $query = "SELECT id FROM login WHERE id='$user_id';";
       if($result= $mysqli->query($query)){
-        header('Location: ../home.php?user='.$user);
+        header('Location: ../home.php?user=' . $user_id);
       }
 	}
   elseif($_SESSION['FBID']){
-    $user = $_SESSION['FBID'];
-    $query="SELECT name FROM users WHERE name='$user';";
+    $user_id = $_SESSION['FBID'];
+    $query = "SELECT id FROM login WHERE id='$user_id';";
     if($result= $mysqli->query($query)){
-      header('Location: ../home.php?user='.$user);
+      header('Location: ../home.php?user=' . $user_id);
     }
   }
   else {

@@ -4,27 +4,29 @@ require '../initialization/dbconnection.php';
 
 session_start();
 
-$username = $_POST['name'];
+$email = $_POST['email'];
 $password = $_POST['password'];
 
-$_SESSION["utente"] = $username;
-
-$username = filter_var($username, FILTER_SANITIZE_STRING);
+$email = filter_var($email, FILTER_SANITIZE_STRING);
 $password = filter_var($password, FILTER_SANITIZE_STRING);
 
-if(!$username || !$password){
-	$error = 'Username e password sono obbligatori';
+if(!$email || !$password){
+	$error = 'Email e password sono obbligatori';
 }
 
 // Connessione al database
 global $mysqli;
 $password = hash('sha256', $password);
-$query = $mysqli->query("SELECT * FROM login WHERE user = '$username' AND password = '$password'");
-if($query->num_rows) {
+
+$query = "SELECT id FROM login WHERE email = '$email' AND password = '$password';";
+if($result = $mysqli->query($query)){
 	echo "Accesso consentito";
 } else {
 	$error = "Accesso rifiutato";
 }
+
+$_SESSION['current_user'] = $result->fetch_object()->id;
+
 $mysqli->close();
 
 session_write_close();
@@ -38,7 +40,7 @@ session_write_close();
 	<h1>Risultati accesso</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: /home.php?user='.$_SESSION["utente"]); ?>
+	<?php else: header('Location: /home.php?user='.$_SESSION['current_user']); ?>
 	<?php endif ?>
 </body>
 </html>

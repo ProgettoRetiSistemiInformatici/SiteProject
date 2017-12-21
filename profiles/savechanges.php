@@ -9,7 +9,7 @@ $newFirstName;
 $newLastName;
 $imagename;
 
-$profileId=$_SESSION['profile']->id;
+$profileId = $_SESSION['current_user']->id;
 
 if(isset($_POST['newBirth'])){
     $newBirth = $_POST['newBirth'];
@@ -20,11 +20,6 @@ if(isset($_POST['newName'])){
     $newFirstName = $_POST['newName'];
    if($newFirstName==null)
     $newFirstName=$_SESSION['profile']->firstname;
-}
-if(isset($_POST['newEmail'])){
-    $newEmail = $_POST['newEmail'];
-   if($newEmail==null)
-    $newEmail=$_SESSION['profile']->email;
 }
 if(isset($_POST['newLName'])){
     $newLastName = $_POST['newLName'];
@@ -102,11 +97,13 @@ else{
 
 global $mysqli;
 $Birthsql = date('Y-m-d',strtotime($newBirth));
-if(!$mysqli->query("UPDATE users SET descuser='$newDesc', profile_image ='$imagename', email='$newEmail', firstname ='$newFirstName', lastname ='$newLastName', birth ='$Birthsql' WHERE id='$profileId';")){
+if(!$mysqli->query("UPDATE login SET descuser='$newDesc', profile_image ='$imagename', firstname ='$newFirstName', lastname ='$newLastName', birth ='$Birthsql' WHERE id='$profileId';")){
     die($mysqli->error);
     $error = "error in mysql!";
 }
-header("Location: profile.php?user=".$_SESSION['profile']->name);
+header("Location: profile.php?user=" . $_SESSION['current_user']);
+
+unset($_SESSION['profile']);
 
 session_write_close();
 

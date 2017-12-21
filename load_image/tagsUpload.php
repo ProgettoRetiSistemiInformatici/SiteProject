@@ -1,5 +1,5 @@
 <?php
-$tag = $_SESSION['tags'];
+$tags = $_SESSION['tags'];
 $photo_name = $_SESSION['photo'];
 
 $query = "SELECT id FROM photo WHERE name = '$photo_name';";
@@ -9,7 +9,7 @@ if(!$result = $mysqli -> query($query)){
 $photo_id = $result->id;
 
 
-$tags = explode(" ", $tag);
+$tags = explode(" ", $tags);
 /*
 * Questo controllo al suo interno avrà una query
 * per ogni tabella in cui andranno inseriti i tag

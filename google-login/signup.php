@@ -11,16 +11,12 @@
 					<img src="images/photo-machine.png" class="img-thumbnail" width="100"><br><br>
 					<form action="registration.php" method="post">
 						<div class="form-group">
-							<label for="inputUsername">Username</label>
-							<input type="text" class="form-control" id="inputUsername" name="username" placeholder="Username" />
+							<label for="inputEmail">Email</label>
+							<input type="email" class="form-control" id="inputEmail" required name="email" placeholder="Email" />
 						</div>
 						<div class="form-group">
 							<label for="inputPassword">Password</label>
-							<input type="password" class="form-control" id="inputPassword" name="password" placeholder="Password" />
-						</div>
-						<div class="form-group">
-							<label for="inputEmail">Email</label>
-							<input type="email" class="form-control" id="inputEmail" name="email" placeholder="Email" />
+							<input type="password" class="form-control" id="inputPassword" required name="password" placeholder="Password" />
 						</div>
 						<input type="submit" value="Sign up" />
 					</form>

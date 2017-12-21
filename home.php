@@ -4,22 +4,23 @@ require 'initialization/dbconnection.php';
 session_start();
 
 //se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
-if(!isset($_SESSION["utente"])){
+if(!isset($_SESSION["current_user"])){
     header("Location: /index.php");
 }
 
-$user= $_SESSION['utente'];
+$user= $_SESSION['current_user'];
 global $mysqli;
-$query = "SELECT photo.name, photo.description, users.profile_image FROM photo,users where users.name = '$user' ORDER BY photo.id DESC LIMIT 50;";
+$query = "SELECT id, name, description FROM photo ORDER BY id DESC LIMIT 50;";
 if (!$result = $mysqli->query($query)){
      echo $mysqli->error;
 }
+
 $result->data_seek(0);
 $row = $result->fetch_row();
 $mysqli->close();
-$_SESSION['profminiature'] = $row[2];
-$_SESSION['utente'] = $user;
+
 session_write_close();
+
 ?>
 
 <!DOCTYPE html>
@@ -44,7 +45,7 @@ session_write_close();
           while($obj = $result->fetch_object()){ ?>
           <div class="col-sm-6 col-md-4">
             <div class="thumbnail">
-              <a href="photo_page/comments.php?photo=<?php echo $obj->name?>">
+              <a href="photo_page/comments.php?photo_id=<?php echo $obj->id?>">
                 <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
               </a>
               <div class="caption text-center">
