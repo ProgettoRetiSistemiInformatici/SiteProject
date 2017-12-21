@@ -105,7 +105,7 @@ session_write_close();
 	<h1>Risultati caricamento immagine</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error; print_r($name); ?></p>
-	<?php else: header('Location: /home.php?user='.$_SESSION['utente']);?>
+	<?php else: header('Location: /home.php?user='.$_SESSION['current_user']);?>
 	<?php endif ?>
         <?php exit();?>
 </body>

@@ -22,11 +22,15 @@
         $gender = filter_var($gender,FILTER_SANITIZE_STRING);
 	$Name = $userData['givenName'];
         $Lastname = $userData['familyName'];
+	$password = rand(555555, 999999999);
+				$password = hash('sha256', $password);//Creazione dell'hash
+
+				$mysqli-> real_escape_string($password);
         $mysqli->real_escape_string($email);
         $mysqli->real_escape_string($gender);
         $result = $mysqli->query("SELECT id, email FROM login WHERE email = '$email'");
         if(!$result->num_rows){
-           $query1 = "INSERT INTO login  (firstname, lastname, email, gender) VALUES($Name', '$Lastname', '$email', '$gender');";
+           $query1 = "INSERT INTO login  (firstname, lastname, email, gender , password) VALUES($Name', '$Lastname', '$email', '$gender', '$password');";
            if(!$mysqli->query($query1)){
                 die($mysqli->error);
                 $error = "error in mysql!";

@@ -4,28 +4,28 @@ require '../initialization/dbconnection.php';
 require "tokenize.php";
 
 $user = $_GET['user'];
+$current_user = $_SESSION['current_user'];
 
-if($name == $_SESSION['current_user']){
-  $current_user = true;
+if($user === $current_user){
+  $equals = true;
 }
 else{
-  $current_user = false;
+  $equals = false;
 }
 
 $date_right;
 global $mysqli;
-$query = "SELECT * FROM users WHERE id= '$user';";
-$query .= "SELECT name, description FROM photo WHERE user_id ='$user';";
+$query = "SELECT * FROM login WHERE id = '$user';";
+$query .= "SELECT id, name, description FROM photo WHERE user_id = '$user';";
 $query .= "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id' DESC LIMIT 3;";
-$query .= "SELECT * FROM relations WHERE follower_id = '$_SESSION['current_user']' AND followed_id = '$user';";
-$obj;
+$query .= "SELECT * FROM relations WHERE follower_id = '$current_user' AND followed_id = '$user';";
 if ($mysqli->multi_query($query)){
     if($result = $mysqli->store_result()){
         //Store first query result(profile info)
         $profile = $result->fetch_object();
     }
     if($mysqli->next_result()){
-        $photo = $mysqli->store_result();
+        $photos = $mysqli->store_result();
     }
     if($mysqli-> next_result()){
         $albums = $mysqli->store_result();
@@ -35,7 +35,7 @@ if ($mysqli->multi_query($query)){
     }
 }
 
-$date_from_sql = $obj->birth;
+$date_from_sql = $profile->birth;
 if($date_from_sql != null){
  $date_right = date('d-m-Y',strtotime($date_from_sql));
 }
@@ -72,7 +72,7 @@ session_write_close();
         <ul class="list-group">
           <?php
                 if (!empty($profile->firstname) || !empty($profile->lastname)){
-                  echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $obj->lastname . "</li>";
+                  echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $profile->lastname . "</li>";
                 }
                 echo "<li class='list-group-item'><b>Email:</b> " . $profile->email . "</li>";
                 echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
@@ -83,15 +83,15 @@ session_write_close();
                 }
             ?>
         </ul>
-        <?php if($current_user){
+        <?php if($equals){
           echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
         }
         else{
-          if(#follow){
-            echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $user . '">Unfollow</a></p>';
+          if($follows->num_rows){
+            echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
           }
           else{
-            echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $user . '">Follow</a></p>';
+            echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
           }
         }
         ?>
@@ -108,7 +108,7 @@ session_write_close();
       <div class="panel-body">
         <div class="row">
           <?php
-            if(isset($albums)){
+            if($albums->num_rows){
               while($ra = $albums->fetch_object()){ ?>
                 <div class="col-sm-6 col-md-4">
                   <div class="thumbnail">
@@ -127,10 +127,10 @@ session_write_close();
               <?php }
               }
               else{
-                echo "<p>No albums to show</p>";;
+                echo "<h4 class = 'text-center'>No albums to show</h4>";;
               } ?>
             </div>
-            <?php if($current_user){
+            <?php if($equals){
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
             }
             ?>
@@ -158,7 +158,7 @@ session_write_close();
       while($photo = $photos->fetch_object()){ ?>
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
-        <a href="../photo_page/comments.php?photo=<?php echo $photo->name?>">
+        <a href="../photo_page/comments.php?photo=<?php echo $photo->id?>">
           <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
         </a>
         <div class="caption text-center">

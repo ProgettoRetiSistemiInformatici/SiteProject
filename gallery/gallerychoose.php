@@ -5,7 +5,10 @@ session_start();
 $user = $_SESSION['current_user'];
 
 global $mysqli;
-if(!$result = $mysqli->query("SELECT name, description FROM photo WHERE user_id= '$user';")){
+
+$query = "SELECT id, name, description FROM photo WHERE user_id = '$user';";
+
+if(!$result = $mysqli->query($query)){
     die($mysqli->error);
     $error = "error in mysql!";
 }

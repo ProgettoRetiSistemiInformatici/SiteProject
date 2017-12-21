@@ -2,9 +2,10 @@
 require '../initialization/dbconnection.php';
 require "tokenize.php";
 
-$user = $_SESSION['current_user']
+$user = $_SESSION['current_user'];
 
 global $mysqli;
+
 $query = "SELECT * FROM login WHERE id = '$user';";
 
 if(!$result = $mysqli->query($query)){
@@ -53,7 +54,6 @@ session_write_close();
               </div>
             </div>
             <div class="col-md-6">
-            </div>
               <div class="row">
                 <div class="col-md-12">
                   <div class="panel panel-default">

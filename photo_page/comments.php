@@ -30,7 +30,7 @@
     }
 
     $query = "SELECT firstname, email FROM login WHERE id = '$photographer_id';";
-    $query .= "SELECT comment, user_id FROM comments WHERE photo_id ='$photo_id';";
+    $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id";
     if ($mysqli->multi_query($query)){
       if($result = $mysqli->store_result()){
           $photographer = $result->fetch_object();
@@ -42,13 +42,9 @@
           }
       }
       if($mysqli->next_result()){
-          $comments = $mysqli->store_result();
+        $comments = $mysqli->store_result();
       }
     }
-    while($obj = $comments->fetch_object()){
-      $array =
-    }
-
     $mysqli -> close();
 
 ?>
@@ -134,11 +130,14 @@
                 <div class="col-md-6 center-block">
                   <ul class="list-group">
                     <li class="list-group-item">
-                      <?php
-                        $result->data_seek(0);
-                        if($comments->num_rows){
+                      <?php if($comments->num_rows){
                           while($obj = $comments->fetch_object()){
-                            echo "<p><b><a href='../profiles/profile.php?user=" . $obj->user_id. "'>" . $obj->user . "</a></b>: " . $obj->comment . "</p>";
+                            if ($obj->firstname != NULL){
+                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->firstname . "</a></b>: " . $obj->comment . "</p>";
+                            }
+                            else{
+                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->email . "</a></b>: " . $obj->comment . "</p>";
+                            }
                           }
                         }
                         else {

@@ -17,6 +17,6 @@ if(!$ins = $mysqli-> query($query)){
 $mysqli->close();
 session_write_close();
 
-header('Location: ../profile.php?user='. $followed);
+header('Location: profile.php?user='. $followed_id);
 
 ?>

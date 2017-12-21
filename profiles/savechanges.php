@@ -9,7 +9,7 @@ $newFirstName;
 $newLastName;
 $imagename;
 
-$profileId = $_SESSION['current_user']->id;
+$profileId = $_SESSION['current_user'];
 
 if(isset($_POST['newBirth'])){
     $newBirth = $_POST['newBirth'];
@@ -97,7 +97,8 @@ else{
 
 global $mysqli;
 $Birthsql = date('Y-m-d',strtotime($newBirth));
-if(!$mysqli->query("UPDATE login SET descuser='$newDesc', profile_image ='$imagename', firstname ='$newFirstName', lastname ='$newLastName', birth ='$Birthsql' WHERE id='$profileId';")){
+$query = "UPDATE login SET descuser='$newDesc', profile_image ='$imagename', firstname ='$newFirstName', lastname ='$newLastName', birth ='$Birthsql' WHERE id = '$profileId';";
+if(!$mysqli->query($query)){
     die($mysqli->error);
     $error = "error in mysql!";
 }

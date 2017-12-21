@@ -40,7 +40,7 @@ session_write_close();
 	<h1>Risultati accesso</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: /home.php?user='.$_SESSION['current_user']); ?>
+	<?php else: header('Location: /home.php'); ?>
 	<?php endif ?>
 </body>
 </html>

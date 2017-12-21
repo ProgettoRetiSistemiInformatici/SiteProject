@@ -18,7 +18,7 @@ if(!$password || !$email){
 global $mysqli;
 
 $password = hash('sha256', $password);//Creazione dell'hash
-$mysqli-> real_escape_string($username);
+$mysqli-> real_escape_string($email);
 $mysqli-> real_escape_string($password);
 $query = "INSERT INTO login (password, email) VALUES ('$password', '$email');";
 // Esecuzione della query e controllo degli eventuali errori
@@ -28,7 +28,7 @@ if (!$mysqli->query($query)) {
 
 $query = "SELECT id FROM login WHERE email = '$email';";
 if($result = $mysqli->query($query)){
-	$_SESSION['current_user'] = $result;
+	$_SESSION['current_user'] = $result->fetch_object()->id;
 }
 
 $mysqli->close();
@@ -44,7 +44,7 @@ session_write_close();
 	<h1>Risultati registrazione</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: ../home.php?user=' . $_SESSION['current_user']); ?>
+	<?php else: header('Location: ../home.php); ?>
 	<?php endif ?>
 </body>
 </html>

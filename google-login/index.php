@@ -6,18 +6,10 @@
   global $mysqli;
 
   if (isset($_SESSION['access_token'])) {
-      $user_id = $_SESSION['current_user'];
-      $query = "SELECT id FROM login WHERE id='$user_id';";
-      if($result= $mysqli->query($query)){
-        header('Location: ../home.php?user=' . $user_id);
-      }
+    header('Location: ../home.php');
 	}
   elseif($_SESSION['FBID']){
-    $user_id = $_SESSION['FBID'];
-    $query = "SELECT id FROM login WHERE id='$user_id';";
-    if($result= $mysqli->query($query)){
-      header('Location: ../home.php?user=' . $user_id);
-    }
+      header('Location: ../home.php');
   }
   else {
     header('Location: ../google-login/login.php');
