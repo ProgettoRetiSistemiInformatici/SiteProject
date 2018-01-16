@@ -1,4 +1,4 @@
-  <?php
+<?php
 //le foto andranno caricate da database tramite php
 require 'initialization/dbconnection.php';
 session_start();

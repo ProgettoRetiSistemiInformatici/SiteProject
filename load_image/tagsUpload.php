@@ -6,7 +6,7 @@ $query = "SELECT id FROM photo WHERE name = '$photo_name';";
 if(!$result = $mysqli -> query($query)){
   echo "Errore nella query per prendere l'id";
 }
-$photo_id = $result->id;
+$photo_id = $result->fetch_object()->id;
 
 
 $tags = explode(" ", $tags);
@@ -20,11 +20,7 @@ foreach ($tags as $value){
   if(!$result = $mysqli -> query($query)){
     echo "Errore nella query per ottenere i tags";
   }
-  echo "</br>";
-  var_dump($result -> num_rows);
-  echo "</br>";
-  $rows = $result -> num_rows;
-  echo $rows . "</br>";
+  $rows = $result->num_rows;
   if($rows){
     $obj = $result -> fetch_object();
     $photo_id .= " " . $obj->photos_id;
@@ -40,7 +36,6 @@ foreach ($tags as $value){
     if(!$result = $mysqli ->  query($query)){
       echo "Errore nella seconda query per inserire i tags";
     }
-
     echo "Tag " . $value . " inserito";
   }
 }

@@ -1,0 +1,45 @@
+<?php
+  require '../initialization/dbconnection.php';
+  require "../profiles/tokenize.php";
+
+  $current_user = $_SESSION['current_user'];
+
+  $query = "SELECT * FROM albums WHERE user_id='$current_user' ORDER BY 'id';";
+  if (!$albums = $mysqli->query($query)){
+       echo $mysqli->error;
+  }
+
+
+?>
+
+<!DOCTYPE html>
+<html>
+<head><?php include '../shared/meta.php'; ?></head>
+<body>
+  <div class="container">
+    <?php include '../shared/header.php'; ?>
+    <?php include '../shared/menuProfile.php'; ?>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <?php
+          while($ra = $albums->fetch_object()){ ?>
+            <div class="col-sm-6 col-md-4">
+              <div class="thumbnail">
+                <a href='#COLLEGARE A SHOW ALBUM'>
+                  <img class="img-responsive img-rounded" src='<?php
+                  if($ra->cover==null){
+                    echo "../google-login/images/album.png";}
+                  else {
+                    echo "../uploads/".$ra->cover;
+                  }?>'></a>
+                <div class="caption">
+                  <h3><?php echo $ra->title; ?></h3>
+                </div>
+              </div>
+            </div>
+          <?php } ?>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

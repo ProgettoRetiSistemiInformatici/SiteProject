@@ -34,9 +34,7 @@ $user = $_SESSION['current_user'];
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <?php if($_SERVER['PHP_SELF'] != '/profiles/profile.php'){
-              echo "<li><a href='../profiles/profile.php?user=" . $user . "'>Show profile</a></li>";
-            } ?>
+            <li><a href='../profiles/profile.php?user=<?php echo $user ?>'>Show profile</a></li>
             <li><a href="../profiles/changedata.php">Edit profile</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="../google-login/logout.php">Log out</a></li>

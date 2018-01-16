@@ -44,7 +44,7 @@ session_write_close();
 	<h1>Risultati registrazione</h1>
 	<?php if ($error): ?>
 		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: ../home.php); ?>
+	<?php else: header('Location: ../home.php'); ?>
 	<?php endif ?>
 </body>
 </html>

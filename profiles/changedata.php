@@ -85,7 +85,7 @@ session_write_close();
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <label for="InputBirthDate">Birth Date:</label>
-                      <input name="newBirth" type="date" class="form-control" id="InputLastname" placeholder="<?php echo  date('d-m-Y',strtotime($profile->birth)) ?>">
+                      <input name="newBirth" type="date" class="form-control" id="InputBirthDate" placeholder="<?php echo  date('d-m-Y',strtotime($profile->birth)) ?>">
                       <p class="help-block">Modify your current birth date</p>
                     </div>
                   </div>

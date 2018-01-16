@@ -4,14 +4,8 @@
     session_start();
     global $photo_id;
 
-    if($_GET['photo_id']!= null){
-        $photo_id = $_GET['photo_id'];
-        $_SESSION['photo_id'] = $photo_id;
-
-    }
-    else {
-        $photo_id = $_SESSION['photo_id'];
-    }
+    $photo_id = $_GET['photo_id'];
+    $_SESSION['photo_id'] = $photo_id;
 
     global $mysqli;
     $query = "SELECT name, user_id, description, (rate/votes) AS finalrate FROM photo WHERE id ='$photo_id';";
@@ -30,7 +24,7 @@
     }
 
     $query = "SELECT firstname, email FROM login WHERE id = '$photographer_id';";
-    $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id";
+    $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id AND comments.photo_id = '$photo_id'";
     if ($mysqli->multi_query($query)){
       if($result = $mysqli->store_result()){
           $photographer = $result->fetch_object();
@@ -73,7 +67,7 @@
                   <div class="panel panel-default">
                     <div class="panel-body">
                       <div class="col-md-12 text-center">
-                        <h3><b>Photographer:</b> <a href="../profiles/profile.php?user=<?php echo $fuser; ?>"><?php echo $fuser; ?></a></h3>
+                        <h3><b>Photographer:</b> <a href="../profiles/profile.php?user=<?php echo $photographer_id; ?>"><?php echo $fuser; ?></a></h3>
                       </div>
                     </div>
                   </div>
