@@ -11,7 +11,7 @@
   if(!$result = $mysqli -> query($query)){
     echo "Errore nella query";
   }
-  $num_rows = $result -> num_rows;
+  $num_rows = $result->num_rows;
   //Controlla se ho già dei tags salvati
   if($num_rows > 0){
     $res = $result->fetch_object()->tags;

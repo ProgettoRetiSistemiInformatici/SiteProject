@@ -9,22 +9,17 @@ $newFirstName;
 $newLastName;
 $imagename;
 
-$profileId=$_SESSION['profile']->id;
+$profileId = $_SESSION['current_user'];
 
 if(isset($_POST['newBirth'])){
     $newBirth = $_POST['newBirth'];
     if($newBirth == null)
-        $newBirth=$_SESSION['profile']->birth;
+        $newBirth = $_SESSION['profile']->birth;
 }
 if(isset($_POST['newName'])){
     $newFirstName = $_POST['newName'];
    if($newFirstName==null)
-    $newFirstName=$_SESSION['profile']->firstname;
-}
-if(isset($_POST['newEmail'])){
-    $newEmail = $_POST['newEmail'];
-   if($newEmail==null)
-    $newEmail=$_SESSION['profile']->email;
+    $newFirstName = $_SESSION['profile']->firstname;
 }
 if(isset($_POST['newLName'])){
     $newLastName = $_POST['newLName'];
@@ -101,12 +96,20 @@ else{
 }
 
 global $mysqli;
-$Birthsql = date('Y-m-d',strtotime($newBirth));
-if(!$mysqli->query("UPDATE users SET descuser='$newDesc', profile_image ='$imagename', email='$newEmail', firstname ='$newFirstName', lastname ='$newLastName', birth ='$Birthsql' WHERE id='$profileId';")){
+if($newBirth != null){
+  $newBirth = date('Y-m-d',strtotime($newBirth));
+  $query = "UPDATE login SET descuser='$newDesc', profile_image ='$imagename', firstname ='$newFirstName', lastname ='$newLastName', birth ='$newBirth' WHERE id = '$profileId';";
+}
+else{
+  $query = "UPDATE login SET descuser='$newDesc', profile_image ='$imagename', firstname ='$newFirstName', lastname ='$newLastName' WHERE id = '$profileId';";  
+}
+if(!$mysqli->query($query)){
     die($mysqli->error);
     $error = "error in mysql!";
 }
-header("Location: profile.php?user=".$_SESSION['profile']->name);
+header("Location: profile.php?user=" . $_SESSION['current_user']);
+
+unset($_SESSION['profile']);
 
 session_write_close();
 

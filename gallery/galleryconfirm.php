@@ -16,7 +16,7 @@ while($i<sizeof($galleryitems)){
     $final.= $galleryitems[$i]."|";
     $i++;
 }
-$queryfinal="SELECT name, id from photo ";
+$queryfinal="SELECT name, id FROM photo ";
 $queryfinal .= tokenizenames($final,"|");
 
 if(!$result = $mysqli->query($queryfinal)){
@@ -46,7 +46,7 @@ $mysqli->close();
             <div class="col-md-6">
               <div class="pull-right" style="margin-top: 16px">
                 <button type="submit" class="btn btn-primary">Yes</button>
-                <a href='<?php echo "../profiles/profile.php?user=" . $_SESSION['utente']; ?>' class="btn btn-danger">No</a>
+                <a href='<?php echo "../profiles/profile.php?user=" . $_SESSION['current_user']; ?>' class="btn btn-danger">No</a>
               </div>
             </div>
           </div>

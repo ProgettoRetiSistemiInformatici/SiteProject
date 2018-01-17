@@ -10,7 +10,7 @@ session_start();
   <div class="container">
     <?php include '../shared/header.php'; ?>
     <!-- Menu -->
-    <?php include '../profiles/menuProfile.php'; ?>
+    <?php include '../shared/menuProfile.php'; ?>
     <div class="panel panel-default">
       <div class="panel-body">
         <form action="upload.php" method="post" enctype="multipart/form-data">

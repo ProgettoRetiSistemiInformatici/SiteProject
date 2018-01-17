@@ -13,7 +13,7 @@
   $_SESSION['FBFULLNAME'] = NULL;
   $_SESSION['FBEMAIL'] = NULL;
 
-	unset($_SESSION['utente']);
+	unset($_SESSION['current_user']);
 
 	session_destroy();
 

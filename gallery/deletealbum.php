@@ -5,15 +5,15 @@ session_start();
 $id=$_GET['id'];
 global $mysqli;
 
-$query="SELECT user FROM album WHERE id='$id';";
+$query="SELECT user_id FROM album WHERE id='$id';";
 $query.= "DELETE FROM album WHERE id='$id';";
 if(!$mysqli->multi_query($query)){
     die($mysqli->error);
 }
 else{
-    $result= $mysqli->store_result();
-    $obj= $result->fetch_object();
-    $user= $obj->user;
+    $result = $mysqli->store_result();
+    $obj = $result->fetch_object();
+    $user = $obj->user_id;
 }
 if(!$mysqli->next_result()){
     die($mysqli->error);
