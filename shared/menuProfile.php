@@ -1,6 +1,6 @@
 <?php
 
-$user = $_SESSION['current_user'];
+$current_user = $_SESSION['current_user'];
 
 ?>
 <nav class="navbar navbar-default">
@@ -13,7 +13,7 @@ $user = $_SESSION['current_user'];
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="glyphicon glyphicon-camera navbar-brand" href="<?php echo "../home.php?user=" . $user ?>" aria-hidden="true"></a>
+      <a class="glyphicon glyphicon-camera navbar-brand" href="<?php echo "../home.php?user=" . $current_user ?>" aria-hidden="true"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -24,7 +24,7 @@ $user = $_SESSION['current_user'];
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Albums <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href=<?php echo '../gallery/index_albums.php'; ?>>Show Albums</a></li>
-            <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $user ?>">Create Album</a></li>
+            <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $current_user ?>">Create Album</a></li>
           </ul>
         </li>
 
@@ -39,7 +39,7 @@ $user = $_SESSION['current_user'];
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Profile <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href='../profiles/profile.php?user=<?php echo $user ?>'>Show profile</a></li>
+            <li><a href='../profiles/profile.php?user=<?php echo $current_user ?>'>Show profile</a></li>
             <li><a href="../profiles/changedata.php">Edit profile</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="../google-login/logout.php">Log out</a></li>
