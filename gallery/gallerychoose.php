@@ -52,9 +52,9 @@ $mysqli->close();
                 <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
                 <div class="text-center">
                   <div class="caption">
-                    <p><?php echo $obj->description ?></p>
+                    <p><?php echo "<b>" . $obj->description . "</b>"?></p>
                   </div>
-                  <div class="checkbox">
+                  <div class="pull-left checkbox">
                     <label>
                       <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>">Add to this album</input>
                     </label>

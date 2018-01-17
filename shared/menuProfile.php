@@ -1,7 +1,5 @@
 <?php
 
-session_start();
-
 $user = $_SESSION['current_user'];
 
 ?>
@@ -15,14 +13,21 @@ $user = $_SESSION['current_user'];
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?php echo "../home.php?user=" . $user ?>">Brand</a>
+      <a class="glyphicon glyphicon-camera navbar-brand" href="<?php echo "../home.php?user=" . $user ?>" aria-hidden="true"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
         <li><a href="../load_image/uploadFile.php">Upload</a></li>
-        <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $user ?>">Create Album</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Albums <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href=<?php echo '../gallery/index_albums.php'; ?>>Show Albums</a></li>
+            <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $user ?>">Create Album</a></li>
+          </ul>
+        </li>
+
       </ul>
       <form form action="../shared/search.php" method="post" class="navbar-form navbar-left">
         <div class="form-group">

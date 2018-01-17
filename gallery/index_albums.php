@@ -21,7 +21,7 @@
     <?php include '../shared/menuProfile.php'; ?>
     <div class="panel panel-default">
       <div class="panel-body">
-        <?php
+        <?php if($albums->num_rows != 0){
           while($ra = $albums->fetch_object()){ ?>
             <div class="col-sm-6 col-md-4">
               <div class="thumbnail">
@@ -37,7 +37,11 @@
                 </div>
               </div>
             </div>
-          <?php } ?>
+          <?php }
+          }
+          else{
+            echo "<h4 class = 'text-center'>No albums to show</h4>";
+          }?>
       </div>
     </div>
   </div>

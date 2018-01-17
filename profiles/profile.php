@@ -147,7 +147,7 @@ session_write_close();
               <?php }
               }
               else{
-                echo "<h4 class = 'text-center'>No albums to show</h4>";;
+                echo "<h4 class = 'text-center'>No albums to show</h4>";
               } ?>
             </div>
             <?php if($equals){
