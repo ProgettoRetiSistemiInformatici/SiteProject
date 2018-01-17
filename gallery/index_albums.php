@@ -39,9 +39,15 @@
             </div>
           <?php }
           }
-          else{
-            echo "<h4 class = 'text-center'>No albums to show</h4>";
-          }?>
+          else{ ?>
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <h4 class = 'text-center'>No albums to show</h4>
+                </div>
+              </div>
+            </div>
+        <?php  } ?>
       </div>
     </div>
   </div>
