@@ -1,6 +1,5 @@
 <?php
 session_start();
-
 $arr = file($_SERVER['DOCUMENT_ROOT'] . "/.htacred", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
 $host = $arr[0];

@@ -55,6 +55,7 @@
                         ?>
                     </ul>
                   </div>
+                  <a href="../profiles/profile.php?user=<?php echo $profile->id ?>" class="btn btn-default pull-right">Show profile</a>
                 </div>
               </div>
               <?php  } ?>

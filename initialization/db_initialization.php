@@ -8,4 +8,5 @@
 
   require 'check_tables.php';
   session_destroy();
+  session_close();
   ?>
