@@ -11,6 +11,10 @@
 	}
 
 	$loginURL = $gClient->createAuthUrl();
+	
+	$loginURL = $gClient->createAuthUrl();
+        $permissions = ['email']; // Optional permissions
+        $FBloginUrl = $helper->getLoginUrl('http://photolio.com/google-login/fb-callback.php', $permissions);
 
 ?>
 
