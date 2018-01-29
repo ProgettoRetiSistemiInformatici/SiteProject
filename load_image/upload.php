@@ -79,8 +79,9 @@ else {
 
         if(!empty($tags)){
           require 'tagsUpload.php';
-          //include 'userTagCheck.php';
         }
+        $_SESSION['istr'] = false;
+        require '../shared/updateExp.php'
     }
       else{
         $error = "Sorry, there was an error uploading your file. ";

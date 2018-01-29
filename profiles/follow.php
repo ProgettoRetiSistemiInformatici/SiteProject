@@ -14,6 +14,9 @@ if(!$ins = $mysqli-> query($query)){
     die($mysqli->error);
 }
 
+$_SESSION['istr'] = true;
+require '../shared/updatExp.php';
+
 $mysqli->close();
 session_write_close();
 

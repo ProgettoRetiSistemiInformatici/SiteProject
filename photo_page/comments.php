@@ -75,8 +75,14 @@
                       <ul class="list-group">
                         <li class="list-group-item text-center"><p><b>Description:</b> <?php echo $desc; ?></p></li>
                         <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
-                        <li class="list-group-item"><div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://localhost:8000/photo_page/comments.php?photo_id=" . $photo_id; ?>"></div>
-                          <div class="fb-share-button pull-right" data-href="http://localhost:8000/photo_page/comments.php?photo_id=<?php echo $photo_id; ?>" data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp;src=sdkpreparse">Condividi</a></div></li>
+                        <li class="list-group-item">
+                          <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                            class="btn btn-danger" aria-hidden="true"
+                            target="_blank">Share on G+</a>
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                            class="btn btn-primary" aria-hidden="true"
+                            target="_blank">Share on Facebook</a>
+                        </li>
                       </ul>
                     </table>
                   </div>

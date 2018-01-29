@@ -2,41 +2,19 @@
 
 require '../initialization/dbconnection.php';
 
-session_start();
+$query = "SELECT login.level AS userLevel, login.exp AS userExp, levels.exp AS neededExp FROM login INNER JOIN levels ON levels.level = login.level AND login.id = $user;";
 
-$user=$_SESSION['current_user'];
+if(!$result = $mysqli->query($query)){
+    echo ($mysqli->error);
+}
 
-global $mysqli;
-$querylevel ="select login.level as actual,lvl as next,exp from (login join levels on levels.lvl = (login.level+1)) where login.id ='$user';"
-        . "select count(*) as numfoto from photo where user_id = '$user';"
-        . "select count(*) as numfollow from relations where followed_id='$user';";
-if(!$mysqli->multi_query($querylevel)){
-    die($mysqli->error);
-}
-$result = $mysqli->store_result();
-if($mysqli->next_result()){
-  $resultp = $mysqli->store_result();
-}
-if($mysqli->next_result()){
-    $resultf = $mysqli->store_result();
-}
 $obj = $result->fetch_object();
-$actualLevel = $obj->actual;
-$nextLevel = $obj->next;
-$exp = $obj->exp;
-$nfoto = $resultp->fetch_object();
-$nfollow = $resultf->fetch_object();
-$expFoto = ($nfoto->numfoto)*50;
-$expFollow = ($nfollow->numfollow)*100;
-$_SESSION['needed_exp'] = $exp;
-$_SESSION['current_exp'] = $expFoto+$expFollow;
-if($exp <= $_SESSION['current_exp']){
-    $newlevel = $level +1;
-
-    $querylvl = "update users set level = '$newlevel' where name ='$user';";
-    if(!$mysqli->query($querylvl)){
-        die($mysqli->error);
-    }
+$userLevel = $obj->userLevel;
+$userExp = $obj->userExp;
+$neededExp = $obj->neededExp;
+if($userExp > $neededExp){
+  $mysql->query("UPDATE login SET level = $userLevel + 1 WHERE id = '$user';");
 }
+
 session_write_close();
 ?>
