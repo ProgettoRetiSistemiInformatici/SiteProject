@@ -47,7 +47,8 @@ if ($mysqli->multi_query($query)){
     }
 }
 
-
+$neededExp = $mysqli->query("SELECT exp FROM levels WHERE level = '$profile->level';");
+$exp = ($profile->exp/$neededExp->fetch_object()->exp) * 100;
 
 if(!empty($profile->birth)){
   $date_from_sql = $profile->birth;
@@ -97,9 +98,13 @@ session_write_close();
                   echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
                 }
                 echo "<li class='list-group-item'><b>Level:</b> " . $profile->level . "</li>";
-                if($_GET['user'] == $_SESSION['current_user']){
-                  echo "<li class='list-group-item'><b>Exp:</b>". $profile->exp ."</li>";
-                }
+                echo "<li class='list-group-item'>
+                        <div class='progress' style='margin-top:7px; margin-bottom:7px'>
+                          <div class='progress-bar' role='progressbar' aria-valuenow=". $exp . " aria-valuemin='0' aria-valuemax='100' style='width: " . $exp . "%;'>
+                            Exp " . $exp . "%
+                          </div>
+                        </div>
+                      </li>";
                 if (!empty($profile->descuser)){
                   echo "<li class='list-group-item'><b>About Me:</b> " . $profile->descuser . "</li>";
                 }
@@ -192,17 +197,17 @@ session_write_close();
               <div class="panel panel-default">
                 <div class="panel-body">
                   <a href="photo_page/comments.php?photo_id=<?php echo $photo->id?>">
-                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
+                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
                   </a>
                 </div>
                 <table class="table">
                   <ul class="list-group">
                     <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
                     <li class="list-group-item text-center">
-                      <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                      <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"
                         target="_blank">Share on G+</a>
-                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-primary" aria-hidden="true"
                         target="_blank">Share on Facebook</a>
                   </li>
