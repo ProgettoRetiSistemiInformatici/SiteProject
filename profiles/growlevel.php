@@ -4,16 +4,16 @@ require '../initialization/dbconnection.php';
 
 session_start();
 
-$user=$_SESSION['utente'];
+$user=$_SESSION['current_user'];
 
 global $mysqli;
-$query ="select level from users where name ='$user';"
-        . "select count(*) as numfoto from photo where user = '$user';"
-        . "select count(*) as numfollow from (relations join users on relations.idUser2 = users.id) where users.name='$user';";
-if(!$mysqli->multi_query($query)){
+$querylevel ="select login.level as actual,lvl as next,exp from (login join levels on levels.lvl = (login.level+1)) where login.id ='$user';"
+        . "select count(*) as numfoto from photo where user_id = '$user';"
+        . "select count(*) as numfollow from relations where followed_id='$user';";
+if(!$mysqli->multi_query($querylevel)){
     die($mysqli->error);
 }
-$result1 = $mysqli->store_result();
+$result = $mysqli->store_result();
 if($mysqli->next_result()){
   $resultp = $mysqli->store_result();
 }
@@ -21,21 +21,22 @@ if($mysqli->next_result()){
     $resultf = $mysqli->store_result();
 }
 $obj = $result->fetch_object();
-$level = $obj->level;
-$nfoto = $resultp->fetch_row();
-$nfollow = $resultf->fetch_row();
-$expcap = $level*1000;
-$expfoto = ($nfoto[0])*50;
-$expfollow = ($nfollow[0])*100;
-
-if($expcap <= $expfoto + $expfollow){
+$actualLevel = $obj->actual;
+$nextLevel = $obj->next;
+$exp = $obj->exp;
+$nfoto = $resultp->fetch_object();
+$nfollow = $resultf->fetch_object();
+$expFoto = ($nfoto->numfoto)*50;
+$expFollow = ($nfollow->numfollow)*100;
+$_SESSION['needed_exp'] = $exp;
+$_SESSION['current_exp'] = $expFoto+$expFollow;
+if($exp <= $_SESSION['current_exp']){
     $newlevel = $level +1;
-}
-$querylvl = "update users set level = '$newlevel' where name ='$user';";
-if(!$mysqli->query($querylvl)){
-    die($mysqli->error);
-}
 
-header('Location: profile.php?user='.$user);
+    $querylvl = "update users set level = '$newlevel' where name ='$user';";
+    if(!$mysqli->query($querylvl)){
+        die($mysqli->error);
+    }
+}
 session_write_close();
 ?>
