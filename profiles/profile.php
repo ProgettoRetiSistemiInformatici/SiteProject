@@ -1,8 +1,12 @@
 <?php
 
 require '../initialization/dbconnection.php';
+if($_GET['user'] == $_SESSION['current_user']){
+ require "growlevel.php";
+}
 require "tokenize.php";
-
+session_start();
+ 
 $user = $_GET['user'];
 $current_user = $_SESSION['current_user'];
 
@@ -41,7 +45,12 @@ if ($mysqli->multi_query($query)){
     if($mysqli->next_result()){
       $num_follower = $mysqli->store_result()->num_rows;
     }
+    else {
+        die($mysqli->error);
+    }
 }
+
+
 
 if(!empty($profile->birth)){
   $date_from_sql = $profile->birth;
@@ -54,35 +63,38 @@ session_write_close();
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-
-    <?php include '../shared/meta.php' ?>
-  </head>
+<head>
+  <?php include '../shared/meta.php' ?>
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'en-GB'}
+</script>
+</head>
 <body>
-  <div class="container">
+<div class="container">
 
-    <?php include '../shared/header.php' ?>
-    <!-- Menu -->
-    <?php include '../shared/menuProfile.php' ?>
-    <!-- Profile Info -->
-    <div class="row">
-      <div class="col-md-4">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              <p><b>Profile info</b></p>
-              <?php
-              if(!empty($profile->profile_image)){
-                echo '<img class="img-responsive img-rounded" src="profile_images/' . $profile->profile_image . '"></h3>';
-              }
-              else{
-                echo '<img class="img-responsive img-rounded" src="profile_images/Default.png"></h3>';
-              }
-              ?>
-          </div>
-          <div class="panel-body">
-            <ul class="list-group">
-              <?php
+<?php include '../shared/header.php' ?>
+<!-- Menu -->
+<?php include '../shared/menuProfile.php' ?>
+
+<!-- Profile Info -->
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          <p><b>Profile info</b></p>
+          <?php
+            if(!empty($profile->profile_image)){
+              echo '<img class="img-responsive img-rounded" src="profile_images/' . $profile->profile_image . '"></h3>';
+            }
+            else{
+              echo '<img class="img-responsive img-rounded" src="profile_images/Default.png"></h3>';
+            }
+          ?>
+      </div>
+      <div class="panel-body">
+        <ul class="list-group">
+          <?php
                 if (!empty($profile->firstname) || !empty($profile->lastname)){
                   echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $profile->lastname . "</li>";
                 }
@@ -91,24 +103,26 @@ session_write_close();
                   echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
                 }
                 echo "<li class='list-group-item'><b>Level:</b> " . $profile->level . "</li>";
-
+                if($_GET['user'] == $_SESSION['current_user']){
+                  echo "<li class='list-group-item'><b>Exp:</b>". $_SESSION['current_exp']."/".$_SESSION['needed_exp']."</li";
+                }
                 if (!empty($profile->descuser)){
                   echo "<li class='list-group-item'><b>About Me:</b> " . $profile->descuser . "</li>";
                 }
                 echo "<li class='list-group-item'><a href='following.php?user=" . $user . "'><b>Following " . $num_following  . "</b></a></li>";
                 echo "<li class='list-group-item'><a href='follower.php?user=" . $user . "'><b>Follower " . $num_follower  . "</b></a></li>";
-              ?>
-          </ul>
-          <?php if($equals){
-            echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
-          }else{
-            if($follows->num_rows){
-              echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
-            }
-            else{
-              echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
-            }
+            ?>
+        </ul>
+        <?php if($equals){
+          echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
+        }else{
+          if($follows->num_rows){
+            echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
           }
+          else{
+            echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
+          }
+        }
         ?>
       </div>
     </div>
@@ -125,23 +139,18 @@ session_write_close();
           <?php
             if($albums->num_rows){
               while($ra = $albums->fetch_object()){ ?>
-                <div class="col-sm-4">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <a href='#COLLEGARE A SHOW ALBUM'>
-                        <img class="img-responsive img-rounded" src='<?php
-                                    if($ra->cover==null){
-                                      echo "../google-login/images/album.png";}
-                                    else {
-                                      echo "../uploads/".$ra->cover;
-                                    }?>'>
-                      </a>
+                <div class="col-sm-6 col-md-4">
+                  <div class="thumbnail">
+                      <a href='../gallery/index_albums.php?user=<?php echo $ra->user_id; ?>'>
+                      <img class="img-responsive img-rounded" src='<?php
+                      if($ra->cover==null){
+                        echo "../google-login/images/album.png";}
+                      else {
+                        echo "../uploads/".$ra->cover;
+                      }?>'></a>
+                    <div class="caption">
+                      <h3><?php echo $ra->title; ?></h3>
                     </div>
-                    <table class="table">
-                      <ul class="list-group">
-                        <li class="list-group-item text-center"><h4><b><?php echo $ra->title; ?></b></h4></li>
-                      </ul>
-                    </table>
                   </div>
                 </div>
               <?php }
@@ -156,20 +165,12 @@ session_write_close();
                 </div>
             <?php  } ?>
             </div>
+            <?php if($equals){
+              echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
+            }
+            ?>
+            <a href="../gallery/index_albums.php" class="btn btn-primary pull-right">Show albums</a>
           </div>
-          <table class="panel-body">
-            <ul class="list-group">
-              <li class="list-group-item">
-              <?php if($equals){
-                echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
-                echo '<a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show albums</a></li>';
-              }
-              else{
-                echo '<a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary">Show albums</a></li>';
-              }
-              ?>
-            </ul>
-          </table>
         </div>
       </div>
     </div>
@@ -193,41 +194,23 @@ session_write_close();
       <div class="row">
         <?php $result->data_seek(0); /*Fetch object array */
           while($photo = $photos->fetch_object()){ ?>
-            <div class="col-sm-4">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <a href="photo_page/comments.php?photo_id=<?php echo $photo->id?>">
-                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
-                  </a>
-                </div>
-                <table class="table">
-                  <ul class="list-group">
-                    <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
-                    <li class="list-group-item"><div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/photo_page/fotopage.php?photo=". $photo->id ?>"></div>
-                      <div class="fb-share-button pull-right" data-href="http://localhost:8000/photo_page/comments.php?photo_id=<?php echo $photo->id; ?>" data-layout="button" data-size="small" data-mobile-iframe="true"><a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp;src=sdkpreparse">Condividi</a></div></li>
-                  </li>
-                  </ul>
-                </table>
+        <div class="col-sm-6 col-md-4">
+          <div class="thumbnail">
+            <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+              <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+            </a>
+            <div class="caption text-center">
+              <p><b><?php echo $photo->description ?></b></p>
+              <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/photo_page/fotopage.php?photo=". $photo->id ?>">
               </div>
             </div>
+          </div>
+        </div>
         <?php } ?>
       </div>
     </div>
   </div>
 <?php  } ?>
 </div>
-<script src="https://apis.google.com/js/platform.js" async defer>
-  {lang: 'en-GB'}
-</script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.async=true;
-      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 </body>
 </html>
