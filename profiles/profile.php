@@ -65,9 +65,6 @@ session_write_close();
 <html lang="en">
 <head>
   <?php include '../shared/meta.php' ?>
-<script src="https://apis.google.com/js/platform.js" async defer>
-  {lang: 'en-GB'}
-</script>
 </head>
 <body>
 <div class="container">
@@ -212,5 +209,18 @@ session_write_close();
   </div>
 <?php  } ?>
 </div>
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'en-GB'}
+</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.async=true;
+      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 </html>
