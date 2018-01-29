@@ -10,6 +10,8 @@ $fb = new Facebook\Facebook([
   ]);
 
 $helper = $fb->getRedirectLoginHelper();
+$permissions = ['email']; // Optional permissions
+$FBloginUrl = $helper->getLoginUrl('http://localhost:3000/google-login/fb-callback.php', $permissions);
 
 
 session_write_close();
