@@ -1,4 +1,4 @@
-<? php
+<?php
 require_once 'FB_API/vendor/autoload.php';
 
 session_start();
