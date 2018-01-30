@@ -52,7 +52,7 @@ session_write_close();
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <a href='#COLLEGARE A SHOW ALBUM'>
+                    <a href='../gallery/album_page.php?album=<?php echo $album->id; ?>'>
                       <img class="img-responsive img-rounded" src='<?php
                                   if($album->cover==null){
                                     echo "../google-login/images/album.png";}
@@ -63,7 +63,7 @@ session_write_close();
                   </div>
                   <table class="table">
                     <ul class="list-group">
-                      <li class="list-group-item text-center"><h4><b><?php echo $album->title; ?></b></h4></li>
+                      <li class="list-group-item text-center"><h4><?php echo $album->title; ?></h4></li>
                     </ul>
                   </table>
                 </div>
@@ -130,7 +130,7 @@ session_write_close();
                   </div>
                   <table class="table">
                     <ul class="list-group">
-                      <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                      <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
                     </ul>
                   </table>
                 </div>
@@ -165,7 +165,7 @@ session_write_close();
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                    <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
                   </ul>
                 </table>
               </div>

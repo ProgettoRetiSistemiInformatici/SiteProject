@@ -23,7 +23,7 @@ $current_user = $_SESSION['current_user'];
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Albums <span class="caret"></span></a>
           <ul class="dropdown-menu">
-            <li><a href=<?php echo '../gallery/index_albums.php'; ?>>Show Albums</a></li>
+            <li><a href="<?php echo '../gallery/index_albums.php?user=' . $current_user ?>">Show Albums</a></li>
             <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $current_user ?>">Create Album</a></li>
           </ul>
         </li>

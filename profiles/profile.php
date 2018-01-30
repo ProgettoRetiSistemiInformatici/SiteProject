@@ -137,19 +137,24 @@ session_write_close();
         <div class="row">
           <?php
             if($albums->num_rows){
-              while($ra = $albums->fetch_object()){ ?>
-                <div class="col-sm-6 col-md-4">
-                  <div class="thumbnail">
-                      <a href='../gallery/album_page.php?album=<?php echo $ra->id; ?>'>
-                      <img class="img-responsive img-rounded" src='<?php
-                      if($ra->cover==null){
-                        echo "../google-login/images/album.png";}
-                      else {
-                        echo "../uploads/".$ra->cover;
-                      }?>'></a>
-                    <div class="caption">
-                      <h3><?php echo $ra->title; ?></h3>
+              while($album = $albums->fetch_object()){ ?>
+                <div class="col-sm-4">
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <a href='../gallery/album_page.php?album=<?php echo $album->id; ?>'>
+                        <img class="img-responsive img-rounded" src='<?php
+                                    if($album->cover==null){
+                                      echo "../google-login/images/photo-machine.png";}
+                                    else {
+                                      echo "../uploads/".$album->cover;
+                                    }?>'>
+                      </a>
                     </div>
+                    <table class="table">
+                      <ul class="list-group">
+                        <li class="list-group-item text-center"><h4><?php echo $album->title; ?></h4></li>
+                      </ul>
+                    </table>
                   </div>
                 </div>
               <?php }
@@ -168,7 +173,7 @@ session_write_close();
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
             }
             ?>
-            <a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show albums</a>
+            <a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show all albums</a>
           </div>
         </div>
       </div>
@@ -202,7 +207,7 @@ session_write_close();
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                    <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
                     <li class="list-group-item text-center">
                       <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"
