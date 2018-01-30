@@ -21,6 +21,7 @@ foreach ($tags as $value){
   }
   $rows = $result->num_rows;
   if($rows){
+    $photos_id = $photo_id;
     $obj = $result->fetch_object();
     $photos_id .= " " . $obj->photos_id;
     $query = "UPDATE tags SET photos_id = '$photos_id' WHERE tag = '$value';";

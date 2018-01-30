@@ -48,7 +48,7 @@ if ($mysqli->multi_query($query)){
 }
 
 $neededExp = $mysqli->query("SELECT exp FROM levels WHERE level = '$profile->level';");
-$exp = ($profile->exp/$neededExp->fetch_object()->exp) * 100;
+$exp = round(($profile->exp/$neededExp->fetch_object()->exp) * 100, 2);
 
 if(!empty($profile->birth)){
   $date_from_sql = $profile->birth;
