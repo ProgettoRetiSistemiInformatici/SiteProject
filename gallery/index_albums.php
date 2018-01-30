@@ -27,7 +27,7 @@
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <a href='#COLLEGARE A SHOW ALBUM'>
+                  <a href='../gallery/album_page.php?album=<?php echo $ra->id; ?>'>
                     <img class="img-responsive img-rounded" src='<?php
                                 if($ra->cover==null){
                                   echo "../google-login/images/album.png";}

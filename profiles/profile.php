@@ -140,7 +140,7 @@ session_write_close();
               while($ra = $albums->fetch_object()){ ?>
                 <div class="col-sm-6 col-md-4">
                   <div class="thumbnail">
-                      <a href='../gallery/index_albums.php?user=<?php echo $ra->user_id; ?>'>
+                      <a href='../gallery/album_page.php?album=<?php echo $ra->id; ?>'>
                       <img class="img-responsive img-rounded" src='<?php
                       if($ra->cover==null){
                         echo "../google-login/images/album.png";}
@@ -168,7 +168,7 @@ session_write_close();
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
             }
             ?>
-            <a href="../gallery/index_albums.php" class="btn btn-primary pull-right">Show albums</a>
+            <a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show albums</a>
           </div>
         </div>
       </div>

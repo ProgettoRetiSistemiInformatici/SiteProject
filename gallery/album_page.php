@@ -3,7 +3,14 @@ require '../initialization/dbconnection.php';
 require  '../profiles/tokenize.php';
 
 session_start();
-$album = $_SESSION['album'];
+$album = $_GET['album'];
+
+$query= "SELECT title, photos_id, cover FROM albums WHERE id ='$album'";
+
+if(!$result = $mysqli->query($query)){
+    die($mysqli->error);
+}
+$album = $result->fetch_object();
 
 if($album == NULL){
     echo "error, album not selected";
