@@ -10,3 +10,11 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
 <h2>Avvio</h2>
   
 per avviare il progetto da terminale, nella directory contenente i file digitare <span style="background-color: #9999;"><code style="font-size:12px;"> $ runphoto.sh</code></span>
+
+<h2>Features to fix/implement</h2>
+
+<p>There are still some fix to do:
+A user can't rate more than one time a photo
+Maybe change the exp method from follow to ratings
+Add a delete album page
+Fix the google and facebook share button</p>
