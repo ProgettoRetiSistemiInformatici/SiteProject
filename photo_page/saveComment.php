@@ -41,7 +41,7 @@
     }
     function addRate($rate){
         global $mysqli;
-      
+
         $photo_id = $_SESSION['photo_id'];
         $query = "SELECT rate FROM photo WHERE id = '$photo_id';";
 
@@ -54,7 +54,7 @@
             if(($obj->rate) != 0){
                 $rate = ($obj->rate + $rate);
             }
-            $query = "UPDATE photo SET rate =  '$rate', votes= votes + 1 WHERE id = ('$photo_id');";
+            $query = "UPDATE photo SET rate =  '$rate', votes = votes + 1 WHERE id = ('$photo_id');";
             if(!$mysqli -> query($query)){
                 die($mysqli->error);
                 $error = "error in mysql!";

@@ -15,6 +15,7 @@
         birth DATE DEFAULT NULL,
         descuser TEXT,
         level INT(11) DEFAULT 1,
+        exp INT(5) DEFAULT 0,
         profile_image VARCHAR(64) DEFAULT 'Default.png',
         PRIMARY KEY(id));";
 
@@ -113,6 +114,29 @@
         FOREIGN KEY (user_id) REFERENCES login(id));";
 
       if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating table: " . $mysqli->error;
+      }
+    }
+  }
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'levels'")) {
+    if(!$result->num_rows == 1) {
+      // sql to create table
+      $sql = "CREATE TABLE levels(
+        id INT(2) NOT NULL AUTO_INCREMENT,
+        level INT(11) NOT NULL,
+        exp INT(5) NOT NULL,
+        PRIMARY KEY(id));";
+
+      if ($mysqli->query($sql) === TRUE) {
+        $exp = 0;
+        for ($i = 0; $i <  10; $i++){
+          $exp = $exp + $i*1000;
+          $query = "INSERT INTO levels (level, exp) VALUES ('$i', '$exp');";
+          if(!$result = $mysqli->query($query)){
+            echo "Error in fill level query";
+          }
+        }
       } else {
         echo "Error creating table: " . $mysqli->error;
       }

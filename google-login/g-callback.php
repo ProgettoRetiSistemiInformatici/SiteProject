@@ -25,7 +25,7 @@
 	$password = rand(555555, 999999999);
 				$password = hash('sha256', $password);//Creazione dell'hash
 
-				$mysqli-> real_escape_string($password);
+				$mysqli->real_escape_string($password);
         $mysqli->real_escape_string($email);
         $mysqli->real_escape_string($gender);
         $result = $mysqli->query("SELECT id, email FROM login WHERE email = '$email'");

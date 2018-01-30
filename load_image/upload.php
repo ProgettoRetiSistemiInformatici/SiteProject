@@ -66,11 +66,11 @@ else {
     $caricato = move_uploaded_file($tmpName, $target_file);
     $desc = $_POST["description"];
     if($caricato){
-        $user = $_SESSION["current_user"];
+        $current_user = $_SESSION["current_user"];
         $nameExt = basename($name);
-        $mysqli -> real_escape_string($user);
+        $mysqli -> real_escape_string($current_user);
         $mysqli -> real_escape_string($nameExt);
-        $query = "INSERT INTO photo (name, user_id, description, tags) VALUES('$nameExt', '$user', '$desc', '$tags');";
+        $query = "INSERT INTO photo (name, user_id, description, tags) VALUES('$nameExt', '$current_user', '$desc', '$tags');";
         if(!$mysqli->query($query)){
           die($mysqli->error);
           $error = "error in mysql!";
@@ -79,9 +79,10 @@ else {
 
         if(!empty($tags)){
           require 'tagsUpload.php';
-          //include 'userTagCheck.php';
         }
-    }
+        $_SESSION['istr'] = false;
+        require '../shared/updateExp.php';
+      }
       else{
         $error = "Sorry, there was an error uploading your file. ";
         print_r($_FILES);

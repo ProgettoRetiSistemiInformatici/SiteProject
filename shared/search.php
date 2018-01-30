@@ -9,7 +9,7 @@ $searchterm = $_POST['search'];
 
 $query = "SELECT * FROM login WHERE email LIKE '%{$searchterm}%' OR firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
 $query.= "SELECT id, cover, title FROM albums WHERE title LIKE '%{$searchterm}%';";
-$query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}%' OR description LIKE '%{$searchterm}%';";
+$query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR description LIKE '%{$searchterm}%';";
 $query.= "SELECT id, photos_id FROM tags WHERE tag LIKE '%{$searchterm}%';";
 
 if ($mysqli->multi_query($query)){
@@ -49,20 +49,25 @@ session_write_close();
         <div class="panel-body">
           <div class="row">
             <?php while($album = $albums->fetch_object()){ ?>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <a href='#COLLEGARE A SHOW ALBUM'>
-                  <img class="img-responsive img-rounded" src='<?php
-                              if($album->cover==null){
-                                echo "../google-login/images/album.png";}
-                              else {
-                                echo "../uploads/".$album->cover;
-                              }?>'></a>
-                <div class="caption">
-                  <h3><?php echo $album->title; ?></h3>
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <a href='#COLLEGARE A SHOW ALBUM'>
+                      <img class="img-responsive img-rounded" src='<?php
+                                  if($album->cover==null){
+                                    echo "../google-login/images/album.png";}
+                                  else {
+                                    echo "../uploads/".$album->cover;
+                                  }?>'>
+                    </a>
+                  </div>
+                  <table class="table">
+                    <ul class="list-group">
+                      <li class="list-group-item text-center"><h4><b><?php echo $album->title; ?></b></h4></li>
+                    </ul>
+                  </table>
                 </div>
               </div>
-            </div>
             <?php } ?>
           </div>
         </div>
@@ -116,14 +121,18 @@ session_write_close();
         <div class="panel-body">
           <div class="row">
             <?php while($photo = $photos->fetch_object()){ ?>
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
-                    <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
-                  </a>
-                  <div class="caption text-center">
-                    <p><b><?php echo $photo->description ?><b></p>
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                      <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+                    </a>
                   </div>
+                  <table class="table">
+                    <ul class="list-group">
+                      <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                    </ul>
+                  </table>
                 </div>
               </div>
           <?php } ?>
@@ -147,16 +156,20 @@ session_write_close();
                 }
                 while($photo = $result->fetch_object()){
             ?>
-              <div class="col-sm-6 col-md-4">
-                <div class="thumbnail">
-                  <a href="../photo_page/comments.php?photo=<?php echo $photo->id?>">
-                    <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+            <div class="col-sm-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
                   </a>
-                  <div class="caption text-center">
-                    <p><b><?php echo $photo->description ?><b></p>
-                  </div>
                 </div>
+                <table class="table">
+                  <ul class="list-group">
+                    <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                  </ul>
+                </table>
               </div>
+            </div>
           <?php }
               } ?>
           </div>

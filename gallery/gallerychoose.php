@@ -2,11 +2,11 @@
 require '../initialization/dbconnection.php';
 session_start();
 
-$user = $_SESSION['current_user'];
+$current_user = $_SESSION['current_user'];
 
 global $mysqli;
 
-$query = "SELECT id, name, description FROM photo WHERE user_id = '$user';";
+$query = "SELECT id, name, description FROM photo WHERE user_id = '$current_user';";
 
 if(!$result = $mysqli->query($query)){
     die($mysqli->error);
@@ -54,15 +54,19 @@ $mysqli->close();
                   <div class="caption">
                     <p><?php echo "<b>" . $obj->description . "</b>"?></p>
                   </div>
-                  <div class="pull-left checkbox">
-                    <label>
-                      <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>">Add to this album</input>
-                    </label>
-                  </div>
-                  <div class="radio">
-                    <label>
-                      <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
-                    </label>
+                </div>
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>">Add to this album</input>
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
+                      </label>
+                    </div>
                   </div>
                 </div>
               </div>

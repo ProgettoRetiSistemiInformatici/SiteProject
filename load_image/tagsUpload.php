@@ -8,7 +8,6 @@ if(!$result = $mysqli -> query($query)){
 }
 $photo_id = $result->fetch_object()->id;
 
-
 $tags = explode(" ", $tags);
 /*
 * Questo controllo al suo interno avrà una query
@@ -22,9 +21,10 @@ foreach ($tags as $value){
   }
   $rows = $result->num_rows;
   if($rows){
-    $obj = $result -> fetch_object();
-    $photo_id .= " " . $obj->photos_id;
-    $query = "UPDATE tags SET photos_id = '$photo_id' WHERE tag = '$value';";
+    $photos_id = $photo_id;
+    $obj = $result->fetch_object();
+    $photos_id .= " " . $obj->photos_id;
+    $query = "UPDATE tags SET photos_id = '$photos_id' WHERE tag = '$value';";
     if(!$result = $mysqli -> query($query)){
       echo "Errore nella query per aggiornare i tags";
     }

@@ -2,6 +2,7 @@
 
 require '../initialization/dbconnection.php';
 require "tokenize.php";
+session_start();
 
 $user = $_GET['user'];
 $current_user = $_SESSION['current_user'];
@@ -41,9 +42,13 @@ if ($mysqli->multi_query($query)){
     if($mysqli->next_result()){
       $num_follower = $mysqli->store_result()->num_rows;
     }
+    else {
+        die($mysqli->error);
+    }
 }
 
-
+$neededExp = $mysqli->query("SELECT exp FROM levels WHERE level = '$profile->level';");
+$exp = round(($profile->exp/$neededExp->fetch_object()->exp) * 100, 2);
 
 if(!empty($profile->birth)){
   $date_from_sql = $profile->birth;
@@ -58,9 +63,6 @@ session_write_close();
 <html lang="en">
 <head>
   <?php include '../shared/meta.php' ?>
-<script src="https://apis.google.com/js/platform.js" async defer>
-  {lang: 'en-GB'}
-</script>
 </head>
 <body>
 <div class="container">
@@ -96,7 +98,13 @@ session_write_close();
                   echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
                 }
                 echo "<li class='list-group-item'><b>Level:</b> " . $profile->level . "</li>";
-
+                echo "<li class='list-group-item'>
+                        <div class='progress' style='margin-top:7px; margin-bottom:7px'>
+                          <div class='progress-bar' role='progressbar' aria-valuenow=". $exp . " aria-valuemin='0' aria-valuemax='100' style='width: " . $exp . "%;'>
+                            Exp " . $exp . "%
+                          </div>
+                        </div>
+                      </li>";
                 if (!empty($profile->descuser)){
                   echo "<li class='list-group-item'><b>About Me:</b> " . $profile->descuser . "</li>";
                 }
@@ -132,7 +140,7 @@ session_write_close();
               while($ra = $albums->fetch_object()){ ?>
                 <div class="col-sm-6 col-md-4">
                   <div class="thumbnail">
-                    <a href='#COLLEGARE A SHOW ALBUM'>
+                      <a href='../gallery/album_page.php?album=<?php echo $ra->id; ?>'>
                       <img class="img-responsive img-rounded" src='<?php
                       if($ra->cover==null){
                         echo "../google-login/images/album.png";}
@@ -160,7 +168,7 @@ session_write_close();
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
             }
             ?>
-            <a href="../gallery/index_albums.php" class="btn btn-primary pull-right">Show albums</a>
+            <a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show albums</a>
           </div>
         </div>
       </div>
@@ -185,23 +193,46 @@ session_write_close();
       <div class="row">
         <?php $result->data_seek(0); /*Fetch object array */
           while($photo = $photos->fetch_object()){ ?>
-        <div class="col-sm-6 col-md-4">
-          <div class="thumbnail">
-            <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
-              <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
-            </a>
-            <div class="caption text-center">
-              <p><b><?php echo $photo->description ?><b></p>
-              <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/photo_page/fotopage.php?photo=". $photo->id ?>">
+            <div class="col-sm-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+                  </a>
+                </div>
+                <table class="table">
+                  <ul class="list-group">
+                    <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                    <li class="list-group-item text-center">
+                      <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                        class="btn btn-danger" aria-hidden="true"
+                        target="_blank">Share on G+</a>
+                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                        class="btn btn-primary" aria-hidden="true"
+                        target="_blank">Share on Facebook</a>
+                  </li>
+                  </ul>
+                </table>
               </div>
             </div>
-          </div>
-        </div>
         <?php } ?>
       </div>
     </div>
   </div>
 <?php  } ?>
 </div>
+<script src="https://apis.google.com/js/platform.js" async defer>
+  {lang: 'en-GB'}
+</script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.async=true;
+      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+</script>
 </body>
 </html>

@@ -2,9 +2,6 @@
     require_once "config.php";
     require_once "fb-config.php";
 
-    error_reporting(E_ALL);
-    ini_set('display_errors', 1);
-
 	if (isset($_SESSION['access_token'])) {
 		header('Location: ../home.php');
 		exit();

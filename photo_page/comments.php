@@ -46,9 +46,6 @@
 <html lang="en">
     <head>
         <?php include '../shared/meta.php'; ?>
-        <script src="https://apis.google.com/js/platform.js" async defer>
-          {lang: 'en-GB'}
-        </script>
     </head>
     <body>
       <div class="container">
@@ -60,7 +57,7 @@
           <div class="col-md-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <img class="img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine" class='img-responsive center-block'>
+                <img class="center-block img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine" class='img-responsive center-block'>
               </div>
               <div class="panel-body">
                 <div class="col-md-6 text-center">
@@ -72,19 +69,22 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6 text-center">
+                <div class="col-md-6">
                   <div class="panel panel-default">
-                    <div class="panel-body">
-                      <div class="col-md-12 text-center center-block">
-                        <p><b>Description:</b> <?php echo $desc; ?> </p>
-                      </div>
-                      <div class="col-md-6 center-block text-center">
-                          <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
-                      </div>
-                      <div class="col-md-6 text-center">
-                        <div class="g-plus" data-action="share" data-height="24" data-href="<?php echo "http://photolio.com/fotopage.php?photo=". $photo_id ?>"></div>
-                      </div>
-                    </div>
+                    <table class="table">
+                      <ul class="list-group">
+                        <li class="list-group-item text-center"><p><b>Description:</b> <?php echo $desc; ?></p></li>
+                        <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
+                        <li class="list-group-item">
+                          <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                            class="btn btn-danger" aria-hidden="true"
+                            target="_blank">Share on G+</a>
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                            class="btn btn-primary" aria-hidden="true"
+                            target="_blank">Share on Facebook</a>
+                        </li>
+                      </ul>
+                    </table>
                   </div>
                 </div>
                 <form action="saveComment.php" method="post">
@@ -115,30 +115,33 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12 text-center">
+          <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-heading">
+              <div class="panel-heading text-center">
                 <h3>Comments</h3>
               </div>
               <div class="panel-body">
-                <div class="col-md-6 center-block">
-                  <ul class="list-group">
-                    <li class="list-group-item">
-                      <?php if($comments->num_rows){
+                <div class="col-md-6">
+                  <table class="table">
+                    <ul class="list-group">
+                      <?php
+                        if($comments->num_rows){
                           while($obj = $comments->fetch_object()){
+                            echo '<li class="list-group-item">';
                             if ($obj->firstname != NULL){
-                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->firstname . "</a></b>: " . $obj->comment . "</p>";
+                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->firstname . "</a></b>: " . $obj->comment . "</p></li>";
                             }
                             else{
-                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->email . "</a></b>: " . $obj->comment . "</p>";
+                              echo "<p><b><a href='../profiles/profile.php?user=" . $obj->id . "'>" . $obj->email . "</a></b>: " . $obj->comment . "</p></li>";
                             }
                           }
                         }
                         else {
-                          echo "<p>No comments yet. Be the first one to comment!!</p>";
+                          echo '<li class="list-group-item">';
+                          echo "<p>No comments yet. Be the first one to comment!!</p></li>";
                         }?>
-                    </li>
-                  </ul>
+                    </ul>
+                  </table>
                 </div>
                 <form action="saveComment.php" method="post">
                   <div class="col-md-6 text-center">
@@ -157,5 +160,18 @@
           </div>
         </div>
       </div>
+      <script src="https://apis.google.com/js/platform.js" async defer>
+        {lang: 'en-GB'}
+      </script>
+      <div id="fb-root"></div>
+      <script>(function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.async=true;
+            js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+      </script>
     </body>
 </html>
