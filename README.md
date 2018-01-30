@@ -13,8 +13,8 @@ per avviare il progetto da terminale, nella directory contenente i file digitare
 
 <h2>Features to fix/implement</h2>
 
-<p>There are still some fix to do:
-A user can't rate more than one time a photo
-Maybe change the exp method from follow to ratings
-Add a delete album page
-Fix the google and facebook share button</p>
+<p>There are still some fix to do: </p>
+<p> A user can't rate more than one time a photo</p>
+<p> Maybe change the exp method from follow to ratings</p>
+<p> Add a delete album page</p>
+<p> Fix the google and facebook share button</p>
