@@ -19,15 +19,24 @@ $current_user = $_SESSION['current_user'];
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <li><a href="../load_image/uploadFile.php">Upload</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Photos <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="<?php echo '../gallery/index_photos.php?user=' . $current_user ?>">Show Photos</a></li>
+            <li><a href="../load_image/uploadFile.php">Upload New Photo</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="../gallery/delete_photos.php">Delete Photos</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Albums <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo '../gallery/index_albums.php?user=' . $current_user ?>">Show Albums</a></li>
-            <li><a href="<?php echo '../gallery/gallerychoose.php?user=' . $current_user ?>">Create Album</a></li>
+            <li><a href="../gallery/gallerychoose.php">Create Album</a></li>
+            <li role="separator" class="divider"></li>
+            <li><a href="../gallery/delete_albums.php">Delete Albums</a></li>
           </ul>
         </li>
-
       </ul>
       <form form action="../shared/search.php" method="post" class="navbar-form navbar-left">
         <div class="form-group">

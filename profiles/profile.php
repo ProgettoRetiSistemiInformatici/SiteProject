@@ -178,20 +178,6 @@ session_write_close();
         </div>
       </div>
     </div>
-
-<!--Follow List -->
-    <?php if(isset($_GET['flist']) && $_GET['flist'] = 1){ ?>
-        <?php while($flist = $follows->fetch_object()){ ?>
-        <div class="gallery">
-            <a href="profileview.php?user=<?php echo $flist->name; ?>">
-                <img class="img-responsive img-rounded"  src="<?php echo "profile_images/". $flist->profile_image;?>" alt="Immagine Profilo" style ='width: 100%;' >
-            </a>
-            <div class="desc"> <?php echo $flist->name; ?></div>
-        </div>
-           <?php } ?>
-    </div>
-    <?php } else { ?>
-
 <!-- Photo Grid -->
   <div class="panel panel-default">
     <div class="panel-body">
@@ -224,20 +210,6 @@ session_write_close();
       </div>
     </div>
   </div>
-<?php  } ?>
 </div>
-<script src="https://apis.google.com/js/platform.js" async defer>
-  {lang: 'en-GB'}
-</script>
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-      var js, fjs = d.getElementsByTagName(s)[0];
-      if (d.getElementById(id)) return;
-      js = d.createElement(s); js.id = id;
-      js.async=true;
-      js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
-      fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-</script>
 </body>
 </html>
