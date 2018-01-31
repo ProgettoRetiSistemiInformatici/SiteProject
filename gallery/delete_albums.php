@@ -1,6 +1,11 @@
 <?php
 require '../initialization/dbconnection.php';
 
+//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
+if(!isset($_SESSION["current_user"])){
+    header("Location: /index.php");
+}
+
 $current_user = $_SESSION['current_user'];
 
 $query = "SELECT * FROM albums WHERE user_id = '$current_user';";

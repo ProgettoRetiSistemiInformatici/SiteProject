@@ -4,6 +4,12 @@
     session_start();
     global $photo_id;
 
+    $guest = false;
+
+    if(empty($_SESSION['current_user'])){
+      $guest = true;
+    }
+
     $photo_id = $_GET['photo_id'];
     $_SESSION['photo_id'] = $photo_id;
 
@@ -87,29 +93,32 @@
                     </table>
                   </div>
                 </div>
-                <form action="saveComment.php" method="post">
-                  <div class="col-md-12 text-center">
-                    <div class="form-group">
-                      <p><b>Rate:</b></p>
-                      <label class="radio-inline">
-                        <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
-                      </label>
-                      <label class="radio-inline">
-                        <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
-                      </label>
+                <?php
+                if(!$guest){ ?>
+                  <form action="saveComment.php" method="post">
+                    <div class="col-md-12 text-center">
+                      <div class="form-group">
+                        <p><b>Rate:</b></p>
+                        <label class="radio-inline">
+                          <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
+                        </label>
+                        <label class="radio-inline">
+                          <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
+                        </label>
+                      </div>
+                      <button class="btn btn-primary" type="submit">Add new vote</button>
                     </div>
-                    <button class="btn btn-primary" type="submit">Add new vote</button>
-                  </div>
-                </form>
+                  </form>
+              <?php } ?>
               </div>
             </div>
           </div>
@@ -143,35 +152,25 @@
                     </ul>
                   </table>
                 </div>
-                <form action="saveComment.php" method="post">
-                  <div class="col-md-6 text-center">
-                    <div class="form-group">
-                      <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12 text-center">
-                      <button class="btn btn-primary" type="submit">Add new comment</button>
-                    </div>
-                  </div>
-                </form>
+                <?php
+                  if(!$guest){ ?>
+                    <form action="saveComment.php" method="post">
+                      <div class="col-md-6 text-center">
+                        <div class="form-group">
+                          <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12 text-center">
+                          <button class="btn btn-primary" type="submit">Add new comment</button>
+                        </div>
+                      </div>
+                    </form>
+                <?php } ?>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <script src="https://apis.google.com/js/platform.js" async defer>
-        {lang: 'en-GB'}
-      </script>
-      <div id="fb-root"></div>
-      <script>(function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s); js.id = id;
-            js.async=true;
-            js.src = 'https://connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.11';
-            fjs.parentNode.insertBefore(js, fjs);
-          }(document, 'script', 'facebook-jssdk'));
-      </script>
-    </body>
+</body>
 </html>

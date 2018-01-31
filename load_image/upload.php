@@ -1,7 +1,10 @@
 <?php
 require '../initialization/dbconnection.php';
 
-session_start();
+//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
+if(!isset($_SESSION["current_user"])){
+    header("Location: /index.php");
+}
 
 $tags = $_POST['tags'];
 $_SESSION['tags'] = $tags;
