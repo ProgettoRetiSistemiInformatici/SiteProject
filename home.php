@@ -49,7 +49,7 @@ session_write_close();
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><p><b><?php echo $obj->description ?></b></p></li>
+                    <li class="list-group-item text-center"><h4><?php echo $obj->description ?></h4></li>
                     <li class="list-group-item text-center">
                       <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"

@@ -29,7 +29,7 @@ $mysqli->close();
     </header>
     <!-- Menu -->
     <?php include '../shared/menuProfile.php'; ?>
-    <form action="galleryconfirm.php" method="post">
+    <form id="formfield" action="createalbum.php" method="post">
       <div class="row">
         <div class="col-md-4">
           <div class="form-group">
@@ -39,7 +39,7 @@ $mysqli->close();
         </div>
         <div class="col-md-8">
           <div class="pull-right" style="margin-top: 26px">
-            <button type="submit" class="btn btn-primary">Accept</button>
+            <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-primary">Accept</button>
             <button type="reset" class="btn btn-default">Reset</button>
           </div>
         </div>
@@ -59,7 +59,7 @@ $mysqli->close();
                   <div class="panel-body">
                     <div class="checkbox">
                       <label>
-                        <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->name?>">Add to this album</input>
+                        <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->id?>">Add to this album</input>
                       </label>
                     </div>
                     <div class="radio">
@@ -75,5 +75,27 @@ $mysqli->close();
       </div>
     </form>
   </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirm-album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to create the album?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <a href="#" id="submit" class="btn btn-success success">Submit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+
+$('#submit').click(function(){
+   /* when the submit button in the modal is clicked, submit the form */
+  $('#formfield').submit();
+});
+</script>
 </body>
 </html>
