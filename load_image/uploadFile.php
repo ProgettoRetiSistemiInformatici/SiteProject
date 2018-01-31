@@ -25,12 +25,12 @@ session_start();
           </div>
           <div class="row">
             <div class="col-md-6">
-              <label for="inputDescription">Insert a short description:</label>
-              <textarea name="description" class="form-control" id="inputDescription" rows="3"></textarea>
+              <label for="inputDescription">Description:</label>
+              <textarea name="description" class="form-control" id="inputDescription" rows="3" placeholder="Insert a title or a short description of the photo"></textarea>
             </div>
             <div class="col-md-6">
-              <label for="inputTags">Insert some tags:</label>
-              <textarea name="tags" class="form-control" id="inputTags" rows="3"></textarea>
+              <label for="inputTags">Tags:</label>
+              <textarea name="tags" class="form-control" id="inputTags" rows="3" placeholder="Insert a series of word preceded by the # symbol"></textarea>
             </div>
           </div>
           <div class="row">
