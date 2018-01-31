@@ -115,11 +115,13 @@ session_write_close();
         <?php if($equals){
           echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
         }else{
-          if($follows->num_rows){
-            echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
-          }
-          else{
-            echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
+          if(!empty($current_user)){
+            if($follows->num_rows){
+              echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
+            }
+            else{
+              echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
+            }
           }
         }
         ?>

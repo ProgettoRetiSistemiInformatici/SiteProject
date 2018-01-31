@@ -3,12 +3,8 @@
 require 'initialization/dbconnection.php';
 session_start();
 
-//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
-if(!isset($_SESSION["current_user"])){
-    header("Location: /index.php");
-}
-
 $user= $_SESSION['current_user'];
+
 global $mysqli;
 $query = "SELECT id, name, description FROM photo ORDER BY id DESC LIMIT 50;";
 if (!$result = $mysqli->query($query)){

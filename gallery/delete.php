@@ -3,8 +3,13 @@
 require '../initialization/dbconnection.php';
 if(!empty($_POST['albums'])){
 
-  $albums = $_POST['albums'];
-  $ids = implode(", ", $albums);
+//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
+if(!isset($_SESSION["current_user"])){
+    header("Location: /index.php");
+}
+
+$albums = $_POST['albums'];
+$ids = implode(", ", $albums);
 
   $user = $_SESSION['current_user'];
 

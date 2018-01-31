@@ -1,4 +1,10 @@
 <?php
+
+//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
+if(!isset($_SESSION["current_user"])){
+    header("Location: /index.php");
+}
+
 $tags = $_SESSION['tags'];
 $photo_name = $_SESSION['photo'];
 
