@@ -50,16 +50,20 @@ $mysqli->close();
       </div>
       <div class="row">
         <?php /*Fetch object array */
-          while($obj = $result->fetch_object()){ ?>
-            <div class="col-sm-6 col-md-4">
-              <div class="thumbnail">
-                <img class="img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
-                <div class="text-center">
-                  <div class="caption">
-                    <p><?php echo "<b>" . $obj->description . "</b>"?></p>
-                  </div>
-                </div>
-                <div class="panel panel-default">
+        while($obj = $result->fetch_object()){ ?>
+          <div class="col-sm-4">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <a href="photo_page/comments.php?photo_id=<?php echo $obj->id?>">
+                  <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
+                </a>
+              </div>
+              <table class="table">
+                <ul class="list-group">
+                  <li class="list-group-item text-center"><h4><?php echo $obj->description ?></h4></li>
+                </ul>
+              </table>
+              <div class="panel panel-default">
                   <div class="panel-body">
                     <div class="checkbox">
                       <label>
@@ -84,7 +88,7 @@ $mysqli->close();
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          Are you sure you want to create the album?
+          Are you sure you want to create this album?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>

@@ -2,9 +2,6 @@
 
 require '../initialization/dbconnection.php';
 
-session_start();
-global $mysqli;
-
 $searchterm = $_POST['search'];
 
 $query = "SELECT * FROM login WHERE email LIKE '%{$searchterm}%' OR firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";

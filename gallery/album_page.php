@@ -2,7 +2,6 @@
 require '../initialization/dbconnection.php';
 require  '../profiles/tokenize.php';
 
-session_start();
 $album = $_GET['album'];
 
 $query= "SELECT title, photos_id, cover FROM albums WHERE id ='$album'";

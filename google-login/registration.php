@@ -1,8 +1,6 @@
 <?php
 //include('MySession.php');
 require '../initialization/dbconnection.php';
-session_start();
-
 
 $password = $_POST['password'];
 $email = $_POST['email'];

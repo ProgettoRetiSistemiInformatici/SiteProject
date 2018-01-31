@@ -3,16 +3,13 @@ require '../initialization/dbconnection.php';
 require_once 'FB_API/vendor/autoload.php';
 require 'fb-config.php';
 
-session_start();
-
-
 $helper = $fb->getRedirectLoginHelper();
 
-if (isset($_GET['state'])) { 
+if (isset($_GET['state'])) {
     $helper->getPersistentDataHandler()->set('state', $_GET['state']);
 }
 
-try {  
+try {
   $accessToken = $helper->getAccessToken('http://photolio.com/google-login/fb-callback.php');
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
@@ -37,7 +34,7 @@ if (! isset($accessToken)) {
   }
   exit();
 }
- 
+
  // Logged in
 
 
@@ -55,8 +52,8 @@ $tokenMetadata->validateAppId('384437665319826'); // Replace {app-id} with your 
 //$tokenMetadata->validateUserId('123');
 
 
-  
- * 
+
+ *
  */
 
 if (!$accessToken->isLongLived()) {

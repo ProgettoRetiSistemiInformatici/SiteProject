@@ -1,6 +1,6 @@
 <?php
 
-if(empty($_SESSION['current_user'])){ ?>
+if(!isset($_SESSION['current_user'])){ ?>
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -87,3 +87,4 @@ else{
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<?php } ?>

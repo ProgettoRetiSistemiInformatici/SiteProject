@@ -1,7 +1,10 @@
 <?php
 
+session_start();
+
 //se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
-if(!isset($_SESSION["current_user"])){
+if(empty($_SESSION['current_user'])){
+    var_dump("EH!");
     header("Location: /index.php");
 }
 

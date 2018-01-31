@@ -8,7 +8,7 @@
   if (isset($_SESSION['access_token'])) {
     header('Location: ../home.php');
 	}
-  elseif($_SESSION['fb_access_token']){
+  elseif(isset($_SESSION['fb_access_token'])){
       header('Location: ../home.php');
   }
   else {

@@ -17,7 +17,7 @@ else{
 $date_right;
 
 $query = "SELECT * FROM login WHERE id = '$user';";
-$query .= "SELECT id, name, description FROM photo WHERE user_id = '$user';";
+$query .= "SELECT id, name, description FROM photo WHERE user_id = '$user' ORDER BY 'id' DESC LIMIT 15;";
 $query .= "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id' DESC LIMIT 3;";
 $query .= "SELECT * FROM relations WHERE follower_id = '$current_user' AND followed_id = '$user';";
 $query .= "SELECT id FROM relations WHERE follower_id = '$user';";

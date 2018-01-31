@@ -1,11 +1,9 @@
 <?php
 //le foto andranno caricate da database tramite php
 require 'initialization/dbconnection.php';
-session_start();
 
-$user= $_SESSION['current_user'];
+$user = $_SESSION['current_user'];
 
-global $mysqli;
 $query = "SELECT id, name, description FROM photo ORDER BY id DESC LIMIT 50;";
 if (!$result = $mysqli->query($query)){
      echo $mysqli->error;
