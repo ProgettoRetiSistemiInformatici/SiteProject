@@ -14,12 +14,16 @@ if(!$result = $mysqli -> query($query)){
 }
 $photo_id = $result->fetch_object()->id;
 
-$tags = explode(" ", $tags);
+$tags = explode("#", $tags);
 /*
 * Questo controllo al suo interno avrà una query
 * per ogni tabella in cui andranno inseriti i tag
 */
 foreach ($tags as $value){
+  $value = trim($value);
+  if($value == ""){
+    continue;
+  }
   //fai la query dove controlli se esiste già nel DB dei tags altrimenti lo inserisci.
   $query = "SELECT tag, photos_id FROM tags WHERE tag = '$value';";
   if(!$result = $mysqli -> query($query)){

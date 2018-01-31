@@ -1,16 +1,11 @@
 <?php
 require '../initialization/dbconnection.php';
 
-//se non si e' loggati si viene reindirizzati nella pagina di registrazione/login
-if(!isset($_SESSION["current_user"])){
-    header("Location: /index.php");
-}
-
 $current_user = $_SESSION['current_user'];
 
-$query = "SELECT * FROM albums WHERE user_id = '$current_user';";
+$query = "SELECT * FROM photo WHERE user_id = '$current_user';";
 
-if(!$albums = $mysqli->query($query)){
+if(!$photos = $mysqli->query($query)){
     die($mysqli->error);
     $error = "error in mysql!";
 }
@@ -34,7 +29,7 @@ $mysqli->close();
     <form id="formfield" action="delete.php" method="post">
       <div class="row">
         <div class="col-md-4">
-          <h3>Select the album or albums that you want to delete:</h3>
+          <h3>Select the photo or photos that you want to delete:</h3>
         </div>
         <div class="col-md-8">
           <div class="pull-right" style="margin-top: 26px">
@@ -46,30 +41,25 @@ $mysqli->close();
       <div class="panel panel-default">
         <div class="panel-body">
           <?php
-            while($ra = $albums->fetch_object()){ ?>
-              <div class="col-sm-4">
-                <div class="panel panel-default">
-                  <div class="panel-body">
-                    <a href='../gallery/album_page.php?album=<?php echo $ra->id; ?>'>
-                      <img class="img-responsive img-rounded" src='<?php
-                                  if($ra->cover==null){
-                                    echo "../google-login/images/album.png";}
-                                  else {
-                                    echo "../uploads/".$ra->cover;
-                                  }?>'>
-                    </a>
-                  </div>
-                  <table class="table">
-                    <ul class="list-group">
-                      <li class="list-group-item text-center"><h4><b><?php echo $ra->title; ?></b></h4></li>
-                    </ul>
-                  </table>
-                  <div class="table">
+          while($photo = $photos->fetch_object()){ ?>
+            <div class="col-sm-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+                  </a>
+                </div>
+                <table class="table">
+                  <ul class="list-group">
+                    <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
+                  </ul>
+                </table>
+                <div class="table">
                     <ul class="list-group">
                       <li class="list-group-item">
                         <div class="checkbox">
                           <label>
-                            <input type="checkbox" name="albums[]" value="<?php echo $ra->id?>">Add to trash</input>
+                            <input type="checkbox" name="photos[]" value="<?php echo $photo->id?>">Add to trash</input>
                           </label>
                         </div>
                       </li>
@@ -85,8 +75,7 @@ $mysqli->close();
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-body">
-          Are you sure you want to delete those albums?
-          (photo inside the albums will still be on the site)
+          Are you sure you want to delete this photos?
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">No</button>

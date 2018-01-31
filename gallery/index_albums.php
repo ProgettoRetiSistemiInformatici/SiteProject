@@ -21,6 +21,9 @@
     <?php include '../shared/header.php'; ?>
     <?php include '../shared/menuProfile.php'; ?>
     <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title text-center"><b>Your Albums</b></h3>
+      </div>
       <div class="panel-body">
         <?php if($albums->num_rows != 0){
           while($ra = $albums->fetch_object()){ ?>
