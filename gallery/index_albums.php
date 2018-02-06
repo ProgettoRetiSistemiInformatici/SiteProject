@@ -1,6 +1,9 @@
 <?php
   require '../initialization/dbconnection.php';
-  require "../profiles/tokenize.php";
+
+  if(!isset($_SESSION["current_user"])){
+      header("Location: /index.php");
+  }
 
   $current_user = $_SESSION['current_user'];
   $user = $_GET['user'];
