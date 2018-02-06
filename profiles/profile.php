@@ -138,8 +138,8 @@ session_write_close();
       <div class="panel-body">
         <div class="row">
           <?php
-            if($albums->num_rows){
-              while($album = $albums->fetch_object()){ ?>
+            if($albums->num_rows):
+              while($album = $albums->fetch_object()): ?>
                 <div class="col-sm-4">
                   <div class="panel panel-default">
                     <div class="panel-body">
@@ -159,9 +159,8 @@ session_write_close();
                     </table>
                   </div>
                 </div>
-              <?php }
-              }
-              else{ ?>
+              <?php endwhile;
+            else: ?>
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
@@ -169,7 +168,7 @@ session_write_close();
                     </div>
                   </div>
                 </div>
-            <?php  } ?>
+            <?php  endif; ?>
             </div>
             <?php if($equals){
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
@@ -182,10 +181,13 @@ session_write_close();
     </div>
 <!-- Photo Grid -->
   <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Photos</h3>
+    </div>
     <div class="panel-body">
       <div class="row">
         <?php $result->data_seek(0); /*Fetch object array */
-          while($photo = $photos->fetch_object()){ ?>
+          while($photo = $photos->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -208,7 +210,7 @@ session_write_close();
                 </table>
               </div>
             </div>
-        <?php } ?>
+        <?php endwhile; ?>
       </div>
     </div>
   </div>

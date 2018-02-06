@@ -25,8 +25,8 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <?php if($photos->num_rows != 0){
-            while($photo = $photos->fetch_object()){ ?>
+          <?php if($photos->num_rows != 0):
+            while($photo = $photos->fetch_object()): ?>
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -49,9 +49,8 @@
                   </table>
                 </div>
               </div>
-          <?php }
-         }
-    else{ ?>
+          <?php endwhile;
+    else: ?>
       <div class="col-sm-12">
         <div class="panel panel-default">
           <div class="panel-body">
@@ -59,7 +58,7 @@
           </div>
         </div>
       </div>
-      <?php  } ?>
+    <?php  endif; ?>
     </div>
   </div>
 </div>

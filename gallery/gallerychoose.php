@@ -50,7 +50,7 @@ $mysqli->close();
       </div>
       <div class="row">
         <?php /*Fetch object array */
-        while($obj = $result->fetch_object()){ ?>
+        while($obj = $result->fetch_object()): ?>
           <div class="col-sm-4">
             <div class="panel panel-default">
               <div class="panel-body">
@@ -79,7 +79,7 @@ $mysqli->close();
                 </div>
               </div>
             </div>
-        <?php } ?>
+        <?php endwhile; ?>
       </div>
     </form>
   </div>

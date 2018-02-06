@@ -38,14 +38,14 @@ session_write_close();
   <div class="container">
     <?php include '../shared/header.php'; ?>
     <?php include '../shared/menuProfile.php'; ?>
-    <?php if($albums->num_rows != 0){ ?>
+    <?php if($albums->num_rows != 0): ?>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><b>Related Albums</b></h3>
         </div>
         <div class="panel-body">
           <div class="row">
-            <?php while($album = $albums->fetch_object()){ ?>
+            <?php while($album = $albums->fetch_object()): ?>
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -65,19 +65,19 @@ session_write_close();
                   </table>
                 </div>
               </div>
-            <?php } ?>
+            <?php endwhile; ?>
           </div>
         </div>
       </div>
-    <?php  } ?>
-    <?php if($profiles->num_rows != 0){ ?>
+    <?php endif; ?>
+    <?php if($profiles->num_rows != 0): ?>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><b>Related Profiles</b></h3>
         </div>
         <div class="panel-body">
           <div class="col-md-6">
-            <?php while($profile = $profiles->fetch_object()){ ?>
+            <?php while($profile = $profiles->fetch_object()): ?>
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="col-md-4">
@@ -105,19 +105,19 @@ session_write_close();
                   <a href="../profiles/profile.php?user=<?php echo $profile->id ?>" class="btn btn-default pull-right">Show profile</a>
                 </div>
               </div>
-            <?php  } ?>
+            <?php endwhile; ?>
           </div>
         </div>
       </div>
-    <?php  } ?>
-    <?php if($photos->num_rows != 0){ ?>
+    <?php endif; ?>
+    <?php if($photos->num_rows != 0): ?>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><b>Related Photos</b></h3>
         </div>
         <div class="panel-body">
           <div class="row">
-            <?php while($photo = $photos->fetch_object()){ ?>
+            <?php while($photo = $photos->fetch_object()): ?>
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
@@ -132,26 +132,26 @@ session_write_close();
                   </table>
                 </div>
               </div>
-          <?php } ?>
+          <?php endwhile; ?>
           </div>
         </div>
       </div>
-    <?php  } ?>
-    <?php if($tagged_photos->num_rows != 0){ ?>
+    <?php  endif; ?>
+    <?php if($tagged_photos->num_rows != 0): ?>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><b>Related Tags</b></h3>
         </div>
         <div class="panel-body">
           <div class="row">
-            <?php while($tagged_photo = $tagged_photos->fetch_object()){
+            <?php while($tagged_photo = $tagged_photos->fetch_object()):
                 $photos = explode(" ", $tagged_photo->photos_id);
                 $photos = join("','", $photos);
                 $query = "SELECT id, name, description FROM photo WHERE id IN ('$photos');";
                 if(!$result = $mysqli->query($query)){
                   echo "Errore nella query dei tags" . $mysqli->error;
                 }
-                while($photo = $result->fetch_object()){
+                while($photo = $result->fetch_object()):
             ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
@@ -167,26 +167,25 @@ session_write_close();
                 </table>
               </div>
             </div>
-          <?php }
-              } ?>
-          </div>
-        </div>
+          <?php endwhile;
+        endwhile; ?>
       </div>
-    <?php $mysqli->close(); }
-      if ($tagged_photos->num_rows == 0 && $photos->num_rows == 0
-            && $profiles->num_rows == 0 && $albums->num_rows == 0){
-    ?>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h3 class="panel-title text-center"><b>Search result</b></h3>
-        </div>
-        <div class="panel-body">
-          <div class="row">
-            <h3 class="text-center"><b>Your search had no result</b></h3>
-          </div>
-        </div>
-      </div>
-    <?php  } ?>
     </div>
+  </div>
+<?php $mysqli->close();
+endif;
+if ($tagged_photos->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 && $albums->num_rows == 0): ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title text-center"><b>Search result</b></h3>
+    </div>
+    <div class="panel-body">
+      <div class="row">
+        <h3 class="text-center"><b>Your search had no result</b></h3>
+      </div>
+    </div>
+  </div>
+<?php endif ?>
+</div>
 </body>
 </html>

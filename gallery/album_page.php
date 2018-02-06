@@ -106,7 +106,7 @@ session_write_close();
                 </div>
                 <div class="panel-body">
                   <div class="row">
-                    <?php  while($photo = $photos->fetch_object()){ ?>
+                    <?php while($photo = $photos->fetch_object()): ?>
                       <div class="col-sm-4">
                         <div class="panel panel-default">
                           <div class="panel-body">
@@ -129,7 +129,7 @@ session_write_close();
                           </table>
                         </div>
                       </div>
-                    <?php } ?>
+                    <?php endwhile; ?>
                     </div>
                   </div>
                 </div>
