@@ -1,7 +1,7 @@
 <?php
 
 require '../initialization/dbconnection.php';
-require "tokenize.php";
+
 session_start();
 
 $user = $_GET['user'];
@@ -116,11 +116,13 @@ session_write_close();
           echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
         }else{
           if(!empty($current_user)){
-            if($follows->num_rows){
-              echo '<p><a class="btn btn-primary" href="unfollow.php?flwd=' . $profile->id . '">Unfollow</a></p>';
+            if(!$follows->num_rows){
+              echo '<p><button id="unfollow" style="display: none" type="button" class="btn btn-primary">Unfollow</button></p>';
+              echo '<p><button id="follow" type="button" class="btn btn-primary">Follow</button></p>';
             }
             else{
-              echo '<p><a class="btn btn-primary" href="follow.php?flwd=' . $profile->id . '">Follow</a></p>';
+              echo '<p><button id="unfollow" type="button" class="btn btn-primary">Unfollow</button></p>';
+              echo '<p><button id="follow" style="display: none" type="button" class="btn btn-primary">Follow</button></p>';
             }
           }
         }
@@ -186,7 +188,7 @@ session_write_close();
     </div>
     <div class="panel-body">
       <div class="row">
-        <?php $result->data_seek(0); /*Fetch object array */
+        <?php if($photos->num_rows):
           while($photo = $photos->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
@@ -210,10 +212,53 @@ session_write_close();
                 </table>
               </div>
             </div>
-        <?php endwhile; ?>
+        <?php endwhile;
+      else: ?>
+          <div class="col-sm-12">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <h4 class = 'text-center'>No photos to show</h4>
+              </div>
+            </div>
+          </div>
+      <?php  endif; ?>
       </div>
     </div>
   </div>
 </div>
+<script>
+  $('#follow').click(function() {
+    var current_user = <?php echo $current_user ?>;
+    var user = <?php echo $user ?>;
+    $.ajax({
+      type: 'POST',
+      url: 'follow.php',
+      data:
+      { current_user: current_user,
+        user: user },
+      success: function(response) {
+        console.log(response);
+      }
+    });
+    $( '#follow' ).hide();
+    $( '#unfollow' ).show();
+  });
+  $('#unfollow').click(function() {
+    var current_user = <?php echo $current_user ?>;
+    var user = <?php echo $user ?>;
+    $.ajax({
+      type: 'POST',
+      url: 'unfollow.php',
+      data:
+      { current_user: current_user,
+        user: user },
+      success: function(response) {
+        console.log(response);
+      }
+    });
+    $( '#unfollow' ).hide();
+    $( '#follow' ).show();
+  });
+</script>
 </body>
 </html>

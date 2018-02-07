@@ -1,6 +1,5 @@
 <?php
 require '../initialization/dbconnection.php';
-require "tokenize.php";
 
 $user = $_SESSION['current_user'];
 

@@ -41,7 +41,7 @@
         $comments = $mysqli->store_result();
       }
     }
-
+    session_write_close();
     $mysqli -> close();
 
 ?>
@@ -86,7 +86,8 @@
                           <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
                             class="btn btn-primary" aria-hidden="true"
                             target="_blank">Share on Facebook</a>
-                      </li>
+                          <button id="share" type="button" data-toggle="modal" data-target="#share-photo" class="btn btn-default">Share</button>
+                        </li>
                       </ul>
                     </table>
                   </div>
@@ -166,5 +167,29 @@
         </div>
       </form>
     </div>
+    <!-- Modal -->
+    <div class="modal fade" id="share-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-body">
+            Photo shared with your follower!
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    $('#share').click(function() {
+      var photo_id = <?php echo $photo_id ?>;
+      $.ajax({
+        type: 'POST',
+        url: 'sharing.php',
+        data: { photo_id: photo_id },
+        success: function(response) {
+          content.html(response);
+        }
+      });
+    });
+  </script>
 </body>
 </html>

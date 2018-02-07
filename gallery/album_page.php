@@ -147,38 +147,33 @@ session_write_close();
                                 <li class="list-group-item">
                                   <p><b>Rating:</b> <?php echo round($album->rate, 2); ?>/5</p>
                                 </li>
+                                <?php if(!$guest): ?>
+                                  <li class="list-group-item">
+                                    <div class="form-group">
+                                      <p><b>Rate:</b></p>
+                                      <label class="radio-inline">
+                                        <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
+                                      </label>
+                                      <label class="radio-inline">
+                                        <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
+                                      </label>
+                                      <label class="radio-inline">
+                                        <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
+                                      </label>
+                                      <label class="radio-inline">
+                                        <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
+                                      </label>
+                                      <label class="radio-inline">
+                                        <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
+                                      </label>
+                                    </div>
+                                  </li>
+                                <?php endif; ?>
                               </ul>
                             </table>
                           </div>
                         </div>
-                        <?php if(!$guest): ?>
-                          <div class="col-md-12">
-                            <table class="table">
-                              <ul class="list-group">
-                                <li class="list-group-item">
-                                  <div class="form-group">
-                                    <p><b>Rate:</b></p>
-                                    <label class="radio-inline">
-                                      <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
-                                    </label>
-                                    <label class="radio-inline">
-                                      <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
-                                    </label>
-                                    <label class="radio-inline">
-                                      <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
-                                    </label>
-                                    <label class="radio-inline">
-                                      <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
-                                    </label>
-                                    <label class="radio-inline">
-                                      <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
-                                    </label>
-                                  </div>
-                                </li>
-                              </ul>
-                            </table>
-                          </div>
-                          <?php endif ?>
+                        <div class="row">
                           <div class="col-md-6">
                             <table class="table">
                               <ul class="list-group">
@@ -200,8 +195,7 @@ session_write_close();
                                   </ul>
                                 </table>
                               </div>
-                              <?php
-                                if(!$guest): ?>
+                              <?php if(!$guest): ?>
                                 <div class="col-md-6 text-center">
                                   <div class="form-group">
                                     <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
@@ -212,7 +206,8 @@ session_write_close();
                                     <button class="btn btn-primary" type="submit">Send</button>
                                   </div>
                                 </div>
-                    <?php endif ?>
+                              <?php endif ?>
+                        </div>
                   </div>
                 </div>
               </div>
