@@ -1,5 +1,3 @@
-# SiteProject
-
 <h1>Titolo: Photolio</h1>
 <p>Sito che permette la visualizzazione, upload, commento e condivisione di immagini.</p>
 </br>
