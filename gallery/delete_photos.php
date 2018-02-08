@@ -25,7 +25,10 @@ $mysqli->close();
       <?php include '../shared/header.php'; ?>
     </header>
     <!-- Menu -->
-    <?php include '../shared/menuProfile.php'; ?>
+    <?php include '../shared/menuProfile.php';
+      if($photos->num_rows):
+    ?>
+
     <form id="formfield" action="delete.php" method="post">
       <div class="row">
         <div class="col-md-4">
@@ -52,23 +55,30 @@ $mysqli->close();
                 <table class="table">
                   <ul class="list-group">
                     <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
+                    <li class="list-group-item">
+                      <div class="checkbox">
+                        <label>
+                          <input type="checkbox" name="photos[]" value="<?php echo $photo->id?>">Add to trash</input>
+                        </label>
+                      </div>
+                    </li>
                   </ul>
                 </table>
-                <div class="table">
-                    <ul class="list-group">
-                      <li class="list-group-item">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" name="photos[]" value="<?php echo $photo->id?>">Add to trash</input>
-                          </label>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
               </div>
-            <?php endwhile; ?>
+            </div>
+          <?php endwhile; ?>
     </form>
+  <?php else: ?>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4 class = 'text-center'>You haven't uploaded any photo yet!!</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="confirm-album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

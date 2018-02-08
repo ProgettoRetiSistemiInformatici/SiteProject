@@ -21,7 +21,7 @@
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
-        echo "Error creating table: " . $mysqli->error;
+        echo "Error creating login: " . $mysqli->error;
       }
     }
   }
@@ -39,13 +39,89 @@
         tags TEXT,
         PRIMARY KEY (id),
         FOREIGN KEY(user_id) REFERENCES login(id));";
-
       if ($mysqli->query($sql) === TRUE) {
       } else {
-        echo "Error creating table: " . $mysqli->error;
+        echo "Error creating photo: " . $mysqli->error;
       }
     }
   }
+
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'tags'")) {
+    if(!$result->num_rows == 1) {
+      //sql create table
+      $sql = "CREATE TABLE tags(
+        id INT(5) NOT NULL AUTO_INCREMENT,
+        tag VARCHAR(16) NOT NULL UNIQUE,
+        photos_id TEXT NOT NULL,
+        PRIMARY KEY (id));";
+
+      if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating tags: " . $mysqli->error;
+      }
+    }
+  }
+
+
+    if ($result = $mysqli->query("SHOW TABLES LIKE 'sharing'")) {
+      if(!$result->num_rows == 1) {
+        //sql create table
+        $sql = "CREATE TABLE sharing(
+          id INT(5) NOT NULL AUTO_INCREMENT,
+          by_user_id INT(5) NOT NULL,
+          photo_id INT(5) NOT NULL,
+          PRIMARY KEY(id),
+          UNIQUE(by_user_id, photo_id),
+          FOREIGN KEY (by_user_id) REFERENCES login(id),
+          FOREIGN KEY (photo_id) REFERENCES photo(id));";
+
+        if ($mysqli->query($sql) === TRUE) {
+        } else {
+          echo "Error creating sharing: " . $mysqli->error;
+        }
+      }
+    }
+
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'relations'")) {
+    if(!$result->num_rows == 1) {
+      //sql create table
+      $sql = "CREATE TABLE relations(
+        id INT(5) NOT NULL AUTO_INCREMENT,
+        follower_id INT(5) NOT NULL,
+        followed_id INT(5) NOT NULL,
+        PRIMARY KEY(id),
+        UNIQUE(follower_id, followed_id),
+        FOREIGN KEY (follower_id) REFERENCES login(id),
+        FOREIGN KEY (followed_id) REFERENCES login(id));";
+
+      if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating relations: " . $mysqli->error;
+      }
+    }
+  }
+
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'albums'")) {
+    if(!$result->num_rows == 1) {
+      // sql to create table
+      $sql = "CREATE TABLE albums(
+        id INT(5) NOT NULL AUTO_INCREMENT,
+        title VARCHAR(16) NOT NULL,
+        user_id INT(5) NOT NULL,
+        photos_id TEXT NOT NULL,
+        cover VARCHAR(64) DEFAULT NULL,
+        rate INT(5) NOT NULL DEFAULT 0,
+        votes INT(5) NOT NULL DEFAULT 0,
+        PRIMARY KEY(id),
+        FOREIGN KEY (user_id) REFERENCES login(id));";
+
+      if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating albums: " . $mysqli->error;
+      }
+    }
+  }
+
 
   if ($result = $mysqli->query("SHOW TABLES LIKE 'comments'")) {
     if(!$result->num_rows == 1) {
@@ -67,86 +143,11 @@
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
-        echo "Error creating table: " . $mysqli->error;
+        echo "Error creating comments: " . $mysqli->error;
       }
     }
   }
 
-  if ($result = $mysqli->query("SHOW TABLES LIKE 'tags'")) {
-    if(!$result->num_rows == 1) {
-      //sql create table
-      $sql = "CREATE TABLE tags(
-        id INT(5) NOT NULL AUTO_INCREMENT,
-        tag VARCHAR(16) NOT NULL UNIQUE,
-        photos_id TEXT NOT NULL,
-        PRIMARY KEY (id));";
-
-      if ($mysqli->query($sql) === TRUE) {
-      } else {
-        echo "Error creating table: " . $mysqli->error;
-      }
-    }
-  }
-
-
-    if ($result = $mysqli->query("SHOW TABLES LIKE 'sharing'")) {
-      if(!$result->num_rows == 1) {
-        //sql create table
-        $sql = "CREATE TABLE sharing(
-          id INT(5) NOT NULL AUTO_INCREMENT,
-          by_user_id INT(5) NOT NULL,
-          photo_id INT(5) NOT NULL,
-          PRIMARY KEY(id),
-          UNIQUE(by_user_id, photo_id),
-          FOREIGN KEY (by_user_id) REFERENCES login(id),
-          FOREIGN KEY (photo_id) REFERENCES photo(id));";
-
-        if ($mysqli->query($sql) === TRUE) {
-        } else {
-          echo "Error creating table: " . $mysqli->error;
-        }
-      }
-    }
-
-  if ($result = $mysqli->query("SHOW TABLES LIKE 'relations'")) {
-    if(!$result->num_rows == 1) {
-      //sql create table
-      $sql = "CREATE TABLE relations(
-        id INT(5) NOT NULL AUTO_INCREMENT,
-        follower_id INT(5) NOT NULL,
-        followed_id INT(5) NOT NULL,
-        PRIMARY KEY(id),
-        UNIQUE(follower_id, followed_id),
-        FOREIGN KEY (follower_id) REFERENCES login(id),
-        FOREIGN KEY (followed_id) REFERENCES login(id));";
-
-      if ($mysqli->query($sql) === TRUE) {
-      } else {
-        echo "Error creating table: " . $mysqli->error;
-      }
-    }
-  }
-
-  if ($result = $mysqli->query("SHOW TABLES LIKE 'albums'")) {
-    if(!$result->num_rows == 1) {
-      // sql to create table
-      $sql = "CREATE TABLE albums(
-        id INT(5) NOT NULL AUTO_INCREMENT,
-        title VARCHAR(16) NOT NULL,
-        user_id INT(5) NOT NULL,
-        photos_id TEXT NOT NULL,
-        cover VARCHAR(64) DEFAULT NULL,
-        rate INT(5) NOT NULL DEFAULT 0,
-        votes INT(5) NOT NULL DEFAULT 0,
-        PRIMARY KEY(id),
-        FOREIGN KEY (user_id) REFERENCES login(id));";
-
-      if ($mysqli->query($sql) === TRUE) {
-      } else {
-        echo "Error creating table: " . $mysqli->error;
-      }
-    }
-  }
   if ($result = $mysqli->query("SHOW TABLES LIKE 'levels'")) {
     if(!$result->num_rows == 1) {
       // sql to create table
@@ -166,7 +167,7 @@
           }
         }
       } else {
-        echo "Error creating table: " . $mysqli->error;
+        echo "Error creating levels: " . $mysqli->error;
       }
     }
   }

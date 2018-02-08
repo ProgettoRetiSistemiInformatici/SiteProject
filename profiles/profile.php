@@ -113,7 +113,8 @@ session_write_close();
             ?>
         </ul>
         <?php if($equals){
-          echo '<p><a class="btn btn-primary" href="changedata.php?">Edit profile</a></p>';
+          echo '<a class="btn btn-primary" href="changedata.php">Edit profile</a>';
+          echo '<button id="deleteBtn" type="button" data-toggle="modal" data-target="#confirm-delete" class="btn btn-danger pull-right">Delete profile</button>';
         }else{
           if(!empty($current_user)){
             if(!$follows->num_rows){
@@ -148,7 +149,7 @@ session_write_close();
                       <a href='../gallery/album_page.php?album=<?php echo $album->id; ?>'>
                         <img class="img-responsive img-rounded" src='<?php
                                     if($album->cover==null){
-                                      echo "../google-login/images/photo-machine.png";}
+                                      echo "../google-login/images/album.png";}
                                     else {
                                       echo "../uploads/".$album->cover;
                                     }?>'>
@@ -162,7 +163,9 @@ session_write_close();
                   </div>
                 </div>
               <?php endwhile;
-            else: ?>
+                echo '</div>';
+                echo '<a href="../gallery/index_albums.php?user=' . $user . '" class="btn btn-primary pull-right">Show all albums</a>';
+                else: ?>
                 <div class="col-sm-12">
                   <div class="panel panel-default">
                     <div class="panel-body">
@@ -170,13 +173,11 @@ session_write_close();
                     </div>
                   </div>
                 </div>
-            <?php  endif; ?>
-            </div>
-            <?php if($equals){
+              </div>
+              <?php  endif; ?>
+            <?php if($equals && $photos->num_rows){
               echo '<a href="../gallery/gallerychoose.php" class="btn btn-primary">Create album</a>';
-            }
-            ?>
-            <a href="../gallery/index_albums.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show all albums</a>
+            } ?>
           </div>
         </div>
       </div>
@@ -213,7 +214,9 @@ session_write_close();
               </div>
             </div>
         <?php endwhile;
-      else: ?>
+        echo '</div>';
+        echo '<a href="../gallery/index_photos.php?user=<?php echo $user; ?>" class="btn btn-primary pull-right">Show all photos</a>';
+        else: ?>
           <div class="col-sm-12">
             <div class="panel panel-default">
               <div class="panel-body">
@@ -221,12 +224,43 @@ session_write_close();
               </div>
             </div>
           </div>
+        </div>
       <?php  endif; ?>
+      <?php if($equals):
+        echo '<a href="../load_image/uploadFile.php" class="btn btn-primary">Upload new photo</a>';
+      endif; ?>
+    </div>
+  </div>
+  <!-- Modal -->
+  <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Are you sure you want to delete your account?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+          <a href="#" id="submit" class="btn btn-danger">Yes</a>
+        </div>
       </div>
     </div>
   </div>
 </div>
 <script>
+
+  $('#submit').click(function(){
+    var current_user = <?php echo $current_user ?>;
+    $.ajax({
+      type: 'POST',
+      url: 'delete_profile.php',
+      data:
+      { current_user: current_user },
+      success: function(response) {
+        window.location.href = "../index.php";
+      }
+    });
+  });
+
   $('#follow').click(function() {
     var current_user = <?php echo $current_user ?>;
     var user = <?php echo $user ?>;

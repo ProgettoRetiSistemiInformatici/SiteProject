@@ -19,7 +19,7 @@ if ($mysqli->multi_query($query)){
         $photos = $mysqli->store_result();
     }
     if($mysqli->next_result()){
-        $tagged_photos = $mysqli->store_result();
+        $tags = $mysqli->store_result();
     }
 }
 else{
@@ -137,21 +137,22 @@ session_write_close();
         </div>
       </div>
     <?php  endif; ?>
-    <?php if($tagged_photos->num_rows != 0): ?>
+    <?php if($tags->num_rows != 0): ?>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title text-center"><b>Related Tags</b></h3>
         </div>
         <div class="panel-body">
           <div class="row">
-            <?php while($tagged_photo = $tagged_photos->fetch_object()):
-                $photos = explode(" ", $tagged_photo->photos_id);
+            <?php while($tag = $tags->fetch_object()):
+                $photos = explode(" ", $tag->photos_id);
                 $photos = join("','", $photos);
                 $query = "SELECT id, name, description FROM photo WHERE id IN ('$photos');";
                 if(!$result = $mysqli->query($query)){
                   echo "Errore nella query dei tags" . $mysqli->error;
                 }
-                while($photo = $result->fetch_object()):
+                if($result->num_rows):
+                  while($photo = $result->fetch_object()):
             ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
@@ -168,13 +169,27 @@ session_write_close();
               </div>
             </div>
           <?php endwhile;
+          else: ?>
+            <div class="col-sm-4">
+              <div class="panel panel-default">
+                <div class="panel-body">
+                  <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/broken.png" ?>" alt="Immagine">
+                </div>
+                <table class="table">
+                  <ul class="list-group">
+                    <li class="list-group-item text-center"><h4>This photo doesn't exist anymore :(</h4></li>
+                  </ul>
+                </table>
+              </div>
+            </div>
+        <?php endif;
         endwhile; ?>
       </div>
     </div>
   </div>
 <?php $mysqli->close();
 endif;
-if ($tagged_photos->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 && $albums->num_rows == 0): ?>
+if ($tags->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 && $albums->num_rows == 0): ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title text-center"><b>Search result</b></h3>

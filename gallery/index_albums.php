@@ -32,7 +32,7 @@
         <h3 class="panel-title text-center"><b>Your Albums</b></h3>
       </div>
       <div class="panel-body">
-        <?php if($albums->num_rows != 0):
+        <?php if($albums->num_rows):
           while($ra = $albums->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">

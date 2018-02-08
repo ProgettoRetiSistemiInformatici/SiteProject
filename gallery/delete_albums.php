@@ -30,7 +30,9 @@ $mysqli->close();
       <?php include '../shared/header.php'; ?>
     </header>
     <!-- Menu -->
-    <?php include '../shared/menuProfile.php'; ?>
+    <?php include '../shared/menuProfile.php';
+      if($albums->num_rows):
+    ?>
     <form id="formfield" action="delete.php" method="post">
       <div class="row">
         <div class="col-md-4">
@@ -62,10 +64,6 @@ $mysqli->close();
                   <table class="table">
                     <ul class="list-group">
                       <li class="list-group-item text-center"><h4><b><?php echo $ra->title; ?></b></h4></li>
-                    </ul>
-                  </table>
-                  <div class="table">
-                    <ul class="list-group">
                       <li class="list-group-item">
                         <div class="checkbox">
                           <label>
@@ -74,11 +72,22 @@ $mysqli->close();
                         </div>
                       </li>
                     </ul>
-                  </div>
+                  </table>
                 </div>
               </div>
             <?php endwhile; ?>
     </form>
+  <?php else: ?>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4 class = 'text-center'>You haven't created any album yet!!</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="confirm-album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

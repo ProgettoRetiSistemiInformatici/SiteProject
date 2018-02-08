@@ -2,7 +2,12 @@
 //le foto andranno caricate da database tramite php
 require 'initialization/dbconnection.php';
 
-$user = $_SESSION['current_user'];
+if(!isset($_SESSION['current_user'])){
+  $user = $_SESSION['current_user'];
+}
+else{
+  $user = -1;
+}
 
 $followers = "SELECT followed_id FROM relations WHERE follower_id = '$user';";
 if(!$followers = $mysqli->query($followers)){

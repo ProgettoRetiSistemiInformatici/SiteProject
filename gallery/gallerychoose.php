@@ -10,7 +10,7 @@ $current_user = $_SESSION['current_user'];
 
 global $mysqli;
 
-$query = "SELECT id, name, description FROM photo WHERE user_id = '$current_user';";
+$query = "SELECT * FROM photo WHERE user_id = '$current_user';";
 
 if(!$result = $mysqli->query($query)){
     die($mysqli->error);
@@ -32,7 +32,9 @@ $mysqli->close();
       <?php include '../shared/header.php'; ?>
     </header>
     <!-- Menu -->
-    <?php include '../shared/menuProfile.php'; ?>
+    <?php include '../shared/menuProfile.php';
+      if($result->num_rows):
+    ?>
     <form id="formfield" action="createalbum.php" method="post">
       <div class="panel panel-default">
         <div class="panel-heading">
@@ -87,6 +89,17 @@ $mysqli->close();
         </div>
       </div>
     </form>
+  <?php else: ?>
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h4 class = 'text-center'>You can't create an album, you haven't uploaded any photo yet!!</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  <?php endif; ?>
   </div>
   <!-- Modal -->
   <div class="modal fade" id="confirm-album" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

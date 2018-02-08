@@ -9,7 +9,7 @@ if(empty($_SESSION['current_user'])){
 
 $album_id = $_GET['album'];
 
-$query = "SELECT * FROM albums WHERE id ='$album_id';";
+$query = "SELECT id, title, user_id, photos_id, cover, (rate/votes) AS rate FROM albums WHERE id ='$album_id';";
 
 if(!$result = $mysqli->query($query)){
     die($mysqli->error);
@@ -106,7 +106,8 @@ session_write_close();
                 </div>
                 <div class="panel-body">
                   <div class="row">
-                    <?php while($photo = $photos->fetch_object()): ?>
+                    <?php if($photos->num_rows):
+                     while($photo = $photos->fetch_object()): ?>
                       <div class="col-sm-4">
                         <div class="panel panel-default">
                           <div class="panel-body">
@@ -129,7 +130,21 @@ session_write_close();
                           </table>
                         </div>
                       </div>
-                    <?php endwhile; ?>
+                    <?php endwhile;
+                    else: ?>
+                    <div class="col-sm-4">
+                      <div class="panel panel-default">
+                        <div class="panel-body">
+                          <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/broken.png" ?>" alt="Immagine">
+                        </div>
+                        <table class="table">
+                          <ul class="list-group">
+                            <li class="list-group-item text-center"><h4>This photo doesn't exist anymore :(</h4></li>
+                          </ul>
+                        </table>
+                      </div>
+                    </div>
+                  <?php endif; ?>
                     </div>
                   </div>
                 </div>
