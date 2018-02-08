@@ -2,17 +2,17 @@
 
 <h1>Titolo: Photolio</h1>
 <p>Sito che permette la visualizzazione, upload, commento e condivisione di immagini.</p>
-</br>
+
 <h3>Studenti partcecipanti:</h3>
-</br>
-<p> Nome: Gianluca</p>
-<p> Cognome: Bianchini</p>
-<p> Matricola: 1404678</p>
-</br>
-<p> Nome: Manuel</p>
-<p> Cognome: Mancini</p>
-<p> Matricola: 1332151</p>
-</br>
+
+<p> Nome: Gianluca
+Cognome: Bianchini
+Matricola: 1404678</p>
+
+<p> Nome: Manuel
+Cognome: Mancini
+Matricola: 1332151</p>
+
 <h3>Software consegnato:</h3>
 <p>File contenente lo script bash per il lancio dell'applicazione</p>
 
@@ -28,6 +28,6 @@ per avviare il progetto da terminale, nella directory contenente i file digitare
 
 <h3>File sorgente: </h3>
 <p>Localizzati nella cartella SiteProject</p>
-</br>
+
 <h3>Documentazione del progetto: </h3>
 <p>Localizzata nella cartella ProjectDocs</p>
