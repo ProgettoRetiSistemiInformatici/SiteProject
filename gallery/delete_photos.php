@@ -41,7 +41,7 @@ $mysqli->close();
       <div class="panel panel-default">
         <div class="panel-body">
           <?php
-          while($photo = $photos->fetch_object()){ ?>
+          while($photo = $photos->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -67,7 +67,7 @@ $mysqli->close();
                   </div>
                 </div>
               </div>
-            <?php } ?>
+            <?php endwhile; ?>
     </form>
   </div>
   <!-- Modal -->

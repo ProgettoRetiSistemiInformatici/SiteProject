@@ -28,9 +28,9 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-body">
-          <?php if($result->num_rows){ ?>
+          <?php if($result->num_rows): ?>
             <div class="col-md-6">
-            <?php while($profile = $result->fetch_object()){ ?>
+            <?php while($profile = $result->fetch_object()): ?>
               <div class="panel panel-default">
                 <div class="panel-body">
                   <div class="col-md-4">
@@ -58,12 +58,11 @@
                   <a href="../profiles/profile.php?user=<?php echo $profile->id ?>" class="btn btn-default pull-right">Show profile</a>
                 </div>
               </div>
-              <?php  } ?>
-            </div>
-            <?php  }
-              else {
-                echo "<h4 class = 'text-center'>No profiles to show.</h4>";
-            }?>
+            <?php endwhile; ?>
+          </div>
+        <?php else :
+              echo "<h4 class = 'text-center'>No profiles to show.</h4>";
+            endif; ?>
           </div>
         </div>
       </div>

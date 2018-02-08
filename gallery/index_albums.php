@@ -33,7 +33,7 @@
       </div>
       <div class="panel-body">
         <?php if($albums->num_rows != 0):
-          while($ra = $albums->fetch_object()){ ?>
+          while($ra = $albums->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -53,7 +53,8 @@
                 </table>
               </div>
             </div>
-          <?php } else :?>
+          <?php endwhile;
+        else: ?>
             <div class="col-sm-12">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -61,7 +62,7 @@
                 </div>
               </div>
             </div>
-        <?php  endif ?>
+        <?php endif; ?>
       </div>
     </div>
   </div>

@@ -34,52 +34,57 @@ $mysqli->close();
     <!-- Menu -->
     <?php include '../shared/menuProfile.php'; ?>
     <form id="formfield" action="createalbum.php" method="post">
-      <div class="row">
-        <div class="col-md-4">
-          <div class="form-group">
-            <label for="inputTitle">Album title:</label>
-              <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Title" required>
-          </div>
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center">New Album</h3>
         </div>
-        <div class="col-md-8">
-          <div class="pull-right" style="margin-top: 26px">
-            <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-primary">Accept</button>
-            <button type="reset" class="btn btn-default">Reset</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <?php /*Fetch object array */
-        while($obj = $result->fetch_object()){ ?>
-          <div class="col-sm-4">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <a href="photo_page/comments.php?photo_id=<?php echo $obj->id?>">
-                  <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
-                </a>
-              </div>
-              <table class="table">
-                <ul class="list-group">
-                  <li class="list-group-item text-center"><h4><?php echo $obj->description ?></h4></li>
-                </ul>
-              </table>
-              <div class="panel panel-default">
-                  <div class="panel-body">
-                    <div class="checkbox">
-                      <label>
-                        <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->id?>">Add to this album</input>
-                      </label>
-                    </div>
-                    <div class="radio">
-                      <label>
-                        <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
-                      </label>
-                    </div>
-                  </div>
-                </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="inputTitle">Album title:</label>
+                  <input type="text" class="form-control" id="inputTitle" name="title" placeholder="Title" required>
               </div>
             </div>
-        <?php } ?>
+            <div class="col-md-8">
+              <div class="pull-right" style="margin-top: 26px">
+                <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-primary">Accept</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <?php /*Fetch object array */
+            while($obj = $result->fetch_object()): ?>
+              <div class="col-sm-4">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <a href="photo_page/comments.php?photo_id=<?php echo $obj->id?>">
+                      <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
+                    </a>
+                  </div>
+                  <table class="table">
+                    <ul class="list-group">
+                      <li class="list-group-item text-center"><h4><?php echo $obj->description ?></h4></li>
+                      <li class="list-group-item">
+                        <div class="checkbox">
+                          <label>
+                            <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->id?>">Add to this album</input>
+                          </label>
+                        </div>
+                        <div class="radio">
+                          <label>
+                            <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
+                          </label>
+                        </div>
+                      </li>
+                    </ul>
+                  </table>
+                </div>
+              </div>
+            <?php endwhile; ?>
+          </div>
+        </div>
       </div>
     </form>
   </div>

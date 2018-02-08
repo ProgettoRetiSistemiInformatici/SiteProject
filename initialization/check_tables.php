@@ -88,6 +88,26 @@
     }
   }
 
+
+    if ($result = $mysqli->query("SHOW TABLES LIKE 'sharing'")) {
+      if(!$result->num_rows == 1) {
+        //sql create table
+        $sql = "CREATE TABLE sharing(
+          id INT(5) NOT NULL AUTO_INCREMENT,
+          by_user_id INT(5) NOT NULL,
+          photo_id INT(5) NOT NULL,
+          PRIMARY KEY(id),
+          UNIQUE(by_user_id, photo_id),
+          FOREIGN KEY (by_user_id) REFERENCES login(id),
+          FOREIGN KEY (photo_id) REFERENCES photo(id));";
+
+        if ($mysqli->query($sql) === TRUE) {
+        } else {
+          echo "Error creating table: " . $mysqli->error;
+        }
+      }
+    }
+
   if ($result = $mysqli->query("SHOW TABLES LIKE 'relations'")) {
     if(!$result->num_rows == 1) {
       //sql create table
