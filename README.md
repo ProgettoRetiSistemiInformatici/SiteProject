@@ -3,13 +3,13 @@
 
 <h3>Studenti partcecipanti:</h3>
 
-<p> Nome: Gianluca
-Cognome: Bianchini
-Matricola: 1404678</p>
+<p> Nome: Gianluca </p>
+<p>Cognome: Bianchini </p>
+<p>Matricola: 1404678</p>
 
-<p> Nome: Manuel
-Cognome: Mancini
-Matricola: 1332151</p>
+<p> Nome: Manuel </p>
+<p>Cognome: Mancini </p>
+<p>Matricola: 1332151</p>
 
 <h3>Software consegnato:</h3>
 <p>File contenente lo script bash per il lancio dell'applicazione</p>
