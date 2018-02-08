@@ -1,10 +1,9 @@
-# SiteProject
-
 <h1>Titolo: Photolio</h1>
 <p>Sito che permette la visualizzazione, upload, commento e condivisione di immagini.</p>
 
 <h3>Studenti partcecipanti:</h3>
 
+<<<<<<< HEAD
 <p> Nome: Gianluca
 Cognome: Bianchini
 Matricola: 1404678</p>
@@ -12,6 +11,15 @@ Matricola: 1404678</p>
 <p> Nome: Manuel
 Cognome: Mancini
 Matricola: 1332151</p>
+=======
+<p> Nome: Gianluca</p>
+<p> Cognome: Bianchini</p>
+<p> Matricola: 1404678</p>
+
+<p> Nome: Manuel</p>
+<p> Cognome: Mancini</p>
+<p> Matricola: 1332151</p>
+>>>>>>> 5ef7b9fc4f309bdc0cef5df1ef1c4464b4f7c99c
 
 <h3>Software consegnato:</h3>
 <p>File contenente lo script bash per il lancio dell'applicazione</p>
