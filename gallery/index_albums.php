@@ -1,11 +1,15 @@
 <?php
   require '../initialization/dbconnection.php';
 
-  if(!isset($_SESSION["current_user"])){
-      header("Location: /index.php");
-  }
 
-  $current_user = $_SESSION['current_user'];
+  $guest = false;
+
+  if(!isset($_SESSION['current_user'])){
+    $guest = true;
+  }
+  else{
+    $current_user = $_SESSION['current_user'];
+  }
   $user = $_GET['user'];
 
   $query = "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id';";
