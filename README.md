@@ -1,7 +1,22 @@
 # SiteProject
-Sito che permette la visualizzazione, upload, commento e condivisione di immagini.
 
-<h2>Configurazione</h2>
+<h1>Titolo: Photolio</h1>
+<p>Sito che permette la visualizzazione, upload, commento e condivisione di immagini.</p>
+</br>
+<h3>Studenti partcecipanti:</h3>
+</br>
+<p> Nome: Gianluca</p>
+<p> Cognome: Bianchini</p>
+<p> Matricola: 1404678</p>
+</br>
+<p> Nome: Manuel</p>
+<p> Cognome: Mancini</p>
+<p> Matricola: 1332151</p>
+</br>
+<h3>Software consegnato:</h3>
+<p>File contenente lo script bash per il lancio dell'applicazione</p>
+
+<h3>Configurazione</h3>
 
 <p>posizionarsi all'interno della directory adibita a contenere i file: <span style="background-color: #9999;"><code style="font-size:12px;"> $ cd /path/to/projectfolder</code></span> e da qui scaricare la repository scrivendo <code style="font-size:12px;"><span style="background-color: #9999;">$ git clone https://github.com/ProgettoRetiSistemiInformatici/SiteProject.git</span></code></p>
 <p>posizionarsi poi nella directory contenente il file <code style="font-size:12px;">composer.json</code> digitando da terminale:</p>
@@ -11,9 +26,8 @@ Sito che permette la visualizzazione, upload, commento e condivisione di immagin
 
 per avviare il progetto da terminale, nella directory contenente i file digitare <span style="background-color: #9999;"><code style="font-size:12px;"> $ runphoto.sh</code></span>
 
-<h2>Features to fix/implement</h2>
-
-<p>There are still some fix to do: </p>
-<p> A user can't rate more than one time a photo</p>
-<p> Maybe change the exp method from follow to ratings</p>
-<p> Fix the google and facebook share button</p>
+<h3>File sorgente: </h3>
+<p>Localizzati nella cartella SiteProject</p>
+</br>
+<h3>Documentazione del progetto: </h3>
+<p>Localizzata nella cartella ProjectDocs</p>
