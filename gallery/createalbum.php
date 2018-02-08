@@ -12,8 +12,7 @@ $title = $_POST['title'];
 $cover = $_POST['cover'];
 $final;
 
-$ids = implode("|", $galleryitems);
-$ids = $ids . "|";
+$ids = implode(" ", $galleryitems);
 
 $user = $_SESSION['current_user'];
 

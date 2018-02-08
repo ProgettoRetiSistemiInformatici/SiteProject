@@ -1,9 +1,6 @@
 <?php
     require '../initialization/dbconnection.php';
 
-    session_start();
-    global $photo_id;
-
     $guest = false;
 
     if(empty($_SESSION['current_user'])){
@@ -11,7 +8,6 @@
     }
 
     $photo_id = $_GET['photo_id'];
-    $_SESSION['photo_id'] = $photo_id;
 
     global $mysqli;
     $query = "SELECT name, user_id, description, (rate/votes) AS finalrate FROM photo WHERE id ='$photo_id';";
@@ -30,7 +26,7 @@
     }
 
     $query = "SELECT firstname, email FROM login WHERE id = '$photographer_id';";
-    $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id AND comments.photo_id = '$photo_id'";
+    $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id AND comments.photo_id = '$photo_id';";
     if ($mysqli->multi_query($query)){
       if($result = $mysqli->store_result()){
           $photographer = $result->fetch_object();
@@ -45,6 +41,7 @@
         $comments = $mysqli->store_result();
       }
     }
+
     $mysqli -> close();
 
 ?>
@@ -59,6 +56,7 @@
       <!-- Menu -->
         <?php include '../shared/menuProfile.php'; ?>
       <!-- Photo Div -->
+      <form action="save_comment.php?photo_id=<?php echo $photo_id; ?>" method="post">
         <div class="row">
           <div class="col-md-12">
             <div class="panel panel-default">
@@ -81,44 +79,41 @@
                       <ul class="list-group">
                         <li class="list-group-item text-center"><p><b>Description:</b> <?php echo $desc; ?></p></li>
                         <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
-                        <li class="list-group-item">
-                          <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                        <li class="list-group-item text-center">
+                          <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
                             class="btn btn-danger" aria-hidden="true"
                             target="_blank">Share on G+</a>
-                          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
                             class="btn btn-primary" aria-hidden="true"
                             target="_blank">Share on Facebook</a>
-                        </li>
+                      </li>
                       </ul>
                     </table>
                   </div>
                 </div>
                 <?php
-                if(!$guest){ ?>
-                  <form action="saveComment.php" method="post">
-                    <div class="col-md-12 text-center">
-                      <div class="form-group">
-                        <p><b>Rate:</b></p>
-                        <label class="radio-inline">
-                          <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
-                        </label>
-                        <label class="radio-inline">
-                          <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
-                        </label>
-                      </div>
-                      <button class="btn btn-primary" type="submit">Add new vote</button>
+                if(!$guest): ?>
+                  <div class="col-md-12 text-center">
+                    <div class="form-group">
+                      <p><b>Rate:</b></p>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio1" value="1"> 1
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio2" value="2"> 2
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio3" value="3"> 3
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio4" value="4"> 4
+                      </label>
+                      <label class="radio-inline">
+                        <input type="radio" name="rate" id="inlineRadio5" value="5"> 5
+                      </label>
                     </div>
-                  </form>
-              <?php } ?>
+                  </div>
+              <?php endif ?>
               </div>
             </div>
           </div>
@@ -153,24 +148,23 @@
                   </table>
                 </div>
                 <?php
-                  if(!$guest){ ?>
-                    <form action="saveComment.php" method="post">
-                      <div class="col-md-6 text-center">
-                        <div class="form-group">
-                          <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
-                        </div>
+                  if(!$guest): ?>
+                    <div class="col-md-6 text-center">
+                      <div class="form-group">
+                        <textarea name="comment" id="insertComment" rows="3" class="form-control" placeholder="Comment..."></textarea>
                       </div>
-                      <div class="row">
-                        <div class="col-md-12 text-center">
-                          <button class="btn btn-primary" type="submit">Add new comment</button>
-                        </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-12 text-center">
+                        <button class="btn btn-primary" type="submit">Send</button>
                       </div>
-                    </form>
-                <?php } ?>
+                    </div>
+                <?php endif ?>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </form>
+    </div>
 </body>
 </html>

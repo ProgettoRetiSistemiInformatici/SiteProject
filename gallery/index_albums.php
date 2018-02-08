@@ -1,8 +1,15 @@
 <?php
   require '../initialization/dbconnection.php';
-  require "../profiles/tokenize.php";
 
-  $current_user = $_SESSION['current_user'];
+
+  $guest = false;
+
+  if(!isset($_SESSION['current_user'])){
+    $guest = true;
+  }
+  else{
+    $current_user = $_SESSION['current_user'];
+  }
   $user = $_GET['user'];
 
   $query = "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id';";
@@ -25,7 +32,7 @@
         <h3 class="panel-title text-center"><b>Your Albums</b></h3>
       </div>
       <div class="panel-body">
-        <?php if($albums->num_rows != 0){
+        <?php if($albums->num_rows != 0):
           while($ra = $albums->fetch_object()){ ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
@@ -46,9 +53,7 @@
                 </table>
               </div>
             </div>
-          <?php }
-          }
-          else{ ?>
+          <?php } else :?>
             <div class="col-sm-12">
               <div class="panel panel-default">
                 <div class="panel-body">
@@ -56,7 +61,7 @@
                 </div>
               </div>
             </div>
-        <?php  } ?>
+        <?php  endif ?>
       </div>
     </div>
   </div>

@@ -53,11 +53,17 @@
       $sql = "CREATE TABLE comments(
         id INT(5) NOT NULL AUTO_INCREMENT,
         user_id INT(5) NOT NULL,
-        photo_id INT(5) NOT NULL,
+        photo_id INT(5) NULL,
+        album_id INT(5) NULL,
         comment VARCHAR(200) NOT NULL,
         PRIMARY KEY(id),
         FOREIGN KEY(user_id) REFERENCES login(id),
-        FOREIGN KEY(photo_id) REFERENCES photo(id));";
+        FOREIGN KEY(photo_id) REFERENCES photo(id),
+        FOREIGN KEY(album_id) REFERENCES albums(id),
+        CHECK(
+          CASE WHEN album_id IS NULL THEN 0 ELSE 1 END +
+          CASE WHEN photo_id IS NULL THEN 0 ELSE 1 END = 1
+        ));";
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
@@ -110,6 +116,8 @@
         user_id INT(5) NOT NULL,
         photos_id TEXT NOT NULL,
         cover VARCHAR(64) DEFAULT NULL,
+        rate INT(5) NOT NULL DEFAULT 0,
+        votes INT(5) NOT NULL DEFAULT 0,
         PRIMARY KEY(id),
         FOREIGN KEY (user_id) REFERENCES login(id));";
 

@@ -37,7 +37,7 @@ session_write_close();
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <a href="photo_page/comments.php?photo_id=<?php echo $obj->id?>">
+                  <a href="../gallery/photo_page.php?photo_id=<?php echo $obj->id?>">
                     <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$obj->name ?>" alt="Immagine">
                   </a>
                 </div>
