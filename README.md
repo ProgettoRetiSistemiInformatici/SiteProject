@@ -1,7 +1,7 @@
 <h1>Titolo: Photolio</h1>
 <p>Sito che permette la visualizzazione, upload, commento e condivisione di immagini.</p>
 
-<h3>Studenti partcecipanti:</h3>
+<h3>Studenti partecipanti:</h3>
 
 <p> Nome: Gianluca </br>
 Cognome: Bianchini </br>
