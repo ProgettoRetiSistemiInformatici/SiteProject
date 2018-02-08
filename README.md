@@ -6,7 +6,7 @@
 <p> Nome: Gianluca </p>
 <p>Cognome: Bianchini </p>
 <p>Matricola: 1404678</p>
-
+<span></span>
 <p> Nome: Manuel </p>
 <p>Cognome: Mancini </p>
 <p>Matricola: 1332151</p>
@@ -20,7 +20,7 @@
 <p>posizionarsi poi nella directory contenente il file <code style="font-size:12px;">composer.json</code> digitando da terminale:</p>
 <p><span style="background-color: #9999;"><code style="font-size:12px;">$cd /google-login/GoogleAPI</code></span></p>
 <p>inizializzare il composer:<span style="background-color: #9999;"><code style="font-size:12px;">$ composer init </code></span> e installarlo <span style="background-color: #9999;"><code style="font-size:12px;">$ composer install</code></span></p>
-<h2>Avvio</h2>
+<h4>Avvio</h4>
 
 per avviare il progetto da terminale, nella directory contenente i file digitare <span style="background-color: #9999;"><code style="font-size:12px;"> $ runphoto.sh</code></span>
 
