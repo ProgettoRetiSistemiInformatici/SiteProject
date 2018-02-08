@@ -247,7 +247,6 @@ session_write_close();
   </div>
 </div>
 <script>
-
   $('#submit').click(function(){
     var current_user = <?php echo $current_user ?>;
     $.ajax({
