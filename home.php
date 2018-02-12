@@ -192,7 +192,17 @@ session_write_close();
       </div>
     </div>
   </div>
-    <script>
+  <!-- Modal -->
+  <div class="modal fade" id="share-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          Photo shared with your follower!
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
     $('#share').click(function() {
       var photo_id = <?php echo $photo_id ?>;
       $.ajax({
@@ -204,6 +214,6 @@ session_write_close();
         }
       });
     });
-  </script>
+</script>
 </body>
 </html>
