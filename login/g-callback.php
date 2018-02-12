@@ -1,7 +1,7 @@
 <?php
 	require_once "config.php";
 	require '../initialization/dbconnection.php';
-    
+
     error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
@@ -28,7 +28,7 @@
         $mysqli->real_escape_string($email);
         $result = $mysqli->query("SELECT id, email FROM login WHERE email = '$email'");
         if(!$result->num_rows){
-           $query1 = "INSERT INTO login  (firstname, lastname, email, password) VALUES('$Name', '$Lastname', '$email', '$password');";
+           $query1 = "INSERT INTO login (firstname, lastname, email, password) VALUES('$Name', '$Lastname', '$email', '$password');";
            if(!$mysqli->query($query1)){
                 $error = "error in mysql!";
                 die($mysqli->error);

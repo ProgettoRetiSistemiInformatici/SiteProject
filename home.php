@@ -24,7 +24,7 @@ else{
 }
 
 $query = "SELECT id, name, title FROM photo ORDER BY id DESC LIMIT 8;";
-$query .= "SELECT * FROM login ORDER BY id DESC LIMIT 3;";
+$query .= "SELECT * FROM login ORDER BY id DESC LIMIT 5;";
 $query .= "SELECT sharing.id, sharing.by_user_id, photo.id, photo.name, photo.description, login.email FROM photo INNER JOIN sharing ON photo.id = sharing.photo_id AND sharing.by_user_id IN ('$follower_ids') INNER JOIN login ON sharing.by_user_id = login.id ORDER BY sharing.id DESC LIMIT 3;";
 
 if ($mysqli->multi_query($query)){
@@ -70,7 +70,7 @@ session_write_close();
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-heading">
-                    <a href="../profiles/profile.php?user=<?php echo $obj->by_user_id ?>"><h3 class="panel-title">Shared by: <?php echo $obj->email; ?></h3></a>
+                    <a href="../profiles/profile.php?user=<?php echo $obj->by_user_id ?>"><h3 class="panel-title">Shared by: <?php echo $obj->firstname; ?></h3></a>
                   </div>
                   <div class="panel-body">
                     <a href="../gallery/photo_page.php?photo_id=<?php echo $obj->id; ?>">
@@ -170,7 +170,6 @@ session_write_close();
                             if (!empty($profile->firstname) || !empty($profile->lastname)){
                               echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $profile->lastname . "</li>";
                             }
-                            echo "<li class='list-group-item'><b>Email:</b> " . $profile->email . "</li>";
                             if(!empty($profile->birth)){
                               $date = date('d-m-Y',strtotime($profile->birth));
                               echo "<li class='list-group-item'><b>Birth Date:</b> " . $date ."</li>";

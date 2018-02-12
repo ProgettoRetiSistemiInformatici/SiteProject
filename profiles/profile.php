@@ -93,7 +93,6 @@ session_write_close();
                 if (!empty($profile->firstname) || !empty($profile->lastname)){
                   echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $profile->lastname . "</li>";
                 }
-                echo "<li class='list-group-item'><b>Email:</b> " . $profile->email . "</li>";
                 if(!empty($date_right)){
                   echo "<li class='list-group-item'><b>Birth Date:</b> " . $date_right ."</li>";
                 }

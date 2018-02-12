@@ -22,17 +22,12 @@ if($album == NULL){
 
 $photographer_id = $album->user_id;
 
-$query = "SELECT firstname, email FROM login WHERE id = '$photographer_id';";
+$query = "SELECT firstname FROM login WHERE id = '$photographer_id';";
 $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id AND comments.album_id = '$album_id';";
 if ($mysqli->multi_query($query)){
   if($result = $mysqli->store_result()){
       $photographer = $result->fetch_object();
-      if($photographer->firstname == NULL){
-        $fuser = $photographer->email;
-      }
-      else{
-        $fuser = $photographer->firstname;
-      }
+      $fuser = $photographer->firstname;
   }
   if($mysqli->next_result()){
     $comments = $mysqli->store_result();

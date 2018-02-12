@@ -89,7 +89,6 @@ session_write_close();
                             if (!empty($profile->firstname) || !empty($profile->lastname)){
                               echo "<li class='list-group-item'><b>Name:</b> " . $profile->firstname . " " . $profile->lastname . "</li>";
                             }
-                            echo "<li class='list-group-item'><b>Email:</b> " . $profile->email . "</li>";
                             if(!empty($profile->birth)){
                               $date = date('d-m-Y',strtotime($profile->birth));
                               echo "<li class='list-group-item'><b>Birth Date:</b> " . $date ."</li>";

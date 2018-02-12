@@ -15,7 +15,8 @@ if(!$password || !$email){
 $password = hash('sha256', $password);//Creazione dell'hash
 $mysqli-> real_escape_string($email);
 $mysqli-> real_escape_string($password);
-$query = "INSERT INTO login (password, email) VALUES ('$password', '$email');";
+$nick = explode('@', $email);
+$query = "INSERT INTO login (password, email, firstname) VALUES ('$password', '$email', '$nick[0]');";
 // Esecuzione della query e controllo degli eventuali errori
 if (!$mysqli->query($query)) {
 	die($mysqli->error);
