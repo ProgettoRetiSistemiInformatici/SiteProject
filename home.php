@@ -25,7 +25,7 @@ else{
 
 $query = "SELECT id, name, title FROM photo ORDER BY id DESC LIMIT 8;";
 $query .= "SELECT * FROM login ORDER BY id DESC LIMIT 5;";
-$query .= "SELECT sharing.id, sharing.by_user_id, photo.id, photo.name, photo.description, login.email FROM photo INNER JOIN sharing ON photo.id = sharing.photo_id AND sharing.by_user_id IN ('$follower_ids') INNER JOIN login ON sharing.by_user_id = login.id ORDER BY sharing.id DESC LIMIT 6;";
+$query .= "SELECT sharing.id, sharing.by_user_id, photo.id, photo.name, photo.title, login.firstname FROM photo INNER JOIN sharing ON photo.id = sharing.photo_id AND sharing.by_user_id IN ('$follower_ids') INNER JOIN login ON sharing.by_user_id = login.id ORDER BY sharing.id DESC LIMIT 6;";
 
 if ($mysqli->multi_query($query)){
     $photos = $mysqli->store_result();
@@ -81,16 +81,13 @@ session_write_close();
                     <ul class="list-group">
                       <li class="list-group-item text-center"><h4><?php echo $obj->title ?></h4></li>
                       <li class="list-group-item text-center">
-                      <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $obj->id; ?>"
-                         class="btn btn-danger" aria-hidden="true"
-                         target="_blank">G+</a>
-                      <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
-                         class="btn btn-primary" aria-hidden="true"
-                         target="_blank">Facebook</a>
-                      <?php if(!$guest): ?>
-                         <button id="share" type="button" data-toggle="modal" data-target="#share-photo" class="btn btn-default">Share</button>
-                      <?php endif; ?>
-                    </li>
+                        <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $obj->id; ?>"
+                          class="btn btn-danger" aria-hidden="true"
+                          target="_blank">G+</a>
+                        <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
+                          class="btn btn-primary" aria-hidden="true"
+                          target="_blank">Facebook</a>
+                      </li>
                     </ul>
                   </table>
                 </div>
@@ -137,9 +134,6 @@ session_write_close();
                           <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $obj->id; ?>&amp"
                             class="btn btn-primary" aria-hidden="true"
                             target="_blank">Facebook</a>
-                          <?php if(!$guest): ?>
-                            <button id="share" type="button" data-toggle="modal" data-target="#share-photo" class="btn btn-default">Share</button>
-                          <?php endif; ?>
                         </li>
                       </ul>
                     </table>
@@ -192,28 +186,5 @@ session_write_close();
       </div>
     </div>
   </div>
-  <!-- Modal -->
-  <div class="modal fade" id="share-photo" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body">
-          Photo shared with your follower!
-        </div>
-      </div>
-    </div>
-  </div>
-  <script>
-    $('#share').click(function() {
-      var photo_id = <?php echo $photo_id ?>;
-      $.ajax({
-        type: 'POST',
-        url: 'sharing.php',
-        data: { photo_id: photo_id },
-        success: function(response) {
-          content.html(response);
-        }
-      });
-    });
-</script>
 </body>
 </html>

@@ -40,6 +40,7 @@
         tags TEXT,
         PRIMARY KEY (id),
         FOREIGN KEY(user_id) REFERENCES login(id) ON DELETE CASCADE);";
+        
       if ($mysqli->query($sql) === TRUE) {
       } else {
         echo "Error creating photo: " . $mysqli->error;
