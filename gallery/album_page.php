@@ -9,39 +9,30 @@ if(empty($_SESSION['current_user'])){
 
 $album_id = $_GET['album'];
 
-$query = "SELECT id, title, user_id, photos_id, cover, (rate/votes) AS rate FROM albums WHERE id ='$album_id';";
+$query = "SELECT albums.id AS album_id, albums.title AS album_title, albums.user_id, (albums.rate/albums.votes) AS rate, photo.id AS photo_id, photo.title AS photo_title, photo.name AS photo_name FROM albums INNER JOIN contents ON albums.id ='$album_id' AND contents.album_id = '$album_id' INNER JOIN photo ON photo.id = contents.photo_id;";
 
 if(!$result = $mysqli->query($query)){
     die($mysqli->error);
 }
-$album = $result->fetch_object();
+$album = $result->fetch_array(MYSQLI_ASSOC);
+$rate = $album['rate'];
 
 if($album == NULL){
     echo "error, album not selected";
 }
 
-$photographer_id = $album->user_id;
+$photographer_id = $album['user_id'];
 
 $query = "SELECT firstname FROM login WHERE id = '$photographer_id';";
 $query .= "SELECT comments.comment, login.id, login.email, login.firstname FROM login INNER JOIN comments ON comments.user_id = login.id AND comments.album_id = '$album_id';";
 if ($mysqli->multi_query($query)){
-  if($result = $mysqli->store_result()){
-      $photographer = $result->fetch_object();
+  if($photographer = $mysqli->store_result()){
+      $photographer = $photographer->fetch_object();
       $fuser = $photographer->firstname;
   }
   if($mysqli->next_result()){
     $comments = $mysqli->store_result();
   }
-}
-
-$idS = $album->photos_id;
-
-$idS = explode(" ", $idS);
-$idS = join("','", $idS);
-$query = "SELECT id, name, title, description FROM photo WHERE id IN ('$idS');";
-
-if(!$photos = $mysqli->query($query)){
-  echo "Errore nella query degli ids" . $mysqli->error;
 }
 
 $mysqli->close();
@@ -80,10 +71,10 @@ session_write_close();
                   <div class="col-md-12">
                     <div class="panel panel-default">
                      <div class="panel-body">
-                       <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
+                       <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
                           class="btn btn-danger" aria-hidden="true"
                           target="_blank">G+</a>
-                       <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
+                       <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
                           class="btn btn-primary pull-right" aria-hidden="true"
                           target="_blank">Facebook</a>
                       </div>
@@ -93,27 +84,26 @@ session_write_close();
               </div>
               <div class="panel panel-default">
                 <div class="panel-heading">
-                  <h3 class="panel-title text-center"><b>Title: </b><?php echo $album->title; ?></h3>
+                  <h3 class="panel-title text-center"><b>Title: </b><?php echo $album['album_title']; ?></h3>
                 </div>
                 <div class="panel-body">
                   <div class="row">
-                    <?php if($photos->num_rows):
-                     while($photo = $photos->fetch_object()): ?>
+                    <?php do{ ?>
                       <div class="col-sm-4">
                         <div class="panel panel-default">
                           <div class="panel-body">
-                            <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id; ?>">
-                              <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+                            <a href="../gallery/photo_page.php?photo_id=<?php echo $album['photo_id']; ?>">
+                              <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$album['photo_name'] ?>" alt="Immagine">
                             </a>
                           </div>
                           <table class="table">
                             <ul class="list-group">
-                              <li class="list-group-item text-center"><p><b><?php echo $photo->title ?></b></p></li>
+                              <li class="list-group-item text-center"><p><b><?php echo $album['photo_title'] ?></b></p></li>
                               <li class="list-group-item text-center">
-                         		<a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>"
+                         		<a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>"
                           		 class="btn btn-danger" aria-hidden="true"
                           		 target="_blank">G+</a>
-                         		<a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                         		<a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>&amp"
                            	 	 class="btn btn-primary" aria-hidden="true"
                             	 target="_blank">Facebook</a>
                               </li>
@@ -121,21 +111,7 @@ session_write_close();
                           </table>
                         </div>
                       </div>
-                    <?php endwhile;
-                    else: ?>
-                    <div class="col-sm-4">
-                      <div class="panel panel-default">
-                        <div class="panel-body">
-                          <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/broken.png" ?>" alt="Immagine">
-                        </div>
-                        <table class="table">
-                          <ul class="list-group">
-                            <li class="list-group-item text-center"><h4>This photo doesn't exist anymore :(</h4></li>
-                          </ul>
-                        </table>
-                      </div>
-                    </div>
-                  <?php endif; ?>
+                    <?php }while($album = $result->fetch_array(MYSQLI_ASSOC)); ?>
                     </div>
                   </div>
                 </div>
@@ -151,7 +127,7 @@ session_write_close();
                             <table class="table">
                               <ul class="list-group">
                                 <li class="list-group-item">
-                                  <p><b>Rating:</b> <?php echo round($album->rate, 2); ?>/5</p>
+                                  <p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p>
                                 </li>
                                 <?php if(!$guest): ?>
                                   <li class="list-group-item">

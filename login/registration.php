@@ -30,17 +30,6 @@ if($result = $mysqli->query($query)){
 $mysqli->close();
 session_write_close();
 
+header('Location: ../home.php');
+
 ?>
-<!DOCTYPE html>
-<html>
-<head>
-	<title></title>
-</head>
-<body>
-	<h1>Risultati registrazione</h1>
-	<?php if ($error): ?>
-		<p style="color: red"><?php echo $error ?></p>
-	<?php else: header('Location: ../home.php'); ?>
-	<?php endif ?>
-</body>
-</html>

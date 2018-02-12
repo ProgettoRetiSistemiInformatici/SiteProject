@@ -35,10 +35,11 @@
         user_id int(5) NOT NULL,
         rate INT(5) NOT NULL DEFAULT 0,
         votes INT(5) NOT NULL DEFAULT 0,
+        title VARCHAR(30) NOT NULL,
         description VARCHAR(160),
         tags TEXT,
         PRIMARY KEY (id),
-        FOREIGN KEY(user_id) REFERENCES login(id));";
+        FOREIGN KEY(user_id) REFERENCES login(id) ON DELETE CASCADE);";
       if ($mysqli->query($sql) === TRUE) {
       } else {
         echo "Error creating photo: " . $mysqli->error;
@@ -71,8 +72,8 @@
         followed_id INT(5) NOT NULL,
         PRIMARY KEY(id),
         UNIQUE(follower_id, followed_id),
-        FOREIGN KEY (follower_id) REFERENCES login(id),
-        FOREIGN KEY (followed_id) REFERENCES login(id));";
+        FOREIGN KEY (follower_id) REFERENCES login(id) ON DELETE CASCADE,
+        FOREIGN KEY (followed_id) REFERENCES login(id) ON DELETE CASCADE);";
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
@@ -88,12 +89,11 @@
         id INT(5) NOT NULL AUTO_INCREMENT,
         title VARCHAR(16) NOT NULL,
         user_id INT(5) NOT NULL,
-        photos_id TEXT NOT NULL,
         cover VARCHAR(64) DEFAULT NULL,
         rate INT(5) NOT NULL DEFAULT 0,
         votes INT(5) NOT NULL DEFAULT 0,
         PRIMARY KEY(id),
-        FOREIGN KEY (user_id) REFERENCES login(id));";
+        FOREIGN KEY (user_id) REFERENCES login(id) ON DELETE CASCADE);";
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
@@ -114,8 +114,8 @@
         comment VARCHAR(200) NOT NULL,
         PRIMARY KEY(id),
         FOREIGN KEY(user_id) REFERENCES login(id),
-        FOREIGN KEY(photo_id) REFERENCES photo(id),
-        FOREIGN KEY(album_id) REFERENCES albums(id),
+        FOREIGN KEY(photo_id) REFERENCES photo(id) ON DELETE CASCADE,
+        FOREIGN KEY(album_id) REFERENCES albums(id) ON DELETE CASCADE,
         CHECK(
           CASE WHEN album_id IS NULL THEN 0 ELSE 1 END +
           CASE WHEN photo_id IS NULL THEN 0 ELSE 1 END = 1
@@ -124,6 +124,24 @@
       if ($mysqli->query($sql) === TRUE) {
       } else {
         echo "Error creating comments: " . $mysqli->error;
+      }
+    }
+  }
+
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'contents'")) {
+    if(!$result->num_rows == 1) {
+      //sql create table
+      $sql = "CREATE TABLE contents(
+        id INT(5) NOT NULL AUTO_INCREMENT,
+        album_id INT(5) NOT NULL,
+        photo_id INT(5) NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (album_id) REFERENCES albums(id) ON DELETE CASCADE,
+        FOREIGN KEY (photo_id) REFERENCES photo(id) ON DELETE CASCADE);";
+
+      if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating tags: " . $mysqli->error;
       }
     }
   }
@@ -138,8 +156,8 @@
             photo_id INT(5) NOT NULL,
             PRIMARY KEY(id),
             UNIQUE(by_user_id, photo_id),
-            FOREIGN KEY (by_user_id) REFERENCES login(id),
-            FOREIGN KEY (photo_id) REFERENCES photo(id));";
+            FOREIGN KEY (by_user_id) REFERENCES login(id) ON DELETE CASCADE,
+            FOREIGN KEY (photo_id) REFERENCES photo(id) ON DELETE CASCADE);";
 
           if ($mysqli->query($sql) === TRUE) {
           } else {

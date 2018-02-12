@@ -31,7 +31,7 @@ if(empty($_SESSION['current_user'])){
             <div class="col-md-12 text-center">
               <div class="form-group">
                 <label for="inputFile">Select an image:</label>
-                <input class="center-block" type="file" id="inputFile" name="fileToUpload">
+                <input class="center-block" type="file" id="inputFile" required name="fileToUpload" accept=".png, .jpg, .jpeg">
                 <p class="help-block" style="margin-top: 10px">Choose the image to upload</p>
               </div>
             </div>

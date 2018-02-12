@@ -25,7 +25,7 @@ else{
 
 $query = "SELECT id, name, title FROM photo ORDER BY id DESC LIMIT 8;";
 $query .= "SELECT * FROM login ORDER BY id DESC LIMIT 5;";
-$query .= "SELECT sharing.id, sharing.by_user_id, photo.id, photo.name, photo.description, login.email FROM photo INNER JOIN sharing ON photo.id = sharing.photo_id AND sharing.by_user_id IN ('$follower_ids') INNER JOIN login ON sharing.by_user_id = login.id ORDER BY sharing.id DESC LIMIT 3;";
+$query .= "SELECT sharing.id, sharing.by_user_id, photo.id, photo.name, photo.description, login.email FROM photo INNER JOIN sharing ON photo.id = sharing.photo_id AND sharing.by_user_id IN ('$follower_ids') INNER JOIN login ON sharing.by_user_id = login.id ORDER BY sharing.id DESC LIMIT 6;";
 
 if ($mysqli->multi_query($query)){
     $photos = $mysqli->store_result();

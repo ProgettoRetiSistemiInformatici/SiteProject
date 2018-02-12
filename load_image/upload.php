@@ -74,7 +74,7 @@ else {
         $nameExt = basename($name);
         $mysqli -> real_escape_string($current_user);
         $mysqli -> real_escape_string($nameExt);
-        $query = "INSERT INTO photo (name, user_id, title, description, tags) VALUES('$nameExt', '$current_user', '$title','$desc', '$tags');";
+        $query = "INSERT INTO photo (name, user_id, title, description) VALUES('$nameExt', '$current_user', '$title','$desc');";
         if(!$mysqli->query($query)){
           die($mysqli->error);
           $error = "error in mysql!";
