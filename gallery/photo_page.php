@@ -10,7 +10,7 @@
     $photo_id = $_GET['photo_id'];
 
     global $mysqli;
-    $query = "SELECT name, user_id, description, (rate/votes) AS finalrate FROM photo WHERE id ='$photo_id';";
+    $query = "SELECT name, user_id, title, description, (rate/votes) AS finalrate FROM photo WHERE id ='$photo_id';";
     if(!$result = $mysqli->query($query)){
         die($mysqli->error);
     }
@@ -18,6 +18,7 @@
         $obj = $result->fetch_object();
         $photo_name = $obj->name;
         $photographer_id = $obj->user_id;
+        $title = $obj->title;
         $desc = $obj->description;
         $rate = $obj->finalrate;
         if($rate == NULL){
@@ -64,32 +65,51 @@
                 <img class="center-block img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine" class='img-responsive center-block'>
               </div>
               <div class="panel-body">
-                <div class="col-md-6 text-center">
-                  <div class="panel panel-default">
-                    <div class="panel-body">
-                      <div class="col-md-12 text-center">
-                        <h3><b>Photographer:</b> <a href="../profiles/profile.php?user=<?php echo $photographer_id; ?>"><?php echo $fuser; ?></a></h3>
+                <div class="row">
+                  <div class="col-md-12 text-center">
+                    <div class="panel panel-default">
+                      <div class="panel-body">
+                        <div class="col-md-12 text-center">
+                          <h3><b>Photographer:</b> <a href="../profiles/profile.php?user=<?php echo $photographer_id; ?>"><?php echo $fuser; ?></a></h3>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="col-md-6">
-                  <div class="panel panel-default">
-                    <table class="table">
-                      <ul class="list-group">
-                        <li class="list-group-item text-center"><p><b>Description:</b> <?php echo $desc; ?></p></li>
-                        <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
-                        <li class="list-group-item text-center">
-                          <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
-                            class="btn btn-danger" aria-hidden="true"
-                            target="_blank">Share on G+</a>
-                          <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
-                            class="btn btn-primary" aria-hidden="true"
-                            target="_blank">Share on Facebook</a>
-                          <button id="share" type="button" data-toggle="modal" data-target="#share-photo" class="btn btn-default">Share</button>
-                        </li>
-                      </ul>
-                    </table>
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <table class="table">
+                        <ul class="list-group">
+                          <li class="list-group-item text-center"><p><b>Title:</b> <?php echo $title; ?></p></li>
+                          <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
+                          <li class="list-group-item text-center">
+                            <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
+                              class="btn btn-danger" aria-hidden="true"
+                              target="_blank">G+</a>
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
+                              class="btn btn-primary" aria-hidden="true"
+                              target="_blank">Facebook</a>
+                            <?php if(!$guest): ?>
+                              <button id="share" type="button" data-toggle="modal" data-target="#share-photo" class="btn btn-default">Share</button>
+                            <?php endif; ?>
+                          </li>
+                        </ul>
+                      </table>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="panel panel-default">
+                      <table class="table">
+                        <ul class="list-group">
+                          <?php if(!empty($desc)): ?>
+                            <li class="list-group-item text-center"><p><b>Description:</b> <?php echo $desc; ?></p></li>
+                          <?php else: ?>
+                            <li class="list-group-item text-center"><p><b>Description:</b> No description provided.</p></li>
+                          <?php endif; ?>
+                        </ul>
+                      </table>
+                    </div>
                   </div>
                 </div>
                 <?php
@@ -177,7 +197,6 @@
         </div>
       </div>
     </div>
-  </div>
   <script>
     $('#share').click(function() {
       var photo_id = <?php echo $photo_id ?>;

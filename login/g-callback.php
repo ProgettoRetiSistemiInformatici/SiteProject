@@ -1,12 +1,15 @@
 <?php
 	require_once "config.php";
 	require '../initialization/dbconnection.php';
+    
+    error_reporting(E_ALL);
+	ini_set('display_errors', 1);
 
-	if (isset($_SESSION['access_token']))
-		$gClient->setAccessToken($_SESSION['access_token']);
+	if (isset($_SESSION['google_token']))
+		$gClient->setAccessToken($_SESSION['google_token']);
 	else if (isset($_GET['code'])) {
 		$token = $gClient->fetchAccessTokenWithAuthCode($_GET['code']);
-		$_SESSION['access_token'] = $token;
+		$_SESSION['google_token'] = $token;
 	}
 
 	$oAuth = new Google_Service_Oauth2($gClient);
@@ -15,32 +18,33 @@
 
 
 	$email = $userData['email'];
-        $email = filter_var($email,FILTER_SANITIZE_STRING);
-	$gender = $userData['gender'];
-        $gender = filter_var($gender,FILTER_SANITIZE_STRING);
+    $email = filter_var($email,FILTER_SANITIZE_STRING);
 	$Name = $userData['givenName'];
-        $Lastname = $userData['familyName'];
+    $Lastname = $userData['familyName'];
 	$password = rand(555555, 999999999);
-				$password = hash('sha256', $password);//Creazione dell'hash
+	$password = hash('sha256', $password);//Creazione dell'hash
 
-				$mysqli->real_escape_string($password);
+		$mysqli->real_escape_string($password);
         $mysqli->real_escape_string($email);
-        $mysqli->real_escape_string($gender);
         $result = $mysqli->query("SELECT id, email FROM login WHERE email = '$email'");
         if(!$result->num_rows){
-           $query1 = "INSERT INTO login  (firstname, lastname, email, gender , password) VALUES($Name', '$Lastname', '$email', '$gender', '$password');";
+           $query1 = "INSERT INTO login  (firstname, lastname, email, password) VALUES('$Name', '$Lastname', '$email', '$password');";
            if(!$mysqli->query($query1)){
-                die($mysqli->error);
                 $error = "error in mysql!";
+                die($mysqli->error);
             }
-           }
-           else{
+            $query = "SELECT id FROM login WHERE email = '$email';";
+			if($result = $mysqli->query($query)){
+				$_SESSION['current_user'] = $result->fetch_object()->id;
+			}
+         }
+         else{
                $obj=$result->fetch_object();
                $_SESSION['current_user'] = $obj->id;
-           }
+         }
         $mysqli->close();
         session_write_close();
 
-        header('Location: index.php?user=' . $_SESSION['current_user']);
+        header('Location: ../home.php');
 	exit();
 ?>

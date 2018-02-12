@@ -20,7 +20,7 @@ $query="INSERT INTO albums (title, user_id, photos_id, cover) VALUES ('$title','
 if(!$mysqli->query($query)){
     die($mysqli->error);
 }
-header("Location: ../profiles/profile.php?user=". $user);
+header("Location: ../gallery/index_albums.php?user=". $user);
 exit();
 
 ?>

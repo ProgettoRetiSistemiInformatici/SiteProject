@@ -34,14 +34,18 @@ $mysqli->close();
       if($albums->num_rows):
     ?>
     <form id="formfield" action="delete.php" method="post">
-      <div class="row">
-        <div class="col-md-4">
-          <h3>Select the album or albums that you want to delete:</h3>
-        </div>
-        <div class="col-md-8">
-          <div class="pull-right" style="margin-top: 26px">
-            <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-danger">Delete</button>
-            <button type="reset" class="btn btn-default">Reset</button>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-md-4">
+              <h3>Select the album or albums that you want to delete:</h3>
+            </div>
+            <div class="col-md-8">
+              <div class="pull-right" style="margin-top: 26px">
+                <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-danger">Delete</button>
+                <button type="reset" class="btn btn-default">Reset</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

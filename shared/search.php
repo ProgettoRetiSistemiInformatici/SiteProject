@@ -6,7 +6,7 @@ $searchterm = $_POST['search'];
 
 $query = "SELECT * FROM login WHERE email LIKE '%{$searchterm}%' OR firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
 $query.= "SELECT id, cover, title FROM albums WHERE title LIKE '%{$searchterm}%';";
-$query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR description LIKE '%{$searchterm}%';";
+$query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%' OR description LIKE '%{$searchterm}%';";
 $query.= "SELECT id, photos_id FROM tags WHERE tag LIKE '%{$searchterm}%';";
 
 if ($mysqli->multi_query($query)){
@@ -121,13 +121,13 @@ session_write_close();
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                    <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id?>">
                       <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
                     </a>
                   </div>
                   <table class="table">
                     <ul class="list-group">
-                      <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
+                      <li class="list-group-item text-center"><h4><?php echo $photo->title ?></h4></li>
                     </ul>
                   </table>
                 </div>
@@ -147,7 +147,7 @@ session_write_close();
             <?php while($tag = $tags->fetch_object()):
                 $photos = explode(" ", $tag->photos_id);
                 $photos = join("','", $photos);
-                $query = "SELECT id, name, description FROM photo WHERE id IN ('$photos');";
+                $query = "SELECT id, name, title, description FROM photo WHERE id IN ('$photos');";
                 if(!$result = $mysqli->query($query)){
                   echo "Errore nella query dei tags" . $mysqli->error;
                 }
@@ -157,13 +157,13 @@ session_write_close();
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id?>">
+                  <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id?>">
                     <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
                   </a>
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
+                    <li class="list-group-item text-center"><h4><?php echo $photo->title ?></h4></li>
                   </ul>
                 </table>
               </div>

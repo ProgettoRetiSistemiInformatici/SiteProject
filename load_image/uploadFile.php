@@ -12,6 +12,12 @@ if(empty($_SESSION['current_user'])){
 <html>
 <head>
     <?php include '../shared/meta.php'; ?>
+    <style>
+      textarea.inputTitle {
+        display:block;
+        margin:1em 0;
+      }
+    </style>
 </head>
 <body>
   <div class="container">
@@ -32,8 +38,14 @@ if(empty($_SESSION['current_user'])){
           </div>
           <div class="row">
             <div class="col-md-6">
+              <label for="inputTitle">Title: <span id="chars">30</span> characters remaining</label>
+              <textarea name="title" class="form-control" id="inputTitle" required rows="1" maxlength="30" placeholder="Insert the title of the photo"></textarea>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
               <label for="inputDescription">Description:</label>
-              <textarea name="description" class="form-control" id="inputDescription" rows="3" placeholder="Insert a title or a short description of the photo"></textarea>
+              <textarea name="description" class="form-control" id="inputDescription" rows="3" placeholder="Insert a short description of the photo"></textarea>
             </div>
             <div class="col-md-6">
               <label for="inputTags">Tags:</label>
@@ -50,5 +62,13 @@ if(empty($_SESSION['current_user'])){
       </div>
     </div>
   </div>
+  <script>
+    var maxLength = 30;
+      $('#inputTitle').keyup(function() {
+        var length = $(this).val().length;
+        var length = maxLength-length;
+        $('#chars').text(length);
+    });
+  </script>
 </body>
 </html>

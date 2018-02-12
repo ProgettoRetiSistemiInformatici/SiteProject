@@ -43,7 +43,7 @@ $idS = $album->photos_id;
 
 $idS = explode(" ", $idS);
 $idS = join("','", $idS);
-$query = "SELECT id, name, description FROM photo WHERE id IN ('$idS');";
+$query = "SELECT id, name, title, description FROM photo WHERE id IN ('$idS');";
 
 if(!$photos = $mysqli->query($query)){
   echo "Errore nella query degli ids" . $mysqli->error;
@@ -84,18 +84,14 @@ session_write_close();
                   </div>
                   <div class="col-md-12">
                     <div class="panel panel-default">
-                      <table class="table">
-                        <ul class="list-group">
-                          <li class="list-group-item">
-                            <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
-                              class="btn btn-danger" aria-hidden="true"
-                              target="_blank">Share on G+</a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
-                              class="btn btn-primary pull-right" aria-hidden="true"
-                              target="_blank">Share on Facebook</a>
-                          </li>
-                        </ul>
-                      </table>
+                     <div class="panel-body">
+                       <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
+                          class="btn btn-danger" aria-hidden="true"
+                          target="_blank">G+</a>
+                       <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album->id; ?>&amp"
+                          class="btn btn-primary pull-right" aria-hidden="true"
+                          target="_blank">Facebook</a>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -111,20 +107,20 @@ session_write_close();
                       <div class="col-sm-4">
                         <div class="panel panel-default">
                           <div class="panel-body">
-                            <a href="../photo_page/comments.php?photo_id=<?php echo $photo->id; ?>">
+                            <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id; ?>">
                               <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
                             </a>
                           </div>
                           <table class="table">
                             <ul class="list-group">
-                              <li class="list-group-item text-center"><p><b><?php echo $photo->description ?></b></p></li>
+                              <li class="list-group-item text-center"><p><b><?php echo $photo->title ?></b></p></li>
                               <li class="list-group-item text-center">
-                                <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
-                                  class="btn btn-danger" aria-hidden="true"
-                                  target="_blank">Share on G+</a>
-                                <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
-                                  class="btn btn-primary" aria-hidden="true"
-                                  target="_blank">Share on Facebook</a>
+                         		<a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>"
+                          		 class="btn btn-danger" aria-hidden="true"
+                          		 target="_blank">G+</a>
+                         		<a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                           	 	 class="btn btn-primary" aria-hidden="true"
+                            	 target="_blank">Facebook</a>
                               </li>
                             </ul>
                           </table>

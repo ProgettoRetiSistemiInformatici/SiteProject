@@ -1,5 +1,5 @@
 <?php
-//include('MySession.php');
+
 require '../initialization/dbconnection.php';
 
 $password = $_POST['password'];
@@ -11,9 +11,6 @@ $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 if(!$password || !$email){
 	$error = 'Email e password sono obbligatori';
 }
-
-// Connessione al database
-global $mysqli;
 
 $password = hash('sha256', $password);//Creazione dell'hash
 $mysqli-> real_escape_string($email);

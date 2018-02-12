@@ -23,8 +23,8 @@ if(!isset($_SESSION['current_user'])){ ?>
           <button type="submit" class="btn btn-default">Submit</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="../google-login/index.php">Login</a></li>
-          <li><a href="../google-login/signup.php">Signup</a></li>
+          <li><a href="../login/login.php">Login</a></li>
+          <li><a href="../login/signup.php">Signup</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
@@ -80,7 +80,7 @@ else{
             <li><a href='../profiles/profile.php?user=<?php echo $current_user ?>'>Show profile</a></li>
             <li><a href="../profiles/changedata.php">Edit profile</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="../google-login/logout.php">Log out</a></li>
+            <li><a href="../login/logout.php">Log out</a></li>
           </ul>
         </li>
       </ul>

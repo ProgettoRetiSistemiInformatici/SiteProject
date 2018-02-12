@@ -49,7 +49,7 @@ $mysqli->close();
               </div>
             </div>
             <div class="col-md-8">
-              <div class="pull-right" style="margin-top: 26px">
+              <div class="pull-right" style="margin-bottom: 10px">
                 <button id="submitBtn" type="button" data-toggle="modal" data-target="#confirm-album" class="btn btn-primary">Accept</button>
                 <button type="reset" class="btn btn-default">Reset</button>
               </div>
@@ -67,7 +67,7 @@ $mysqli->close();
                   </div>
                   <table class="table">
                     <ul class="list-group">
-                      <li class="list-group-item text-center"><h4><?php echo $obj->description ?></h4></li>
+                      <li class="list-group-item text-center"><h4><?php echo $obj->title ?></h4></li>
                       <li class="list-group-item">
                         <div class="checkbox">
                           <label>

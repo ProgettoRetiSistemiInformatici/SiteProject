@@ -10,7 +10,7 @@ if (isset($_GET['state'])) {
 }
 
 try {
-  $accessToken = $helper->getAccessToken('http://photolio.com/google-login/fb-callback.php');
+  $accessToken = $helper->getAccessToken('http://photolio.altervista.org/login/fb-callback.php');
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();
@@ -73,8 +73,6 @@ $_SESSION['fb_access_token'] = (string)$accessToken;
 $response = $fb->get("/me?fields=id,birthday,first_name,last_name,email",$accessToken);
 $userData = $response->getGraphNode()->asArray();
 
-global $mysqli;
-
 $firstname = $userData['first_name'];
 $lastname = $userData['last_name'];
 $email = $userData['email'];
@@ -82,23 +80,28 @@ $email = filter_var($email,FILTER_SANITIZE_STRING);
 $fbpass = $userData['id'];
 $fbpass = hash('sha256',$fbpass);
 echo $email;
+
 $result = $mysqli->query("SELECT id, email FROM login WHERE email = '$email'");
 if(!$result->num_rows){
-   $query1 = "INSERT INTO login  (firstname, lastname, email, password) VALUES('$firstname', '$lastname', '$email', '$fbpass');";
-   if(!$mysqli->query($query1)){
-        die($mysqli->error);
-        $error = "error in mysql!";
-    } else{
-        $result = $mysqli->query($query);
-    }
+   $query = "INSERT INTO login  (firstname, lastname, email, password) VALUES('$firstname', '$lastname', '$email', '$fbpass');";
+
+   if(!$mysqli->query($query)){
+      $error = "error in mysql!";
+      die($mysqli->error);
+   }
+   $query = "SELECT id FROM login WHERE email = '$email';";
+   if($result = $mysqli->query($query)){
+   		$_SESSION['current_user'] = $result->fetch_object()->id;
+	}
 }
-$obj=$result->fetch_object();
-$_SESSION['current_user'] = $obj->id;
+else{
+   	$obj=$result->fetch_object();
+    $_SESSION['current_user'] = $obj->id;
+}
 
 $mysqli->close();
 session_write_close();
 
-header('Location: index.php?user='. $_SESSION['current_user']);
+header('Location: ../home.php');
 exit();
-//header('Location: https://photolio.com/google-login/index.php');
 ?>

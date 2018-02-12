@@ -4,15 +4,15 @@
 
 	require_once "config.php";
 
-	if(isset($_SESSION['access_token'])){
-		unset($_SESSION['access_token']);
+	if(isset($_SESSION['google_token'])){
+		unset($_SESSION['google_token']);
 		$gClient->revokeToken();
 	}
-
-	$_SESSION['FBID'] = NULL;
-  $_SESSION['FBFULLNAME'] = NULL;
-  $_SESSION['FBEMAIL'] = NULL;
-
+	
+	if(isset($_SESSION['fb_access_token'])){
+		unset($_SESSION['fb_access_token']);
+	}
+    
 	unset($_SESSION['current_user']);
 
 	session_destroy();

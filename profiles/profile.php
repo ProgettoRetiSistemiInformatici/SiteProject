@@ -17,7 +17,7 @@ else{
 $date_right;
 
 $query = "SELECT * FROM login WHERE id = '$user';";
-$query .= "SELECT id, name, description FROM photo WHERE user_id = '$user' ORDER BY 'id' DESC LIMIT 15;";
+$query .= "SELECT id, name, title, description FROM photo WHERE user_id = '$user' ORDER BY 'id' DESC LIMIT 15;";
 $query .= "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id' DESC LIMIT 3;";
 $query .= "SELECT * FROM relations WHERE follower_id = '$current_user' AND followed_id = '$user';";
 $query .= "SELECT id FROM relations WHERE follower_id = '$user';";
@@ -200,14 +200,14 @@ session_write_close();
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><h4><?php echo $photo->description ?></h4></li>
+                    <li class="list-group-item text-center"><h4><?php echo $photo->title ?></h4></li>
                     <li class="list-group-item text-center">
-                      <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                      <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"
-                        target="_blank">Share on G+</a>
-                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fphoto_page%2Fcomments.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                        target="_blank">G+</a>
+                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-primary" aria-hidden="true"
-                        target="_blank">Share on Facebook</a>
+                        target="_blank">Facebook</a>
                   </li>
                   </ul>
                 </table>

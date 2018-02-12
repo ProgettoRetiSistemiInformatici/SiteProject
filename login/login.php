@@ -2,12 +2,10 @@
     require_once "config.php";
     require_once "fb-config.php";
 
-	if (isset($_SESSION['access_token'])) {
+	if (isset($_SESSION['google_token']) || isset($_SESSION['fb_access_token'])) {
 		header('Location: ../home.php');
 		exit();
 	}
-
-	$loginURL = $gClient->createAuthUrl();
 
 ?>
 
@@ -22,7 +20,7 @@
           <div class="col-md-6 col-offset-3 text-center" style="margin-top: 100px">
               <div class="jumbotron">
                 <img src="images/photo-machine.png" class="img-thumbnail" width="100"><br><br>
-                <form action="access.php" method="post">
+                <form action="../login/access.php" method="post">
                     <div class="form-group">
                         <label for="inputEmail">Email:</label>
                         <input type="email" id="inputEmail" required name="email" class="form-control" placeholder="Email"><br>
