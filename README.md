@@ -12,7 +12,7 @@ Cognome: Mancini </br>
 Matricola: 1332151</p>
 
 <h3>Software consegnato:</h3>
-<p>File contenente lo script bash per il lancio dell'applicazione</p>
+<p>Software completo che può essere avviato tramite comando <span>php -S localhost:8000</span></p>
 
 <h3>Configurazione e avvio</h3>
 <p>Il progetto è completamente disponibile al sito http://photolio.altervista.org</p>
