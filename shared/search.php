@@ -15,7 +15,7 @@ if ($mysqli->multi_query($query)){
     if($mysqli->next_result()){
         $albums = $mysqli->store_result();
     }
-    if($mysqli-> next_result()){
+    if($mysqli->next_result()){
         $photos = $mysqli->store_result();
     }
     if($mysqli->next_result()){
