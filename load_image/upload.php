@@ -79,7 +79,7 @@ else {
           die($mysqli->error);
           $error = "error in mysql!";
         }
-        $_SESSION['photo'] = $nameExt;
+        $_SESSION['photo_id'] = $mysqli->insert_id;
 
         if(!empty($tags)){
           require 'tagsUpload.php';

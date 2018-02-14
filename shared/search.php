@@ -7,7 +7,7 @@ $searchterm = $_POST['search'];
 $query = "SELECT * FROM login WHERE email LIKE '%{$searchterm}%' OR firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
 $query.= "SELECT id, cover, title FROM albums WHERE title LIKE '%{$searchterm}%';";
 $query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%' OR description LIKE '%{$searchterm}%';";
-$query.= "SELECT id, photos_id FROM tags WHERE tag LIKE '%{$searchterm}%';";
+$query.= "SELECT tags.id AS tag_id, photo.id AS photo_id, photo.name AS photo_name, photo.title AS photo_title FROM tags INNER JOIN tag_reference ON tags.tag LIKE '%{$searchterm}%' AND tags.id = tag_reference.tag_id INNER JOIN photo ON photo.id = tag_reference.photo_id;";
 
 if ($mysqli->multi_query($query)){
     $profiles = $mysqli->store_result();
@@ -143,46 +143,22 @@ session_write_close();
         </div>
         <div class="panel-body">
           <div class="row">
-            <?php while($tag = $tags->fetch_object()):
-                $photos = explode(" ", $tag->photos_id);
-                $photos = join("','", $photos);
-                $query = "SELECT id, name, title, description FROM photo WHERE id IN ('$photos');";
-                if(!$result = $mysqli->query($query)){
-                  echo "Errore nella query dei tags" . $mysqli->error;
-                }
-                if($result->num_rows):
-                  while($photo = $result->fetch_object()):
-            ?>
+            <?php while($tag = $tags->fetch_object()): ?>
             <div class="col-sm-4">
               <div class="panel panel-default">
                 <div class="panel-body">
-                  <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id?>">
-                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$photo->name ?>" alt="Immagine">
+                  <a href="../gallery/photo_page.php?photo_id=<?php echo $tag->photo_id?>">
+                    <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/".$tag->photo_name ?>" alt="Immagine">
                   </a>
                 </div>
                 <table class="table">
                   <ul class="list-group">
-                    <li class="list-group-item text-center"><h4><?php echo $photo->title ?></h4></li>
+                    <li class="list-group-item text-center"><h4><?php echo $tag->photo_title ?></h4></li>
                   </ul>
                 </table>
               </div>
             </div>
-          <?php endwhile;
-          else: ?>
-            <div class="col-sm-4">
-              <div class="panel panel-default">
-                <div class="panel-body">
-                  <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "/uploads/broken.png" ?>" alt="Immagine">
-                </div>
-                <table class="table">
-                  <ul class="list-group">
-                    <li class="list-group-item text-center"><h4>This photo doesn't exist anymore :(</h4></li>
-                  </ul>
-                </table>
-              </div>
-            </div>
-        <?php endif;
-        endwhile; ?>
+          <?php endwhile; ?>
       </div>
     </div>
   </div>

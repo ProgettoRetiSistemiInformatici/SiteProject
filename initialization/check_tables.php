@@ -37,10 +37,9 @@
         votes INT(5) NOT NULL DEFAULT 0,
         title VARCHAR(30) NOT NULL,
         description VARCHAR(160),
-        tags TEXT,
         PRIMARY KEY (id),
         FOREIGN KEY(user_id) REFERENCES login(id) ON DELETE CASCADE);";
-        
+
       if ($mysqli->query($sql) === TRUE) {
       } else {
         echo "Error creating photo: " . $mysqli->error;
@@ -54,12 +53,31 @@
       $sql = "CREATE TABLE tags(
         id INT(5) NOT NULL AUTO_INCREMENT,
         tag VARCHAR(16) NOT NULL UNIQUE,
-        photos_id TEXT NOT NULL,
         PRIMARY KEY (id));";
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
         echo "Error creating tags: " . $mysqli->error;
+      }
+    }
+  }
+
+  if ($result = $mysqli->query("SHOW TABLES LIKE 'tag_reference'")) {
+    if(!$result->num_rows == 1) {
+      //sql create table
+      $sql = "CREATE TABLE tag_reference(
+        id INT(5) NOT NULL AUTO_INCREMENT,
+        tag_id INT(5) NOT NULL,
+        photo_id INT (5) NOT NULL,
+        user_id INT(5) NOT NULL,
+        PRIMARY KEY (id),
+        FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
+        FOREIGN KEY (photo_id) REFERENCES photo(id) ON DELETE CASCADE,
+        FOREIGN KEY (user_id) REFERENCES login(id) ON DELETE CASCADE);";
+
+      if ($mysqli->query($sql) === TRUE) {
+      } else {
+        echo "Error creating tag_reference: " . $mysqli->error;
       }
     }
   }
@@ -142,7 +160,7 @@
 
       if ($mysqli->query($sql) === TRUE) {
       } else {
-        echo "Error creating tags: " . $mysqli->error;
+        echo "Error creating contents: " . $mysqli->error;
       }
     }
   }
