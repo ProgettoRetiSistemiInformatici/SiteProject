@@ -4,9 +4,9 @@ require '../initialization/dbconnection.php';
 
 $searchterm = $_POST['search'];
 
-$query = "SELECT * FROM login WHERE email LIKE '%{$searchterm}%' OR firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
+$query = "SELECT id, firstname, lastname, birth, level, descuser FROM login WHERE firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
 $query.= "SELECT id, cover, title FROM albums WHERE title LIKE '%{$searchterm}%';";
-$query.= "SELECT * FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%' OR description LIKE '%{$searchterm}%';";
+$query.= "SELECT id, name, title FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%';";
 $query.= "SELECT tags.id AS tag_id, photo.id AS photo_id, photo.name AS photo_name, photo.title AS photo_title FROM tags INNER JOIN tag_reference ON tags.tag LIKE '%{$searchterm}%' AND tags.id = tag_reference.tag_id INNER JOIN photo ON photo.id = tag_reference.photo_id;";
 
 if ($mysqli->multi_query($query)){

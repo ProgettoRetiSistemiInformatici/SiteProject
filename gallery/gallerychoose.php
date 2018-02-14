@@ -69,15 +69,13 @@ $mysqli->close();
                     <ul class="list-group">
                       <li class="list-group-item text-center"><h4><?php echo $obj->title ?></h4></li>
                       <li class="list-group-item">
-                        <div class="checkbox">
-                          <label>
-                            <input type="checkbox" name="galleryitem[]" value="<?php echo $obj->id?>">Add to this album</input>
-                          </label>
-                        </div>
-                        <div class="radio">
-                          <label>
-                            <input type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</input>
-                          </label>
+                        <div class="form-horizontal">
+                          <div class="checkbox">
+                            <label><input id="addAlbum" type="checkbox" name="galleryitem[]" value="<?php echo $obj->id?>">Add to this album</label>
+                          </div>
+                          <div class="radio">
+                            <label><input id="addCover" type="radio" name="cover" value="<?php echo $obj->name?>">Use as cover</label>
+                          </div>
                         </div>
                       </li>
                     </ul>
