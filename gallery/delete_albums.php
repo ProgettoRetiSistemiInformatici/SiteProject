@@ -109,6 +109,7 @@ $mysqli->close();
     </div>
   </div>
 </div>
+  <?php include 'shared/footer.php'; ?>
 <script>
 
 $('#submit').click(function(){

@@ -49,6 +49,18 @@ session_write_close();
 <html lang='en'>
 <head>
 <?php include 'shared/meta.php'; ?>
+<style>#iubenda-cs-banner{top:0!important;left:0!important;position:fixed!important;width:100%!important;z-index:99999998!important;background:#000;background:rgba(0,0,0,.85)}.iubenda-cs-content{display:block;margin:0 auto;padding:10px 50px 10px 20px;width:auto;font-family:Helvetica,Arial,FreeSans,sans-serif;font-size:12px;color:#fff!important}.iubenda-cs-rationale{max-width:900px;position:relative;margin:0 auto}.iubenda-banner-content>p{font-family:Helvetica,Arial,FreeSans,sans-serif;line-height:1.5}.iubenda-cs-close-btn{color:#fff!important;text-decoration:none;font-size:12px;position:absolute;top:-5px;right:-20px;border:1px solid #fff!important;display:inline-block;width:20px;height:20px;line-height:20px;text-align:center;border-radius:10px}.iubenda-cs-cookie-policy-lnk{text-decoration:underline;color:#fff!important;font-size:12px;font-weight:900}</style>
+<script type="text/javascript">/*<![CDATA[*/
+  var _iub = _iub || [];
+  _iub.csConfiguration = {
+    siteId: 1025613, cookiePolicyId: 25819051, lang: 'it', localConsentDomain: 'photolio.altervista.org',
+    banner: { applyStyles: false, content: "Questo sito utilizza cookie di terze parti per inviarti pubblicit&agrave; in linea con le tue preferenze. Se vuoi saperne di pi&ugrave; o negare il consenso a tutti o ad alcuni cookie, %{cookie_policy_link}. Chiudendo questo banner, scorrendo questa pagina, cliccando su un link o proseguendo la navigazione in altra maniera, acconsenti all&apos;uso dei cookie.", cookiePolicyLinkCaption: "clicca qui"}
+  };
+  (function (w, d) {
+    var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "//cdn.iubenda.com/cookie_solution/iubenda_cs.js"; tag.parentNode.insertBefore(s, tag); };
+    if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; }
+  })(window, document);
+  /*]]>*/</script>
 </head>
 <body>
 <div class="container">
@@ -186,5 +198,6 @@ session_write_close();
       </div>
     </div>
   </div>
+  <?php include 'shared/footer.php'; ?>
 </body>
 </html>

@@ -219,5 +219,6 @@ session_write_close();
               </div>
             <?php endif; ?>
         </div>
+          <?php include 'shared/footer.php'; ?>
     </body>
 </html>

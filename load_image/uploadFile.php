@@ -62,6 +62,7 @@ if(empty($_SESSION['current_user'])){
       </div>
     </div>
   </div>
+    <?php include 'shared/footer.php'; ?>
   <script>
     var maxLength = 30;
       $('#inputTitle').keyup(function() {

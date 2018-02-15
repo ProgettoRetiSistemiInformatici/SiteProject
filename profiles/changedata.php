@@ -107,5 +107,6 @@ session_write_close();
       </div>
     </form>
   </div>
+    <?php include 'shared/footer.php'; ?>
 </body>
 </html>

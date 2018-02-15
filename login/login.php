@@ -17,7 +17,7 @@
 <body>
     <div class="container">
         <div class="row justify-content-center">
-          <div class="col-md-6 col-offset-3 text-center" style="margin-top: 100px">
+          <div class="col-md-12 text-center" style="margin-top: 100px">
               <div class="jumbotron">
                 <img src="images/photo-machine.png" class="img-thumbnail" width="100"><br><br>
                 <form action="../login/access.php" method="post">
@@ -31,10 +31,8 @@
                     </div>
                     <input type="submit" value="Log in" class="btn btn-primary">
                 </form>
-              </div>
-            </div>
-            <div class="col-md-6 text-center" style="margin-top: 300px">
-              <div class="jumbotron">
+                <h3>Or</h3>
+                </br>
                 <input type="button" onclick="window.location = '<?php echo $loginURL ?>';" value="Log in with Google" class="btn btn-danger">
                 <input type="button" onclick="window.location = '<?php echo $FBloginUrl ?>';" value="Log in with Facebook" class="btn btn-primary">
               </div>
