@@ -187,7 +187,7 @@
         </div>
       </div>
     </div>
-      <?php include '../shared/footer.php'; ?>
+  <?php include '../shared/footer.php'; ?>
   <script>
     $('#share').click(function() {
       var photo_id = <?php echo $photo_id ?>;
