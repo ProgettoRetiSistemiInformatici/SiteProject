@@ -68,6 +68,6 @@
       </div>
     </div>
   </div>
-    <?php include 'shared/footer.php'; ?>
+    <?php include '../shared/footer.php'; ?>
 </body>
 </html>

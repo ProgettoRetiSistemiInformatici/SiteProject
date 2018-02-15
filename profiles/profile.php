@@ -245,7 +245,7 @@ session_write_close();
     </div>
   </div>
 </div>
-  <?php include 'shared/footer.php'; ?>
+  <?php include '../shared/footer.php'; ?>
 <script>
   $('#submit').click(function(){
     var current_user = <?php echo $current_user ?>;
