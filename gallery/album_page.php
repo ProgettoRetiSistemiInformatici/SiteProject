@@ -78,10 +78,10 @@ session_write_close();
                 <div class="col-md-12">
                   <div class="panel panel-default">
                    <div class="panel-body">
-                     <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
+                     <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.com%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"
                         target="_blank">G+</a>
-                     <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
+                     <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2Fgallery%2Falbum_page.php%3Falbum%3D<?php echo $album['album_id']; ?>&amp"
                         class="btn btn-primary pull-right" aria-hidden="true"
                         target="_blank">Facebook</a>
                     </div>
@@ -107,10 +107,10 @@ session_write_close();
                           <ul class="list-group">
                             <li class="list-group-item text-center"><p><b><?php echo $album['photo_title'] ?></b></p></li>
                             <li class="list-group-item text-center">
-                          <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>"
+                          <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>"
                              class="btn btn-danger" aria-hidden="true"
                              target="_blank">G+</a>
-                          <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>&amp"
+                          <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $album['photo_id']; ?>&amp"
                              class="btn btn-primary" aria-hidden="true"
                              target="_blank">Facebook</a>
                             </li>

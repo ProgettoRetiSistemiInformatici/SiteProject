@@ -66,6 +66,20 @@ else{
             <li><a href="../gallery/delete_albums.php">Delete Albums</a></li>
           </ul>
         </li>
+        <li class='dropdown'>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Contests <span class="caret"></span></a>
+            <ul class='dropdown-menu'>
+                <li><a href='../contest/index_contests.php'>Show Contests</a></li>
+                <li><a href='../contest/newcontest.php'>Create Contest</a></li>
+            </ul>
+        </li>
+        <li class='dropdown'>
+            <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>Groups <span class='caret'></span></a>
+            <ul class='dropdown-menu'>
+                <li><a href='../groups/newgroup.php'> Create Group</a></li>
+                <li><a href='../groups/index_groups.php'>Your Groups</a></li>
+            </ul>
+        </li>
       </ul>
       <form form action="../shared/search.php" method="post" class="navbar-form navbar-left">
         <div class="form-group">

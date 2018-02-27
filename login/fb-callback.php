@@ -10,7 +10,7 @@ if (isset($_GET['state'])) {
 }
 
 try {
-  $accessToken = $helper->getAccessToken('http://photolio.altervista.org/login/fb-callback.php');
+  $accessToken = $helper->getAccessToken('http://photolio.com/login/fb-callback.php');
 } catch(Facebook\Exceptions\FacebookResponseException $e) {
   // When Graph returns an error
   echo 'Graph returned an error: ' . $e->getMessage();

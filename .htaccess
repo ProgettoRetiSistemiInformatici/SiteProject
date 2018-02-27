@@ -1,4 +1,4 @@
-RewriteEingine On
+RewriteEngine On
 RewriteBase /
 
 #Protect the htaccess file
@@ -9,4 +9,4 @@ satisfy all
 </Files>
 
 #Disable directory browsing
-Option All -Indexes
+#Option All -Indexes

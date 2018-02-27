@@ -22,6 +22,8 @@ $query .= "SELECT * FROM albums WHERE user_id='$user' ORDER BY 'id' DESC LIMIT 3
 $query .= "SELECT * FROM relations WHERE follower_id = '$current_user' AND followed_id = '$user';";
 $query .= "SELECT id FROM relations WHERE follower_id = '$user';";
 $query .= "SELECT id FROM relations WHERE followed_id = '$user';";
+$query .= "SELECT contest.name, contest.id, share_winner.warned from (contest join share_winner on contest.id = share_winner.contest_id) WHERE winner_id = '$user';";
+$query .= "SELECT groups.name, groups.id from (groups join membership on groups.id = membership.group_id) where membership.member_id='$user';";
 if ($mysqli->multi_query($query)){
     if($result = $mysqli->store_result()){
         //Store first query result(profile info)
@@ -41,6 +43,12 @@ if ($mysqli->multi_query($query)){
     }
     if($mysqli->next_result()){
       $num_follower = $mysqli->store_result()->num_rows;
+    }
+    if($mysqli->next_result()){
+      $contest = $mysqli->store_result();
+    }
+    if($mysqli->next_result()){
+        $group = $mysqli->store_result();
     }
     else {
         die($mysqli->error);
@@ -107,6 +115,7 @@ session_write_close();
                 if (!empty($profile->descuser)){
                   echo "<li class='list-group-item'><b>About Me:</b> " . $profile->descuser . "</li>";
                 }
+                echo "<li class='list-group-item'><a href='../contest/newcontest.php'class='btn btn-primary'>Create Contest</a></li>";
                 echo "<li class='list-group-item'><a href='following.php?user=" . $user . "'><b>Following " . $num_following  . "</b></a></li>";
                 echo "<li class='list-group-item'><a href='follower.php?user=" . $user . "'><b>Follower " . $num_follower  . "</b></a></li>";
             ?>
@@ -130,7 +139,7 @@ session_write_close();
       </div>
     </div>
   </div>
-
+   
   <!--Albums List-->
   <div class="col-md-8">
     <div class="panel panel-default">
@@ -181,6 +190,25 @@ session_write_close();
         </div>
       </div>
     </div>
+<?php if($contest->num_rows): ?>
+    <?php while ($contestresult = $contest->fetch_object()):?>
+        <?php if($contestresult->warned == NULL): ?>
+        <div id="contest" class="modal-fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class ="modal-body">
+                      <?php echo "<p>Congratulations, you won the Contest:<br><b>".$contestresult->name."<p>"; ?>
+                      <?php $mysqli->query("UPDATE share_winner set warned = 1 where contest_id = '$contestresult->id';");?>                       
+                  </div>
+                  <div class ="modal-footer">
+                      <button type="button" id="confirm" class="btn btn-default" data-dismiss="modal">Ok!</button>
+                  </div>
+               </div>
+          </div>
+        </div>
+       <?php endif; ?>
+    <?php endwhile;?>
+  <?php endif; ?>
 <!-- Photo Grid -->
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -201,10 +229,10 @@ session_write_close();
                   <ul class="list-group">
                     <li class="list-group-item text-center"><h4><?php echo $photo->title ?></h4></li>
                     <li class="list-group-item text-center">
-                      <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                      <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-danger" aria-hidden="true"
                         target="_blank">G+</a>
-                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.altervista.org%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
+                      <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                         class="btn btn-primary" aria-hidden="true"
                         target="_blank">Facebook</a>
                   </li>
@@ -230,7 +258,7 @@ session_write_close();
       endif; ?>
     </div>
   </div>
-  <!-- Modal -->
+  <!-- Modals -->
   <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
@@ -247,6 +275,9 @@ session_write_close();
 </div>
   <?php include '../shared/footer.php'; ?>
 <script>
+  $('#confirm').click(function(){
+    $("#contest").hide();
+  });
   $('#submit').click(function(){
     var current_user = <?php echo $current_user ?>;
     $.ajax({

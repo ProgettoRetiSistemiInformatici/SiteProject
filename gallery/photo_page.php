@@ -57,7 +57,7 @@
           <div class="col-md-12">
             <div class="panel panel-default">
               <div class="panel-heading">
-                <img class="center-block img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine" class='img-responsive center-block'>
+                <img class="center-block img-responsive img-rounded" src="<?php echo "/uploads/" .$photo_name; ?>" alt="Immagine">
               </div>
               <div class="panel-body">
                 <div class="row">
@@ -79,10 +79,10 @@
                           <li class="list-group-item text-center"><p><b>Title:</b> <?php echo $title; ?></p></li>
                           <li class="list-group-item text-center"><p><b>Rating:</b> <?php echo round($rate, 2); ?>/5</p></li>
                           <li class="list-group-item text-center">
-                            <a href="https://plus.google.com/share?url=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
+                            <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
                               class="btn btn-danger" aria-hidden="true"
                               target="_blank">G+</a>
-                            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A8000%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
+                            <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo_id; ?>&amp"
                               class="btn btn-primary" aria-hidden="true"
                               target="_blank">Facebook</a>
                             <?php if(!$guest): ?>

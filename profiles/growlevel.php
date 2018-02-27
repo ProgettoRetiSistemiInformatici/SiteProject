@@ -1,6 +1,9 @@
 <?php
 
 require '../initialization/dbconnection.php';
+if($winner!= NULL){
+    $current_user = $winner;
+}
 $query = "SELECT login.level AS userLevel, login.exp AS userExp, levels.exp AS neededExp FROM login INNER JOIN levels ON levels.level = login.level AND login.id = $current_user;";
 
 if(!$result = $mysqli->query($query)){

@@ -3,12 +3,13 @@
 require '../initialization/dbconnection.php';
 
 $searchterm = $_POST['search'];
-
-$query = "SELECT id, firstname, lastname, birth, level, descuser FROM login WHERE firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
+$searchterm = $mysqli->real_escape_string($searchterm);
+$query = "SELECT id, firstname, lastname, birth, level, descuser ,profile_image FROM login WHERE firstname LIKE '%{$searchterm}%' OR lastname LIKE '%{$searchterm}%';";
 $query.= "SELECT id, cover, title FROM albums WHERE title LIKE '%{$searchterm}%';";
-$query.= "SELECT id, name, title FROM photo WHERE name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%';";
+$query.= "SELECT id, name, title FROM photo WHERE title LIKE '%{$searchterm}%' OR name LIKE '%{$searchterm}.jpg%' OR name LIKE '%{$searchterm}.jpeg%' OR name LIKE '%{$searchterm}.png%' OR title LIKE '%{$searchterm}%';";
 $query.= "SELECT tags.id AS tag_id, photo.id AS photo_id, photo.name AS photo_name, photo.title AS photo_title FROM tags INNER JOIN tag_reference ON tags.tag LIKE '%{$searchterm}%' AND tags.id = tag_reference.tag_id INNER JOIN photo ON photo.id = tag_reference.photo_id;";
-
+$query.= "SELECT contest.id, contest.name, contest.endtime, contest.winner, contest.creator,login.firstname, contest.contest_img "
+        . "FROM (contest join login on contest.creator = login.id) WHERE contest.name LIKE '%{$searchterm}%';";
 if ($mysqli->multi_query($query)){
     $profiles = $mysqli->store_result();
 
@@ -21,12 +22,16 @@ if ($mysqli->multi_query($query)){
     if($mysqli->next_result()){
         $tags = $mysqli->store_result();
     }
+    if($mysqli->next_result()){
+        $contests = $mysqli->store_result();
+    }
 }
 else{
   die($mysqli->error);
 }
 
 session_write_close();
+
 ?>
 
 <!DOCTYPE html>
@@ -108,6 +113,37 @@ session_write_close();
           </div>
         </div>
       </div>
+     <?php endif; ?>
+    <?php if($contests->num_rows != 0):?>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title text-center"><b>Related Contests</b></h3>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <?php while($contest = $contests->fetch_object()): ?>
+              <div class="col-sm-4">
+                  <div class="panel panel-default">
+                      <div class="panel body">
+                          <a href="../contest/contest_page.php?contest=<?php echo $contest->id?>">
+                          <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "../contest/contest_covers/".$contest->contest_img?>" alt="Immagine">
+                          </a>
+                      </div>
+                      <table class="table">
+                          <ul class="list-group">
+                              <li class="list-group-item text-center"><h4><b><?php echo $contest->name ?></b></h4></li>
+                              <li class="list-group-item"><h4>Contest Ends in: <?php echo $contest->endtime?></h4></li>
+                              <?php if($contest->winner!=NULL): ?>
+                              <li class="list-group-item text-center"><h4>Winner: <?php echo $contest->firstname ?></h4></li>
+                              <?php endif; ?>
+                          </ul>
+                      </table>
+                  </div>
+              </div>
+            <?php endwhile; ?>
+          </div>
+        </div>
+    </div>
     <?php endif; ?>
     <?php if($photos->num_rows != 0): ?>
       <div class="panel panel-default">
@@ -164,7 +200,7 @@ session_write_close();
   </div>
 <?php $mysqli->close();
 endif;
-if ($tags->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 && $albums->num_rows == 0): ?>
+if ($tags->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 && $albums->num_rows == 0 && $contests->num_rows==0): ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h3 class="panel-title text-center"><b>Search result</b></h3>
@@ -175,7 +211,7 @@ if ($tags->num_rows == 0 && $photos->num_rows == 0 && $profiles->num_rows == 0 &
       </div>
     </div>
   </div>
-<?php endif ?>
+<?php endif; ?>
 </div>
 </body>
 </html>
