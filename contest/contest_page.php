@@ -15,7 +15,7 @@ if(!$result = $mysqli->query("SELECT contest.name, contest.description, login.fi
 $obj = $result->fetch_object();
 
 
-$queryp = "SELECT p.name, p.title, p.id, p.votes from (photo as p join photo_contest as c on p.id = c.photo_id) where c.contest_id = '$id'ORDER by p.votes;";
+$queryp = "SELECT p.name,p.votes, p.title, p.id from (photo as p join photo_contest as c on p.id = c.photo_id) where c.contest_id = '$id'ORDER by p.votes;";
 if(!$res2 = $mysqli->query($queryp)){
     die($mysqli->error);
 }
@@ -93,26 +93,47 @@ session_write_close();
               <div class="col-sm-4">
                 <div class="panel panel-default">
                   <div class="panel-body">
-                    <a href="../gallery/photo_page.php?photo_id=<?php echo $photo->id?>">
                       <img style="height:200px" class="center-block img-responsive img-rounded" src="<?php echo "../uploads/".$photo->name ?>" alt="Immagine">
-                    </a>
                   </div>
                   <table class="table">
-                    <ul class="list-group">
+                    <ul class="list-group">                        
                       <li class="list-group-item text-center"><h4><?php echo $photo->title; ?></h4></li>
                       <li class="list-group-item text-center">
+                        <?php if($obj->winner == null):?>
+                        <button id="CastVote" onclick="CastaVote(<?php echo $photo->id;?>)" type="button" class="btn btn-warning">Vote This Photo</button>
+                         <?php endif; ?>
                         <a href="https://plus.google.com/share?url=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                           class="btn btn-danger" aria-hidden="true"
                           target="_blank">G+</a>
                         <a href="https://facebook.com/sharer/sharer.php?u=http%3A%2F%2Fphotolio.com%2Fgallery%2Fphoto_page.php%3Fphoto_id%3D<?php echo $photo->id; ?>&amp"
                           class="btn btn-primary" aria-hidden="true"
                           target="_blank">Facebook</a>
-                          <p>Votes: <?php echo $photo->votes; ?></p>
-                    </li>
+                        <?php echo '<b> Votes: </b><p id="votes-'.$photo->id.'"></p> </li>
                     </ul>
                   </table>
                 </div>
-              </div>
+              </div>';?>
+                    <script>
+                        function CastaVote(id){
+                            var xhttp = new XMLHttpRequest();
+                            xhttp.open("GET","./castvote.php?photo="+id,true);
+                            xhttp.send();    
+                        }
+                        
+                        $(document).ready(function() {
+                        var photo_id =<?php echo $photo->id;?>;
+                        var $votes = $("#votes-"+photo_id);
+                        setInterval(function () {
+                            RetrieveMessages(photo_id);
+                        }, 2000);
+                        function RetrieveMessages(id) {
+                            $.get("./readvote.php?photo="+id, function (data) {
+                                $votes.html(data); //Paste content into chat output
+                            });
+                        }
+
+                        })
+                    </script>
           <?php endwhile;
     else: ?>
       <div class="col-sm-12">

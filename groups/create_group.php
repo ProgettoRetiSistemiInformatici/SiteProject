@@ -68,7 +68,7 @@ if(isset($_FILES['groupImage'])&& $_FILES['groupImage']['size'] != 0){
     }
 }
 if($imagename != NULL){
-    $query = "INSERT INTO groups (name, description, group_cover, admin) VALUES ('$name,'$desc','$imagename','$user');";
+    $query = "INSERT INTO groups (name, description, group_cover, admin) VALUES ('$name','$desc','$imagename','$user');";
 }
 else {
     $query = "INSERT INTO groups (name, description, admin) VALUES ('$name','$desc','$user');";
@@ -89,6 +89,6 @@ if(!$mysqli->query($query3)){
 }
 $mysqli->close();
 $_SESSION['current_user'] = $user;
-header('Location: group_page.php');
+header('Location: group_page.php?group='.$_SESSION['group_id']);
 session_write_close();
 ?>
