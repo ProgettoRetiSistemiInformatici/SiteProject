@@ -302,7 +302,7 @@
                 `text` varchar(128) NOT NULL,
                 `group_id` int(5) NOT NULL,
                 PRIMARY KEY (`id`),
-                KEY `group_id` (`group_id`)
+                KEY `group_id` (`group_id`),
                 FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`) ON DELETE CASCADE
               ) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;";
             if($mysqli->query($sql) === TRUE){
